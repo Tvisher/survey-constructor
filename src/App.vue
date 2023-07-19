@@ -4,142 +4,28 @@
     v-for="pollItem in pollList"
     :pollItemType="pollItem.type"
     :editorValue="pollItem.data.editorValue"
-    @setEditorValue="setEditorValueInPoll(pollItem.id, $event)"
+    :key="pollItem.id"
+    :id="pollItem.id"
   />
 </template>
 
 <script>
 import PollElement from "./components/PollElement.vue";
-
+import { mapState } from "vuex";
 export default {
   name: "App",
   components: {
     PollElement,
   },
   data() {
-    return {
-      pollList: [
-        {
-          id: 1,
-          type: "Editor 1",
-          data: {
-            editorValue: {
-              ops: [
-                {
-                  insert: "asdasdasdasdasdasd12312\n123123",
-                },
-                {
-                  attributes: {
-                    italic: true,
-                  },
-                  insert: "1231231232312312",
-                },
-                {
-                  insert: "\n",
-                },
-              ],
-            },
-          },
-        },
-        {
-          id: 2,
-          type: "Editor 2",
-          data: {
-            editorValue: {
-              ops: [
-                {
-                  insert: "asdasdasdasdasdasd12312\n123123",
-                },
-                {
-                  attributes: {
-                    italic: true,
-                  },
-                  insert: "1231231232312312",
-                },
-                {
-                  insert: "\n",
-                },
-              ],
-            },
-          },
-        },
-        {
-          id: 3,
-          type: "Editor 2",
-          data: {
-            editorValue: {
-              ops: [
-                {
-                  insert: "asdasdasdasdasdasd12312\n123123",
-                },
-                {
-                  attributes: {
-                    italic: true,
-                  },
-                  insert: "1231231232312312",
-                },
-                {
-                  insert: "\n",
-                },
-              ],
-            },
-          },
-        },
-        {
-          id: 4,
-          type: "Editor 2",
-          data: {
-            editorValue: {
-              ops: [
-                {
-                  insert: "asdasdasdasdasdasd12312\n123123",
-                },
-                {
-                  attributes: {
-                    italic: true,
-                  },
-                  insert: "1231231232312312",
-                },
-                {
-                  insert: "\n",
-                },
-              ],
-            },
-          },
-        },
-        {
-          id: 5,
-          type: "Editor 2",
-          data: {
-            editorValue: {
-              ops: [
-                {
-                  insert: "asdasdasdasdasdasd12312\n123123",
-                },
-                {
-                  attributes: {
-                    italic: true,
-                  },
-                  insert: "1231231232312312",
-                },
-                {
-                  insert: "\n",
-                },
-              ],
-            },
-          },
-        },
-      ],
-    };
+    return {};
   },
-  methods: {
-    setEditorValueInPoll(id, newValue) {
-      const currentPoll = this.pollList.find((poll) => poll.id === id);
-      if (currentPoll) {
-        currentPoll.data.editorValue = newValue;
-      }
-    },
+  computed: {
+    ...mapState({
+      pollList: (state) => state.pollList,
+    }),
   },
+  methods: {},
 };
 </script>
 
