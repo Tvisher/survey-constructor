@@ -1,7 +1,10 @@
 import { createStore } from 'vuex'
 
+import pollTypesList from './pollTypesList';
+
 export default createStore({
   state: {
+    pollTypesList,
     pollList: [
       {
         id: 1,
