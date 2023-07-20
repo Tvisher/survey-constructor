@@ -132,6 +132,7 @@ export default createStore({
         currentPoll.data.editorValue = editorValue;
       }
     },
+
     removePollInState(state, id) {
       state.pollList = state.pollList.filter(poll => poll.id !== id);
     }

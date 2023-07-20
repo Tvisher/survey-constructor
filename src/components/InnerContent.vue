@@ -3,16 +3,25 @@
     <div class="poll-container">
       <div class="poll-elements">
         <div class="poll-elements__title">Название опроса</div>
-
-        <PollElement
+        <poll-element
           v-for="(pollItem, index) in pollList"
           :pollItemType="pollItem.type"
           :pollItemName="pollItem.typeName"
           :pollItemData="pollItem.data"
           :key="pollItem.id"
-          :id="pollItem.id"
-          :number="index"
+          :pollItemId="pollItem.id"
+          :pollNumber="index"
         />
+      </div>
+      <div class="poll-list-sidebar">
+        <div class="poll-list-sidebar__wrapper">
+          <sidebar-item
+            v-for="pollTemplate in pollTypesList"
+            :key="pollTemplate.id"
+            :name="pollTemplate.typeName"
+            :type="pollTemplate.type"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -20,10 +29,12 @@
 
 <script>
 import PollElement from "./PollElement.vue";
+import SidebarItem from "./SidebarItem.vue";
 import { mapState } from "vuex";
 export default {
   components: {
     PollElement,
+    SidebarItem,
   },
   data() {
     return {};
@@ -31,15 +42,24 @@ export default {
   computed: {
     ...mapState({
       pollList: (state) => state.pollList,
+      pollTypesList: (state) => state.pollTypesList,
     }),
   },
   methods: {},
+  mounted() {
+    // console.log(this.pollTypesList);
+  },
 };
 </script>
 
 <style>
 #app {
   margin-top: 60px;
+}
+
+.poll-elements {
+  max-width: 790px;
+  width: 100%;
 }
 .poll-elements__title {
   margin-bottom: 20px;
@@ -52,13 +72,31 @@ export default {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1180px;
   margin: auto;
 }
 
-.poll-container {
+.poll-elements {
   padding: 20px;
   border-radius: 8px;
   background: #ecf4ff;
+}
+
+.poll-container {
+  align-items: flex-start;
+  display: flex;
+  gap: 30px;
+}
+
+.poll-list-sidebar {
+  max-width: 350px;
+  width: 100%;
+  padding: 15px;
+  background: #ecf4ff;
+  position: sticky;
+  top: 30px;
+  left: 0;
+}
+.poll-list-sidebar__wrapper {
 }
 </style>
