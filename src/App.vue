@@ -1,41 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <PollElement
-    v-for="pollItem in pollList"
-    :pollItemType="pollItem.type"
-    :editorValue="pollItem.data.editorValue"
-    :key="pollItem.id"
-    :id="pollItem.id"
-  />
+  <InnerContent />
 </template>
 
 <script>
-import PollElement from "./components/PollElement.vue";
-import { mapState } from "vuex";
+import InnerContent from "./components/InnerContent.vue";
 export default {
   name: "App",
   components: {
-    PollElement,
+    InnerContent,
   },
   data() {
     return {};
   },
-  computed: {
-    ...mapState({
-      pollList: (state) => state.pollList,
-    }),
-  },
+  computed: {},
   methods: {},
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  font-family: Montserrat;
 }
 </style>

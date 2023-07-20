@@ -5,7 +5,8 @@ export default createStore({
     pollList: [
       {
         id: 1,
-        type: "Editor 1",
+        type: "single-choice",
+        typeName: 'Одиночный выбор',
         data: {
           editorValue: {
             ops: [
@@ -27,7 +28,8 @@ export default createStore({
       },
       {
         id: 2,
-        type: "Editor 2",
+        type: "drop-down-list",
+        typeName: 'Выпадающий список',
         data: {
           editorValue: {
             ops: [
@@ -49,7 +51,8 @@ export default createStore({
       },
       {
         id: 3,
-        type: "Editor 2",
+        type: "multiple-drop-down-list",
+        typeName: 'Множественный вып. список',
         data: {
           editorValue: {
             ops: [
@@ -71,7 +74,8 @@ export default createStore({
       },
       {
         id: 4,
-        type: "Editor 2",
+        type: "multiple-choice",
+        typeName: 'Множественный выбор',
         data: {
           editorValue: {
             ops: [
@@ -93,7 +97,8 @@ export default createStore({
       },
       {
         id: 5,
-        type: "Editor 2",
+        type: "ranging",
+        typeName: 'Ранжирование',
         data: {
           editorValue: {
             ops: [
@@ -119,12 +124,14 @@ export default createStore({
   },
   mutations: {
     setSinglePollEditorValue(state, { itemId, editorValue }) {
-      // console.log(id, editorValue);
       const currentPoll = state.pollList.find((poll) => poll.id === itemId);
       if (currentPoll) {
         currentPoll.data.editorValue = editorValue;
       }
     },
+    removePollInState(state, id) {
+      state.pollList = state.pollList.filter(poll => poll.id !== id);
+    }
   },
   actions: {
   },
