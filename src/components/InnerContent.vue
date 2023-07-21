@@ -16,8 +16,8 @@
       <div class="poll-list-sidebar">
         <div class="poll-list-sidebar__wrapper">
           <sidebar-item
-            v-for="pollTemplate in pollTypesList"
-            :key="pollTemplate.id"
+            v-for="(pollTemplate, index) in pollTypesList"
+            :key="index"
             :name="pollTemplate.typeName"
             :type="pollTemplate.type"
           />
@@ -36,18 +36,11 @@ export default {
     PollElement,
     SidebarItem,
   },
-  data() {
-    return {};
-  },
   computed: {
     ...mapState({
       pollList: (state) => state.pollList,
       pollTypesList: (state) => state.pollTypesList,
     }),
-  },
-  methods: {},
-  mounted() {
-    // console.log(this.pollTypesList);
   },
 };
 </script>

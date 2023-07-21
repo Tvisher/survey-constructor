@@ -8,9 +8,12 @@
     :currentAnswerId="optionsData.currentAnswerId"
     :variantNumber="index"
   />
+  <button class="btn red-btn" @click="addOption">Добавить вариант</button>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 import AnswerOption from "./pollSegments/AnswerOption.vue";
 export default {
   components: {
@@ -19,6 +22,13 @@ export default {
   props: {
     pollItemId: { type: [Number, String] },
     optionsData: { type: Object },
+  },
+  methods: {
+    ...mapMutations(["addOptionInPoll"]),
+    addOption() {
+      const pollItemId = this.pollItemId;
+      this.addOptionInPoll(pollItemId);
+    },
   },
 };
 </script>

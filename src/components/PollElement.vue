@@ -10,6 +10,7 @@
     <editor-component :pollItemId="pollItemId" :editorValue="editorValue" />
 
     <answer-options-creater
+      v-if="isOptionsNeeded"
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
     />
@@ -41,6 +42,15 @@ export default {
     },
     editorValue() {
       return this.pollItemData.editorValue;
+    },
+    isOptionsNeeded() {
+      const answerOptionsCreaterList = [
+        "single-choice",
+        "drop-down-list",
+        "multiple-drop-down-list",
+        "multiple-choice",
+      ];
+      return answerOptionsCreaterList.includes(this.pollItemType);
     },
   },
   methods: {

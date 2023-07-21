@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-
+import { v4 as uuidv4 } from 'uuid';
 import pollTypesList from './pollTypesList';
 
 export default createStore({
@@ -140,8 +140,24 @@ export default createStore({
       }
     },
 
+    addPollInState(state, pollType) {
+      const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type == pollType);
+      const addedPollTmp = JSON.parse(JSON.stringify(pollTmp))
+      addedPollTmp.id = uuidv4();
+      state.pollList.push(addedPollTmp);
+    },
+
     removePollInState(state, pollId) {
       state.pollList = state.pollList.filter(poll => poll.id !== pollId);
+    },
+
+    addOptionInPoll(state, pollItemId) {
+      const currentPoll = state.pollList.find((poll) => poll.id === pollItemId);
+      const newOption = {
+        id: `${uuidv4()}`,
+        value: ""
+      }
+      currentPoll.data.optionsData.optionsList.push(newOption);
     },
 
     selectCurrentOptionInPoll(state, { pollItemId, optionId }) {
@@ -150,6 +166,7 @@ export default createStore({
         currentPoll.data.optionsData.currentAnswerId = optionId;
       }
     },
+
     editCurrentOptionInPoll(state, { pollItemId, optionId, optionValue }) {
       const currentPoll = state.pollList.find((poll) => poll.id === pollItemId);
       if (currentPoll) {

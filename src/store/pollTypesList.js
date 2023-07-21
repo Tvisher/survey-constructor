@@ -1,38 +1,62 @@
+
 const pollTypesList = [
     {
-        id: 1,
         type: 'single-choice',
         typeName: 'Одиночный выбор',
         data: {
             editorValue: {},
+            optionsData: {
+                currentAnswerId: '',
+                optionsList: [
+                    { id: 1, value: "" },
+                    { id: 2, value: "" },
+                ],
+            },
         }
     },
     {
-        id: 2,
         type: 'drop-down-list',
         typeName: 'Выпадающий список',
         data: {
             editorValue: {},
+            optionsData: {
+                currentAnswerId: '',
+                optionsList: [
+                    { id: 1, value: "" },
+                    { id: 2, value: "" },
+                ],
+            },
         }
     },
     {
-        id: 3,
         type: 'multiple-drop-down-list',
         typeName: 'Множественный вып. список',
         data: {
             editorValue: {},
+            optionsData: {
+                currentAnswerId: '',
+                optionsList: [
+                    { id: 1, value: "" },
+                    { id: 2, value: "" },
+                ],
+            },
         }
     },
     {
-        id: 4,
         type: 'multiple-choice',
         typeName: 'Множественный выбор',
         data: {
             editorValue: {},
+            optionsData: {
+                currentAnswerId: '',
+                optionsList: [
+                    { id: 1, value: "" },
+                    { id: 2, value: "" },
+                ],
+            },
         }
     },
     {
-        id: 5,
         type: 'ranging',
         typeName: 'Ранжирование',
         data: {
@@ -40,7 +64,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 6,
         type: 'range-selection',
         typeName: 'Выбор диапазона',
         data: {
@@ -48,7 +71,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 7,
         type: 'pair-ranking',
         typeName: 'Парное ранжирование',
         data: {
@@ -56,7 +78,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 8,
         type: 'matrix',
         typeName: 'Матрица',
         data: {
@@ -64,7 +85,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 9,
         type: 'free-response-matrix',
         typeName: 'Матрица свободных ответов',
         data: {
@@ -72,7 +92,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 10,
         type: 'full-name',
         typeName: 'ФИО',
         data: {
@@ -80,7 +99,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 11,
         type: 'phone-number',
         typeName: 'Номер телефона',
         data: {
@@ -88,7 +106,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 12,
         type: 'date',
         typeName: 'Дата',
         data: {
@@ -96,7 +113,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 13,
         type: 'selecting-date-range',
         typeName: 'Выбор промежутка дат',
         data: {
@@ -104,7 +120,6 @@ const pollTypesList = [
         }
     },
     {
-        id: 14,
         type: 'email',
         typeName: 'Эл. почта',
         data: {
