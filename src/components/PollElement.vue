@@ -7,17 +7,11 @@
       </div>
       <button class="poll-remove" @click="removePoll"></button>
     </div>
-    <div class="editor-descr">Текст вопроса</div>
-    <div class="editor-wrapper">
-      <editor-component :pollItemId="pollItemId" :editorValue="editorValue" />
-    </div>
-    <hr />
-    <div class="editor-descr">Варианты</div>
-    <variants-generator
-      v-for="variant in variants"
-      :key="variant.id"
+    <editor-component :pollItemId="pollItemId" :editorValue="editorValue" />
+
+    <answer-options-creater
       :pollItemId="pollItemId"
-      :data="variant"
+      :optionsData="pollItemData.optionsData"
     />
   </div>
 </template>
@@ -25,26 +19,21 @@
 <script>
 import { mapMutations } from "vuex";
 
-import EditorComponent from "./pollElems/EditorComponent.vue";
-import VariantsGenerator from "./pollElems/VariantsGenerator.vue";
+import EditorComponent from "./pollSegments/EditorComponent.vue";
+import AnswerOptionsCreater from "./AnswerOptionsCreater.vue";
 
 export default {
-  components: { EditorComponent, VariantsGenerator },
+  components: { EditorComponent, AnswerOptionsCreater },
   props: {
     pollItemType: { type: String },
     pollItemName: { type: String },
     pollItemData: { type: Object },
-    pollItemId: { type: Number },
+    pollItemId: { type: [Number, String] },
     pollNumber: { type: Number },
   },
 
   data() {
-    return {
-      variants: [
-        { id: 1, value: "", isCurrent: true },
-        { id: 2, value: "", isCurrent: false },
-      ],
-    };
+    return {};
   },
   computed: {
     indexNumber() {
@@ -60,18 +49,7 @@ export default {
       this.removePollInState(this.pollItemId);
     },
   },
-
-  // watch: {
-  //   editorValueInComponent(editorValue, oldValue) {
-  //     if (oldValue === "") return;
-  //     const itemId = this.pollItemId;
-  //     this.setSinglePollEditorValue({ itemId, editorValue });
-  //   },
-  // },
-
-  // mounted() {
-  //   this.editorValueInComponent = new Delta(this.editorValue);
-  // },
+  mounted() {},
 };
 </script>
 

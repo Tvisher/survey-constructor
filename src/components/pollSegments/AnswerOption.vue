@@ -5,34 +5,60 @@
         <input
           type="text"
           class="variant-item__filed"
-          v-model="variant.value"
+          :value="variantData.value"
+          @input="editVariant"
         />
       </label>
       <label class="custom-cb">
-        <input type="radio" class="custom-cb__checkbox" :name="pollItemId" />
+        <input
+          type="radio"
+          class="custom-cb__checkbox"
+          :name="pollItemId"
+          :checked="isCurrentVariant"
+          @input="selectVariant"
+        />
         <span class="custom-cb__text">Правильный ответ</span>
       </label>
     </div>
     <button class="variant-item__remove"></button>
   </div>
 </template>
-
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   props: {
-    pollItemId: { type: Number },
-    data: { type: Object },
+    pollItemId: { type: [Number, String] },
+    currentAnswerId: { type: [Number, String] },
+    variantNumber: { type: Number },
+    variantData: { type: Object },
   },
   data() {
-    return {
-      variant: this.data,
-    };
+    return {};
   },
-  methods: {},
   computed: {
-    // variantName() {
-    //   return this.pollItemId + this.variant.id;
-    // },
+    isCurrentVariant() {
+      if (!this.currentAnswerId && this.variantNumber === 0) {
+        this.selectVariant();
+        return this.variantData.id;
+      }
+      return this.variantData.id == this.currentAnswerId;
+    },
+  },
+  methods: {
+    ...mapMutations(["selectCurrentOptionInPoll", "editCurrentOptionInPoll"]),
+
+    selectVariant() {
+      const optionId = this.variantData.id;
+      const pollItemId = this.pollItemId;
+      this.selectCurrentOptionInPoll({ pollItemId, optionId });
+    },
+    editVariant(event) {
+      const optionId = this.variantData.id;
+      const pollItemId = this.pollItemId;
+      const optionValue = event.target.value.trim();
+      this.editCurrentOptionInPoll({ pollItemId, optionId, optionValue });
+    },
   },
 };
 </script>

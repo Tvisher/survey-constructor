@@ -1,5 +1,11 @@
 <template>
-  <QuillEditor v-model:content="editorValueInComponent"></QuillEditor>
+  <div>
+    <div class="editor-descr">Текст вопроса</div>
+    <div class="editor-wrapper">
+      <QuillEditor v-model:content="editorValueInComponent"></QuillEditor>
+    </div>
+    <hr />
+  </div>
 </template>
 
 <script>
@@ -8,7 +14,7 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
-    pollNumber: { type: Number },
+    pollItemId: { type: [Number, String] },
     editorValue: { type: Object },
   },
   data() {
@@ -23,8 +29,9 @@ export default {
   watch: {
     editorValueInComponent(editorValue, oldValue) {
       if (oldValue === "") return;
-      const itemId = this.pollItemId;
-      this.setSinglePollEditorValue({ itemId, editorValue });
+      const pollItemId = this.pollItemId;
+      console.log(pollItemId, editorValue);
+      this.setSinglePollEditorValue({ pollItemId, editorValue });
     },
   },
 
