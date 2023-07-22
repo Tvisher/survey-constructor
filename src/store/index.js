@@ -28,7 +28,7 @@ export default createStore({
             ],
           },
           optionsData: {
-            currentAnswerId: '1',
+            currentAnswerId: ['1'],
             optionsList: [
               { id: '1', value: "asdasdasd" },
               { id: '2', value: "123123123" },
@@ -36,98 +36,7 @@ export default createStore({
           },
         },
       },
-      // {
-      //   id: 2,
-      //   type: "drop-down-list",
-      //   typeName: 'Выпадающий список',
-      //   data: {
-      //     editorValue: {
-      //       ops: [
-      //         {
-      //           insert: "asdasdasdasdasdasd12312\n123123",
-      //         },
-      //         {
-      //           attributes: {
-      //             italic: true,
-      //           },
-      //           insert: "1231231232312312",
-      //         },
-      //         {
-      //           insert: "\n",
-      //         },
-      //       ],
-      //     },
-      //   },
-      // },
-      // {
-      //   id: 3,
-      //   type: "multiple-drop-down-list",
-      //   typeName: 'Множественный вып. список',
-      //   data: {
-      //     editorValue: {
-      //       ops: [
-      //         {
-      //           insert: "asdasdasdasdasdasd12312\n123123",
-      //         },
-      //         {
-      //           attributes: {
-      //             italic: true,
-      //           },
-      //           insert: "1231231232312312",
-      //         },
-      //         {
-      //           insert: "\n",
-      //         },
-      //       ],
-      //     },
-      //   },
-      // },
-      // {
-      //   id: 4,
-      //   type: "multiple-choice",
-      //   typeName: 'Множественный выбор',
-      //   data: {
-      //     editorValue: {
-      //       ops: [
-      //         {
-      //           insert: "asdasdasdasdasdasd12312\n123123",
-      //         },
-      //         {
-      //           attributes: {
-      //             italic: true,
-      //           },
-      //           insert: "1231231232312312",
-      //         },
-      //         {
-      //           insert: "\n",
-      //         },
-      //       ],
-      //     },
-      //   },
-      // },
-      // {
-      //   id: 5,
-      //   type: "ranging",
-      //   typeName: 'Ранжирование',
-      //   data: {
-      //     editorValue: {
-      //       ops: [
-      //         {
-      //           insert: "asdasdasdasdasdasd12312\n123123",
-      //         },
-      //         {
-      //           attributes: {
-      //             italic: true,
-      //           },
-      //           insert: "1231231232312312",
-      //         },
-      //         {
-      //           insert: "\n",
-      //         },
-      //       ],
-      //     },
-      //   },
-      // },
+
     ],
   },
   getters: {
@@ -163,7 +72,18 @@ export default createStore({
     selectCurrentOptionInPoll(state, { pollItemId, optionId }) {
       const currentPoll = state.pollList.find((poll) => poll.id === pollItemId);
       if (currentPoll) {
-        currentPoll.data.optionsData.currentAnswerId = optionId;
+        currentPoll.data.optionsData.currentAnswerId = [optionId];
+      }
+    },
+
+    removeCurrentOptionInPoll(state, { pollItemId, optionId }) {
+      const currentPoll = state.pollList.find((poll) => poll.id === pollItemId);
+      const optionListLength = currentPoll.data.optionsData.optionsList.length;
+      if (optionListLength <= 2) return
+      const currentOption = currentPoll.data.optionsData.currentAnswerId[0];
+      currentPoll.data.optionsData.optionsList = currentPoll.data.optionsData.optionsList.filter(option => option.id !== optionId);
+      if (currentOption === optionId) {
+        currentPoll.data.optionsData.currentAnswerId[0] = currentPoll.data.optionsData.optionsList[0].id;
       }
     },
 
@@ -174,7 +94,6 @@ export default createStore({
         currentOption.value = optionValue
       }
     }
-
 
   },
   actions: {

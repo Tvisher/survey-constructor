@@ -6,7 +6,7 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: '',
+                currentAnswerId: ['1'],
                 optionsList: [
                     { id: 1, value: "" },
                     { id: 2, value: "" },
@@ -20,10 +20,10 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: '',
+                currentAnswerId: ['1'],
                 optionsList: [
-                    { id: 1, value: "" },
-                    { id: 2, value: "" },
+                    { id: '1', value: "" },
+                    { id: '2', value: "" },
                 ],
             },
         }
@@ -34,10 +34,10 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: '',
+                currentAnswerId: [],
                 optionsList: [
-                    { id: 1, value: "" },
-                    { id: 2, value: "" },
+                    { id: '1', value: "" },
+                    { id: '2', value: "" },
                 ],
             },
         }
@@ -48,10 +48,10 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: '',
+                currentAnswerId: [],
                 optionsList: [
-                    { id: 1, value: "" },
-                    { id: 2, value: "" },
+                    { id: '1', value: "" },
+                    { id: '2', value: "" },
                 ],
             },
         }

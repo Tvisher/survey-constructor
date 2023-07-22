@@ -9,7 +9,7 @@
     </div>
     <editor-component :pollItemId="pollItemId" :editorValue="editorValue" />
 
-    <answer-options-creater
+    <single-choise-variant
       v-if="isOptionsNeeded"
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
@@ -21,10 +21,10 @@
 import { mapMutations } from "vuex";
 
 import EditorComponent from "./pollSegments/EditorComponent.vue";
-import AnswerOptionsCreater from "./AnswerOptionsCreater.vue";
+import SingleChoiseVariant from "./SingleChoiseVariant.vue";
 
 export default {
-  components: { EditorComponent, AnswerOptionsCreater },
+  components: { EditorComponent, SingleChoiseVariant },
   props: {
     pollItemType: { type: String },
     pollItemName: { type: String },
@@ -44,12 +44,7 @@ export default {
       return this.pollItemData.editorValue;
     },
     isOptionsNeeded() {
-      const answerOptionsCreaterList = [
-        "single-choice",
-        "drop-down-list",
-        "multiple-drop-down-list",
-        "multiple-choice",
-      ];
+      const answerOptionsCreaterList = ["single-choice", "drop-down-list"];
       return answerOptionsCreaterList.includes(this.pollItemType);
     },
   },
