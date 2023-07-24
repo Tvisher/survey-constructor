@@ -15,6 +15,7 @@ export default createStore({
     pollPages: [
       {
         id: "1",
+        pageComment: '',
         pollList: [
           {
             id: '1',
@@ -70,6 +71,7 @@ export default createStore({
       },
       {
         id: "2",
+        pageComment: '',
         pollList: [
 
           {

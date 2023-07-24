@@ -2,28 +2,14 @@
   <div class="container">
     <div class="app-container">
       <div class="polls-container">
-        <div class="polls-pages">
-          <div
-            class="polls-page"
-            v-for="(pollPage, index) in pollPagesList"
-            :key="pollPage.id"
-            :class="{ active: pollPage.id === currentPageId }"
-            @click="setCurrentPollPage(pollPage.id)"
-          >
-            {{ index + 1 }}
-          </div>
-        </div>
-        <div class="poll-elements">
-          <div class="poll-elements__title">Название опроса</div>
-          <poll-element
-            v-for="(pollItem, index) in pollPage.pollList"
-            :pollPageId="pollPage.id"
-            :pollItemId="pollItem.id"
-            :pollItemType="pollItem.type"
-            :pollItemName="pollItem.typeName"
-            :pollItemData="pollItem.data"
-            :key="pollItem.id"
-            :pollNumber="index"
+        <polls-pagination
+          :pollPagesList="pollPagesList"
+          :currentPageId="currentPageId"
+        />
+        <div class="poll-pages">
+          <poll-page
+            :currenPage="currentPollPage"
+            :currenPageNumber="currenPageNumber"
           />
         </div>
       </div>
@@ -42,39 +28,58 @@
 </template>
 
 <script>
-import PollElement from "./PollElement.vue";
+// import PollElement from "./PollElement.vue";
 import SidebarItem from "./SidebarItem.vue";
-import { mapState, mapMutations } from "vuex";
+import PollPage from "./PollPage.vue";
+import PollsPagination from "./PollsPagination";
+import { mapState } from "vuex";
 export default {
   components: {
-    PollElement,
+    PollPage,
     SidebarItem,
+    PollsPagination,
   },
-  methods: {
-    ...mapMutations(["setCurrentPollPage"]),
-  },
+
   computed: {
     ...mapState({
       currentPageId: (state) => state.currentPageId,
       pollPagesList: (state) => state.pollPages,
       pollTypesList: (state) => state.pollTypesList,
     }),
-    pollPage() {
+
+    currentPollPage() {
       return this.pollPagesList.find((page) => page.id === this.currentPageId);
+    },
+
+    currenPageNumber() {
+      const pageIndex = this.pollPagesList.findIndex(
+        (page) => page.id === this.currentPageId
+      );
+      return pageIndex + 1;
     },
   },
 };
 </script>
 
 <style lang="scss">
-.polls-pages {
+.polls-pagination {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 23px;
+  padding: 15px 20px;
+  background: #ecf4ff;
+}
+.poll-page-head {
+  margin-bottom: 20px;
+  color: #202020;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
 }
 
-.polls-page {
+.polls-page-btn {
   cursor: pointer;
   margin-right: 21px;
   width: 50px;
