@@ -11,6 +11,15 @@
       @input="editComment"
     />
   </div>
+  <div class="poll-page-zone" v-if="!hasPollElements">
+    <img
+      class="poll-page-zone__image"
+      src="./../assets/img/add-ico.svg"
+      alt=""
+    />
+    <span>Перенесите нужный вам тип вопроса в эту</span>
+    <span>область страницы</span>
+  </div>
   <poll-element
     v-for="(pollItem, index) in currenPage.pollList"
     :pollPageId="currenPage.id"
@@ -33,6 +42,11 @@ export default {
   },
   components: {
     PollElement,
+  },
+  computed: {
+    hasPollElements() {
+      return this.currenPage.pollList.length > 0;
+    },
   },
   methods: {
     ...mapMutations(["editPageComment"]),
@@ -60,5 +74,21 @@ export default {
   border-radius: 4px;
   border: 1px solid rgba(0, 66, 105, 0.28);
   background: #fff;
+}
+
+.poll-page-zone {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 2px dashed rgba(0, 66, 105, 0.28);
+}
+
+.poll-page-zone__image {
+  width: 82px;
+  height: 82px;
+  margin-bottom: 8px;
 }
 </style>

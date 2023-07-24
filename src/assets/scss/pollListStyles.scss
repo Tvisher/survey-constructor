@@ -13,6 +13,7 @@
   width: 100%;
 }
 .sidebar-item__ico {
+  flex-shrink: 0;
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;

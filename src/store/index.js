@@ -108,6 +108,12 @@ export default createStore({
             }
           },
         ],
+      }, {
+        id: "3",
+        pageComment: 'Комментарий ко второй странице, тут пока пусто',
+        pollList: [
+
+        ],
       }
     ],
   },
