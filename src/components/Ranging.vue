@@ -19,6 +19,7 @@
       </div>
       <button
         class="variant-item__remove"
+        :class="{ 'cant-remove': !permissionToRemoveOption }"
         @click="removeVariant(option.id)"
       ></button>
     </div>
@@ -59,9 +60,12 @@ export default {
       const { pollItemId, pollPageId } = this;
       this.addOptionInPoll({ pollPageId, pollItemId });
     },
+
     removeVariant(optionId) {
       const { pollItemId, pollPageId } = this;
-      this.removeOptionInPoll({ pollPageId, pollItemId, optionId });
+      if (this.permissionToRemoveOption) {
+        this.removeOptionInPoll({ pollPageId, pollItemId, optionId });
+      }
     },
     editVariant(event, optionId) {
       const { pollItemId, pollPageId } = this;
