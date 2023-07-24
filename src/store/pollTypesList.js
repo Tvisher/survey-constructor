@@ -6,10 +6,12 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
                 currentAnswerId: ['1'],
                 optionsList: [
-                    { id: 1, value: "" },
-                    { id: 2, value: "" },
+                    { id: '1', value: "" },
+                    { id: '2', value: "" },
                 ],
             },
         }
@@ -20,6 +22,8 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
                 currentAnswerId: ['1'],
                 optionsList: [
                     { id: '1', value: "" },
@@ -34,7 +38,9 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: [],
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
+                currentAnswerId: ['1'],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -48,7 +54,9 @@ const pollTypesList = [
         data: {
             editorValue: {},
             optionsData: {
-                currentAnswerId: [],
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
+                currentAnswerId: ['1'],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -61,6 +69,14 @@ const pollTypesList = [
         typeName: 'Ранжирование',
         data: {
             editorValue: {},
+            optionsData: {
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
+                optionsList: [
+                    { id: '1', value: "" },
+                    { id: '2', value: "" },
+                ],
+            },
         }
     },
     {

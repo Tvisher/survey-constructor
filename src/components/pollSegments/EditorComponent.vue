@@ -14,6 +14,7 @@ import { mapMutations } from "vuex";
 
 export default {
   props: {
+    pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },
     editorValue: { type: Object },
   },
@@ -29,9 +30,9 @@ export default {
   watch: {
     editorValueInComponent(editorValue, oldValue) {
       if (oldValue === "") return;
+      const pollPageId = this.pollPageId;
       const pollItemId = this.pollItemId;
-      console.log(pollItemId, editorValue);
-      this.setSinglePollEditorValue({ pollItemId, editorValue });
+      this.setSinglePollEditorValue({ pollPageId, pollItemId, editorValue });
     },
   },
 

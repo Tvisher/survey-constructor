@@ -1,17 +1,31 @@
 <template>
   <div class="container">
-    <div class="poll-container">
-      <div class="poll-elements">
-        <div class="poll-elements__title">Название опроса</div>
-        <poll-element
-          v-for="(pollItem, index) in pollList"
-          :pollItemType="pollItem.type"
-          :pollItemName="pollItem.typeName"
-          :pollItemData="pollItem.data"
-          :key="pollItem.id"
-          :pollItemId="pollItem.id"
-          :pollNumber="index"
-        />
+    <div class="app-container">
+      <div class="polls-container">
+        <div class="polls-pages">
+          <div
+            class="polls-page"
+            v-for="(pollPage, index) in pollPagesList"
+            :key="pollPage.id"
+            :class="{ active: pollPage.id === currentPageId }"
+            @click="setCurrentPollPage(pollPage.id)"
+          >
+            {{ index + 1 }}
+          </div>
+        </div>
+        <div class="poll-elements">
+          <div class="poll-elements__title">Название опроса</div>
+          <poll-element
+            v-for="(pollItem, index) in pollPage.pollList"
+            :pollPageId="pollPage.id"
+            :pollItemId="pollItem.id"
+            :pollItemType="pollItem.type"
+            :pollItemName="pollItem.typeName"
+            :pollItemData="pollItem.data"
+            :key="pollItem.id"
+            :pollNumber="index"
+          />
+        </div>
       </div>
       <div class="poll-list-sidebar">
         <div class="poll-list-sidebar__wrapper">
@@ -30,66 +44,51 @@
 <script>
 import PollElement from "./PollElement.vue";
 import SidebarItem from "./SidebarItem.vue";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     PollElement,
     SidebarItem,
   },
+  methods: {
+    ...mapMutations(["setCurrentPollPage"]),
+  },
   computed: {
     ...mapState({
-      pollList: (state) => state.pollList,
+      currentPageId: (state) => state.currentPageId,
+      pollPagesList: (state) => state.pollPages,
       pollTypesList: (state) => state.pollTypesList,
     }),
+    pollPage() {
+      return this.pollPagesList.find((page) => page.id === this.currentPageId);
+    },
   },
 };
 </script>
 
-<style>
-#app {
-  margin-top: 60px;
-}
-
-.poll-elements {
-  max-width: 790px;
-  width: 100%;
-}
-.poll-elements__title {
-  margin-bottom: 20px;
-  text-align: center;
-  color: #202020;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 100%; /* 18px */
-}
-
-.container {
-  max-width: 1180px;
-  margin: auto;
-}
-
-.poll-elements {
-  padding: 20px;
-  border-radius: 8px;
-  background: #ecf4ff;
-}
-
-.poll-container {
-  align-items: flex-start;
+<style lang="scss">
+.polls-pages {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 23px;
 }
 
-.poll-list-sidebar {
-  max-width: 350px;
-  width: 100%;
-  padding: 15px;
-  background: #ecf4ff;
-  position: sticky;
-  top: 30px;
-  left: 0;
-}
-.poll-list-sidebar__wrapper {
+.polls-page {
+  cursor: pointer;
+  margin-right: 21px;
+  width: 50px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #262b31;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0px 2px 12px 0px rgba(37, 51, 66, 0.08);
+  &.active {
+    color: #fff;
+    background-color: #fa0056;
+  }
 }
 </style>
