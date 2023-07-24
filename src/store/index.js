@@ -15,7 +15,7 @@ export default createStore({
     pollPages: [
       {
         id: "1",
-        pageComment: '',
+        pageComment: 'Комментарий к первой странице',
         pollList: [
           {
             id: '1',
@@ -71,7 +71,7 @@ export default createStore({
       },
       {
         id: "2",
-        pageComment: '',
+        pageComment: 'Комментарий ко второй странице',
         pollList: [
 
           {
@@ -109,8 +109,7 @@ export default createStore({
           },
         ],
       }
-    ]
-
+    ],
   },
   getters: {
   },
@@ -118,9 +117,9 @@ export default createStore({
     setCurrentPollPage(state, pageId) {
       state.currentPageId = pageId;
     },
+
     addPollInState(state, pollType) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
-
       const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type === pollType);
       const addedPollTmp = JSON.parse(JSON.stringify(pollTmp))
       addedPollTmp.id = uuidv4();
@@ -132,6 +131,11 @@ export default createStore({
       if (currentPoll) {
         currentPoll.data = { ...currentPoll.data, editorValue };
       }
+    },
+
+    editPageComment(state, { pollPageId, commentValue }) {
+      const currentPage = state.pollPages.find(page => page.id === pollPageId);
+      currentPage.pageComment = commentValue;
     },
 
     removePollInState(state, { pollPageId, pollId }) {
