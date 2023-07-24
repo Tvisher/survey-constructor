@@ -110,7 +110,7 @@ export default createStore({
         ],
       }, {
         id: "3",
-        pageComment: 'Комментарий ко второй странице, тут пока пусто',
+        pageComment: 'Комментарий к третьей странице, тут пока пусто',
         pollList: [
 
         ],
