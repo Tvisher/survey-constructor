@@ -15,8 +15,8 @@
     <draggable
       handle=".poll-item__name"
       v-bind="pollItemsDragOptionsInSidebar"
-      :list="pollList"
-      @change="draggEvent"
+      v-model="pollList"
+      item-key="id"
       @start="isDragging = true"
       @end="isDragging = false"
     >
@@ -34,7 +34,7 @@
         :name="isDragging ? 'flip-list' : null"
       >
         <poll-element
-          v-for="(pollItem, index) in currenPage.pollList"
+          v-for="(pollItem, index) in pollList"
           :pollPageId="currenPage.id"
           :pollItemId="pollItem.id"
           :pollItemType="pollItem.type"
@@ -64,10 +64,18 @@ export default {
   data() {
     return {
       isDragging: false,
-      pollList: this.currenPage.pollList,
     };
   },
   computed: {
+    pollList: {
+      get() {
+        return this.currenPage.pollList;
+      },
+      set(sortableList) {
+        const pollPageId = this.currenPage.id;
+        this.dragSortPollsInPage({ pollPageId, sortableList });
+      },
+    },
     hasPollElements() {
       return this.currenPage.pollList.length > 0;
     },
@@ -88,20 +96,6 @@ export default {
       "dragAddPollInPage",
     ]),
 
-    draggEvent(event) {
-      const pollPageId = this.currenPage.id;
-      if (event.added) {
-        const pollType = event.added.element.type;
-        const addedIndex = event.added.newIndex;
-        // this.dragAddPollInPage({ pollPageId, pollType, addedIndex });
-      }
-      if (event.moved) {
-        const pollId = event.moved.element.id;
-        const pollNewIndex = event.moved.newIndex;
-        console.log(pollId, pollNewIndex);
-        // this.$store.commit("dragSortPollsInPage", { pageId });
-      }
-    },
     editComment(event) {
       const pollPageId = this.currenPage.id;
       const commentValue = event.target.value.trim();

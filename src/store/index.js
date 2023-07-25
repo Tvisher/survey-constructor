@@ -130,18 +130,12 @@ export default createStore({
 
     dragSortPollsInPage(state, { pollPageId, sortableList }) {
       const currentPage = state.pollPages.find(page => page.id === pollPageId);
+      const newPollElement = sortableList.find(item => !item.id);
+      if (newPollElement) {
+        newPollElement.id = uuidv4();
+      }
       currentPage.pollList = sortableList;
     },
-
-    dragAddPollInPage(state, { pollPageId, pollType, addedIndex }) {
-      const currentPollPage = state.pollPages.find(page => page.id === pollPageId);
-      const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type === pollType);
-      const addedPollTmp = JSON.parse(JSON.stringify(pollTmp))
-      addedPollTmp.id = uuidv4();
-      currentPollPage.pollList.slice(addedIndex, 0, addedPollTmp);
-      console.log(currentPollPage.pollList);
-    },
-
 
     addPollInState(state, pollType) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
