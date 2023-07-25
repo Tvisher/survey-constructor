@@ -16,7 +16,6 @@
       handle=".poll-item__name"
       v-bind="pollItemsDragOptionsInSidebar"
       v-model="pollList"
-      item-key="id"
       @start="isDragging = true"
       @end="isDragging = false"
     >
@@ -69,6 +68,7 @@ export default {
   computed: {
     pollList: {
       get() {
+        console.log(this.currenPage.pollList.length);
         return this.currenPage.pollList;
       },
       set(sortableList) {
@@ -76,6 +76,7 @@ export default {
         this.dragSortPollsInPage({ pollPageId, sortableList });
       },
     },
+
     hasPollElements() {
       return this.currenPage.pollList.length > 0;
     },
@@ -86,6 +87,7 @@ export default {
         group: "pollTypes",
         disabled: false,
         ghostClass: "ghost",
+        sort: "true",
       };
     },
   },
@@ -95,7 +97,9 @@ export default {
       "dragSortPollsInPage",
       "dragAddPollInPage",
     ]),
-
+    draggableChange(e) {
+      console.log(e);
+    },
     editComment(event) {
       const pollPageId = this.currenPage.id;
       const commentValue = event.target.value.trim();

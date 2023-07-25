@@ -56,19 +56,7 @@ export default {
       },
     };
   },
-  methods: {
-    // checkMove(event) {
-    //   this.sidebarItemDraggablePositions.indexInPage =
-    //     event.draggedContext.futureIndex;
-    //   this.sidebarItemDraggablePositions.indexInSidebar =
-    //     event.draggedContext.index;
-    //   console.log(this.sidebarItemDraggablePositions);
-    // },
-    // onDragComplite(event) {
-    //   const sideBarItemType = event.added.element.type;
-    //   console.log(sideBarItemType);
-    // },
-  },
+  methods: {},
   computed: {
     ...mapState({
       currentPageId: (state) => state.currentPageId,

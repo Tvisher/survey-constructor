@@ -142,7 +142,7 @@ export default createStore({
       const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type === pollType);
       const addedPollTmp = JSON.parse(JSON.stringify(pollTmp))
       addedPollTmp.id = uuidv4();
-      currentPollPage.pollList.push(addedPollTmp);
+      currentPollPage.pollList = [...currentPollPage.pollList, addedPollTmp];
     },
 
     setSinglePollEditorValue(state, { pollPageId, pollItemId, editorValue }) {
