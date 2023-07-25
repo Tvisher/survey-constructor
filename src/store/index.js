@@ -8,6 +8,8 @@ function findPollById(state, pollPageId, pollItemId) {
   return currentPollPage.pollList.find((poll) => poll.id === pollItemId);
 }
 
+
+
 export default createStore({
   state: {
     pollTypesList,
@@ -108,7 +110,8 @@ export default createStore({
             }
           },
         ],
-      }, {
+      },
+      {
         id: "3",
         pageComment: 'Комментарий к третьей странице, тут пока пусто',
         pollList: [
@@ -123,6 +126,22 @@ export default createStore({
     setCurrentPollPage(state, pageId) {
       state.currentPageId = pageId;
     },
+
+
+    dragSortPollsInPage(state, { pollPageId, sortableList }) {
+      const currentPage = state.pollPages.find(page => page.id === pollPageId);
+      currentPage.pollList = sortableList;
+    },
+
+    dragAddPollInPage(state, { pollPageId, pollType, addedIndex }) {
+      const currentPollPage = state.pollPages.find(page => page.id === pollPageId);
+      const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type === pollType);
+      const addedPollTmp = JSON.parse(JSON.stringify(pollTmp))
+      addedPollTmp.id = uuidv4();
+      currentPollPage.pollList.slice(addedIndex, 0, addedPollTmp);
+      console.log(currentPollPage.pollList);
+    },
+
 
     addPollInState(state, pollType) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
@@ -144,7 +163,7 @@ export default createStore({
       currentPage.pageComment = commentValue;
     },
 
-    removePollInState(state, { pollPageId, pollId }) {
+    removePollInPage(state, { pollPageId, pollId }) {
       const currentPollPage = state.pollPages.find(page => page.id === pollPageId);
       currentPollPage.pollList = currentPollPage.pollList.filter(poll => poll.id !== pollId);
     },

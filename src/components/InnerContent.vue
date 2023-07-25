@@ -15,12 +15,20 @@
       </div>
       <div class="poll-list-sidebar">
         <div class="poll-list-sidebar__wrapper">
-          <sidebar-item
-            v-for="(pollTemplate, index) in pollTypesList"
-            :key="index"
-            :name="pollTemplate.typeName"
-            :type="pollTemplate.type"
-          />
+          <draggable
+            :list="pollTypesList"
+            handle=".sidebar-item__wrapper"
+            v-bind="{ ghostClass: 'sidebrGhostItem' }"
+            :group="{ name: 'pollTypes', pull: 'clone', put: false }"
+            :sort="false"
+          >
+            <sidebar-item
+              v-for="(pollTemplate, index) in pollTypesList"
+              :key="index"
+              :name="pollTemplate.typeName"
+              :type="pollTemplate.type"
+            />
+          </draggable>
         </div>
       </div>
     </div>
@@ -28,6 +36,7 @@
 </template>
 
 <script>
+import { VueDraggableNext } from "vue-draggable-next";
 import SidebarItem from "./SidebarItem.vue";
 import PollPage from "./PollPage.vue";
 import PollsPagesPagination from "./PollsPagesPagination";
@@ -37,8 +46,29 @@ export default {
     PollPage,
     SidebarItem,
     PollsPagesPagination,
+    draggable: VueDraggableNext,
   },
-
+  data() {
+    return {
+      sidebarItemDraggablePositions: {
+        indexInPage: "",
+        indexInSidebar: "",
+      },
+    };
+  },
+  methods: {
+    // checkMove(event) {
+    //   this.sidebarItemDraggablePositions.indexInPage =
+    //     event.draggedContext.futureIndex;
+    //   this.sidebarItemDraggablePositions.indexInSidebar =
+    //     event.draggedContext.index;
+    //   console.log(this.sidebarItemDraggablePositions);
+    // },
+    // onDragComplite(event) {
+    //   const sideBarItemType = event.added.element.type;
+    //   console.log(sideBarItemType);
+    // },
+  },
   computed: {
     ...mapState({
       currentPageId: (state) => state.currentPageId,
@@ -60,4 +90,7 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.sidebrGhostItem {
+}
+</style>

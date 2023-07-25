@@ -82,11 +82,11 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["removePollInState"]),
+    ...mapMutations(["removePollInPage"]),
     removePoll() {
       const pollPageId = this.pollPageId;
       const pollId = this.pollItemId;
-      this.removePollInState({ pollPageId, pollId });
+      this.removePollInPage({ pollPageId, pollId });
     },
   },
   mounted() {},

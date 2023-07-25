@@ -5,6 +5,7 @@
   margin-bottom: 8px;
 }
 .sidebar-item__wrapper {
+  cursor: grab;
   display: flex;
   align-items: center;
   height: 48px;
@@ -19,7 +20,6 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  //   background-color: red;
   margin-right: 16px;
 }
 .sidebar-item__btn {
@@ -33,6 +33,12 @@
   background-repeat: no-repeat;
   background-size: 16px;
   background-position: center;
+}
+
+.sidebar-item__name {
+  font-size: 14px;
+  color: #202020;
+  font-weight: 400;
 }
 
 .sidebar-item {
