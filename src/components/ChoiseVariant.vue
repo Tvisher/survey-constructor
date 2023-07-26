@@ -1,17 +1,35 @@
 <template>
   <div class="editor-descr">Варианты</div>
-  <answer-option
-    v-for="variant in optionsData.optionsList"
-    :key="variant.id"
-    :variantData="variant"
-    :inputsType="inputsType"
-    :currentAnswerIdList="optionsData.currentAnswerId"
-    :showRemoveBtn="permissionToRemoveOption"
-    @selectVariant="selectVariant"
-    @editVariant="editVariant($event, variant.id)"
-    @removeVariant="removeVariant"
-  />
-  <button class="btn red-btn" v-if="permissionToAddOption" @click="addOption">
+  <draggable
+    v-model="optionsList"
+    v-bind="pollItemsDragOptionsInSidebar"
+    handle=".variant-item__dragg"
+    @start="isDraggingOption = true"
+    @end="isDraggingOption = false"
+  >
+    <transition-group
+      type="transition"
+      :name="isDraggingOption ? 'flip-option-list' : null"
+    >
+      <answer-option
+        v-for="(variant, index) in optionsList"
+        :key="variant.id"
+        :numberPosition="index"
+        :variantData="variant"
+        :inputsType="inputsType"
+        :currentAnswerIdList="optionsData.currentAnswerId"
+        :showRemoveBtn="permissionToRemoveOption"
+        @selectVariant="selectVariant"
+        @editVariant="editVariant($event, variant.id)"
+        @removeVariant="removeVariant"
+      />
+    </transition-group>
+  </draggable>
+  <button
+    class="btn red-btn add-btn"
+    v-if="permissionToAddOption"
+    @click="addOption"
+  >
     Добавить вариант
   </button>
 </template>
@@ -19,10 +37,12 @@
 <script>
 import { mapMutations } from "vuex";
 import AnswerOption from "./pollSegments/AnswerOption.vue";
+import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
   components: {
     AnswerOption,
+    draggable: VueDraggableNext,
   },
   props: {
     pollPageId: { type: [Number, String] },
@@ -30,8 +50,21 @@ export default {
     optionsData: { type: Object },
     inputsType: { type: String },
   },
-
+  data() {
+    return {
+      isDraggingOption: false,
+    };
+  },
   computed: {
+    optionsList: {
+      get() {
+        return this.optionsData.optionsList;
+      },
+      set(sortableList) {
+        const pollItemId = this.pollItemId;
+        this.dragSortOptionsInPoll({ sortableList, pollItemId });
+      },
+    },
     permissionToAddOption() {
       const maxOptionsLength = this.optionsData.maxOptionsLength;
       const optionsLength = this.optionsData.optionsList.length;
@@ -42,6 +75,16 @@ export default {
       const optionsLength = this.optionsData.optionsList.length;
       return optionsLength > minxOptionsLength;
     },
+
+    pollItemsDragOptionsInSidebar() {
+      return {
+        animation: 0,
+        group: `optionGroup-${this.pollItemId}`,
+        disabled: false,
+        ghostClass: "ghost-potion",
+        sort: "true",
+      };
+    },
   },
   methods: {
     ...mapMutations([
@@ -49,6 +92,7 @@ export default {
       "editOptionInPoll",
       "addOptionInPoll",
       "removeOptionInPoll",
+      "dragSortOptionsInPoll",
     ]),
     addOption() {
       const { pollItemId, pollPageId } = this;
@@ -61,8 +105,8 @@ export default {
     },
 
     removeVariant(optionId) {
-      const { pollItemId, pollPageId } = this;
-      this.removeOptionInPoll({ pollPageId, pollItemId, optionId });
+      const { pollItemId, pollPageId, inputsType } = this;
+      this.removeOptionInPoll({ pollPageId, pollItemId, optionId, inputsType });
     },
 
     editVariant(event, optionId) {
@@ -74,4 +118,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.flip-option-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+.ghost-potion {
+  opacity: 0.8;
+  background: #ecf4ff;
+}
+</style>

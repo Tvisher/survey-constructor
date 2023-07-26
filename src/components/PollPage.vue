@@ -97,9 +97,6 @@ export default {
       "dragSortPollsInPage",
       "dragAddPollInPage",
     ]),
-    draggableChange(e) {
-      console.log(e);
-    },
     editComment(event) {
       const pollPageId = this.currenPage.id;
       const commentValue = event.target.value.trim();
@@ -117,7 +114,26 @@ export default {
   transition: transform 0s;
 }
 .ghost {
-  opacity: 0.3;
-  background: #c8ebfb;
+  opacity: 0.5;
+  background-color: #c8ebfb;
+}
+.sidebar-item.ghost {
+  opacity: 0.7;
+  margin-bottom: 0;
+  background-color: transparent;
+  .sidebar-item__wrapper {
+    padding: 30px 20px !important;
+  }
+  .sidebar-item__ico {
+    width: 24px;
+    height: 24px;
+  }
+  .sidebar-item__name {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .sidebar-item__btn {
+    display: none;
+  }
 }
 </style>
