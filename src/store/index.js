@@ -13,7 +13,7 @@ function findPollById(state, pollPageId, pollItemId) {
 export default createStore({
   state: {
     pollTypesList,
-    currentPageId: '1',
+    currentPageId: '3',
     pollPages: [
       {
         id: "1",
@@ -69,6 +69,18 @@ export default createStore({
               },
             }
           },
+          {
+            id: "509dab5e-68b4-46e0-8b17-57d80ae5bdb4",
+            type: "range-selection",
+            typeName: "Выбор диапазона",
+            data: {
+              editorValue: {},
+              rangeData: {
+                min: '20',
+                max: '40'
+              }
+            },
+          }
         ],
       },
       {
@@ -130,13 +142,19 @@ export default createStore({
       state.currentPageId = pageId;
     },
 
+    setRangeSelectionValues(state, { pollItemId, rangeData }) {
+      const currentPollItem = findPollById(state, state.currentPageId, pollItemId);
+      currentPollItem.data.rangeData = rangeData;
+    },
+
     dragSortPollsInPage(state, { pollPageId, sortableList }) {
       const currentPage = state.pollPages.find(page => page.id === pollPageId);
-      const newPollElement = sortableList.find(item => !item.id);
+      const newPollList = JSON.parse(JSON.stringify(sortableList));
+      const newPollElement = newPollList.find(item => !item.id);
       if (newPollElement) {
         newPollElement.id = uuidv4();
       }
-      currentPage.pollList = sortableList;
+      currentPage.pollList = [...newPollList];
     },
 
     dragSortOptionsInPoll(state, { sortableList, pollItemId }) {
@@ -222,10 +240,8 @@ export default createStore({
 
   },
   actions: {
-  },
-  modules: {
   }
-})
+});
 
 
 

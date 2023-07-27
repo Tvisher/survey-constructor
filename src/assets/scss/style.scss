@@ -351,3 +351,15 @@ hr {
     }
   }
 }
+
+.range-selection__label {
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 10px);
+}
+
+.range-selection__creater {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}

@@ -84,6 +84,10 @@ const pollTypesList = [
         typeName: 'Выбор диапазона',
         data: {
             editorValue: {},
+            rangeData: {
+                min: '',
+                max: ''
+            }
         }
     },
     {
@@ -91,6 +95,22 @@ const pollTypesList = [
         typeName: 'Парное ранжирование',
         data: {
             editorValue: {},
+            optionsData: {
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
+                optionsList: [
+                    {
+                        id: '1',
+                        firstFieldValue: '',
+                        secondFieldValue: '',
+                    },
+                    {
+                        id: '2',
+                        firstFieldValue: '',
+                        secondFieldValue: '',
+                    },
+                ]
+            }
         }
     },
     {

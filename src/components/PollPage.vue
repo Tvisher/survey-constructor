@@ -68,7 +68,6 @@ export default {
   computed: {
     pollList: {
       get() {
-        console.log(this.currenPage.pollList.length);
         return this.currenPage.pollList;
       },
       set(sortableList) {

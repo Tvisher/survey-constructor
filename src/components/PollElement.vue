@@ -28,6 +28,17 @@
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
     />
+
+    <range-selection
+      v-if="pollItemType === 'range-selection'"
+      :pollItemId="pollItemId"
+      :rangeData="pollItemData.rangeData"
+    />
+    <pair-ranking
+      v-if="pollItemType === 'pair-ranking'"
+      :pollItemId="pollItemId"
+      :optionsData="pollItemData.optionsData"
+    />
   </div>
 </template>
 
@@ -37,9 +48,17 @@ import { mapMutations } from "vuex";
 import EditorComponent from "./pollSegments/EditorComponent.vue";
 import ChoiseVariant from "./ChoiseVariant.vue";
 import Ranging from "./Ranging.vue";
+import RangeSelection from "./RangeSelection.vue";
+import PairRanking from "./PairRanking.vue";
 
 export default {
-  components: { EditorComponent, ChoiseVariant, Ranging },
+  components: {
+    EditorComponent,
+    ChoiseVariant,
+    Ranging,
+    RangeSelection,
+    PairRanking,
+  },
   props: {
     pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },

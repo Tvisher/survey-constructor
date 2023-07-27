@@ -12,7 +12,7 @@
     >
       <div
         class="variant-item__container"
-        v-for="(option, index) in optionsData.optionsList"
+        v-for="(option, index) in optionsList"
         :key="option.id"
       >
         <div class="variant-item__dragg">
