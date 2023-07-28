@@ -9,7 +9,6 @@ function findPollById(state, pollPageId, pollItemId) {
 }
 
 
-
 export default createStore({
   state: {
     pollTypesList,
@@ -121,8 +120,7 @@ export default createStore({
       }
     ],
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
     setCurrentPollPage(state, pageId) {
       state.currentPageId = pageId;
@@ -181,6 +179,7 @@ export default createStore({
       };
       currentPoll.data.optionsData.optionsList.push(newOption);
     },
+
     addPairInPoll(state, pollItemId) {
       const currentPoll = findPollById(state, state.currentPageId, pollItemId);
       const newPair = {
@@ -190,6 +189,7 @@ export default createStore({
       };
       currentPoll.data.optionsData.optionsList.push(newPair);
     },
+
     editPairValue(state, { pollItemId, fieldValue, pairId, filedType }) {
       const currentPoll = findPollById(state, state.currentPageId, pollItemId);
       const pairFiled = currentPoll.data.optionsData.optionsList.find(pair => pair.id === pairId);
@@ -228,6 +228,7 @@ export default createStore({
         }
       }
     },
+
     removePairInPoll(state, { pollItemId, pairId, }) {
       const currentPoll = findPollById(state, state.currentPageId, pollItemId);
       console.log(currentPoll);
@@ -244,6 +245,7 @@ export default createStore({
 
   },
   actions: {
+
   }
 });
 

@@ -16,6 +16,8 @@
       <button class="poll-remove" @click="removePoll"></button>
     </div>
 
+    <image-loader />
+
     <editor-component
       :pollItemId="pollItemId"
       :pollPageId="pollPageId"
@@ -58,6 +60,7 @@ import ChoiseVariant from "./ChoiseVariant.vue";
 import Ranging from "./Ranging.vue";
 import RangeSelection from "./RangeSelection.vue";
 import PairRanking from "./PairRanking.vue";
+import ImageLoader from "./pollSegments/ImageLoader";
 
 export default {
   components: {
@@ -67,6 +70,7 @@ export default {
     Ranging,
     RangeSelection,
     PairRanking,
+    ImageLoader,
   },
   props: {
     pollPageId: { type: [Number, String] },
