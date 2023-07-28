@@ -37,6 +37,7 @@
           :pollPageId="currenPage.id"
           :pollItemId="pollItem.id"
           :pollItemType="pollItem.type"
+          :pollItemDescr="pollItem.typeDescr"
           :pollItemName="pollItem.typeName"
           :pollItemData="pollItem.data"
           :key="pollItem.id"

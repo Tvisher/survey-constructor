@@ -3,27 +3,36 @@
   <div class="pairs">
     <div
       class="variant__pair"
-      v-for="(pairOption, index) in optionsList"
+      v-for="(pairOption, index) in optionsData.optionsList"
       :key="pairOption.id"
     >
       <div class="pair__num editor-descr">Пара № {{ index + 1 }}</div>
-      <div class="variant__pair-content">
-        <label>
-          <input
-            class="variant-item__filed"
-            type="text"
-            :value="pairOption.firstFieldValue"
-            placeholder="Вопрос"
-          />
-        </label>
-        <label>
-          <input
-            class="variant-item__filed"
-            type="text"
-            :value="pairOption.secondFieldValue"
-            placeholder="Ответ"
-          />
-        </label>
+      <div class="variant__pair-wrapper">
+        <div class="variant__pair-content">
+          <label>
+            <input
+              class="variant-item__filed"
+              type="text"
+              :value="pairOption.firstFieldValue"
+              placeholder="Вопрос"
+              @input="editValue($event, pairOption.id, 'firstFieldValue')"
+            />
+          </label>
+          <label>
+            <input
+              class="variant-item__filed"
+              type="text"
+              :value="pairOption.secondFieldValue"
+              placeholder="Ответ"
+              @input="editValue($event, pairOption.id, 'secondFieldValue')"
+            />
+          </label>
+        </div>
+        <button
+          class="variant-item__remove"
+          :class="{ 'cant-remove': !permissionToRemoveOption }"
+          @click="removePair(pairOption.id)"
+        ></button>
       </div>
     </div>
   </div>
@@ -37,24 +46,15 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   props: {
     pollItemId: { type: [Number, String] },
     optionsData: { type: Object },
   },
-  data() {
-    return {};
-  },
+
   computed: {
-    optionsList: {
-      get() {
-        return this.optionsData.optionsList;
-      },
-      set(sortableList) {
-        const pollItemId = this.pollItemId;
-        this.dragSortOptionsInPoll({ sortableList, pollItemId });
-      },
-    },
     permissionToAddOption() {
       const maxOptionsLength = this.optionsData.maxOptionsLength;
       const optionsLength = this.optionsData.optionsList.length;
@@ -67,15 +67,28 @@ export default {
     },
   },
   methods: {
-    addPair() {},
+    ...mapMutations(["addPairInPoll", "editPairValue", "removePairInPoll"]),
+    addPair() {
+      const { pollItemId } = this;
+      this.addPairInPoll(pollItemId);
+    },
+    editValue(event, pairId, filedType) {
+      const { pollItemId } = this;
+      const fieldValue = event.target.value.trim();
+      this.editPairValue({ pollItemId, fieldValue, pairId, filedType });
+    },
+
+    removePair(pairId) {
+      const { pollItemId } = this;
+      if (this.permissionToRemoveOption) {
+        this.removePairInPoll({ pollItemId, pairId });
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.pairs {
-  /* margin-top: 15px; */
-}
 .variant__pair {
   padding: 15px 0;
 }
@@ -94,6 +107,13 @@ export default {
 }
 .variant-item__dragg {
   margin-top: 0;
+}
+.variant-item__filed {
+  margin: 4px 0;
+}
+.variant__pair-wrapper {
+  display: flex;
+  align-items: center;
 }
 
 .pair__num {

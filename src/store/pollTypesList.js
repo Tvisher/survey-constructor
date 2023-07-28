@@ -3,6 +3,7 @@ const pollTypesList = [
     {
         type: 'single-choice',
         typeName: 'Одиночный выбор',
+        typeDescr: 'Описание для элемента опроса Одиночный выбор',
         data: {
             editorValue: {},
             optionsData: {
@@ -19,6 +20,7 @@ const pollTypesList = [
     {
         type: 'drop-down-list',
         typeName: 'Выпадающий список',
+        typeDescr: 'Описание для элемента опроса Выпадающий список',
         data: {
             editorValue: {},
             optionsData: {
@@ -35,6 +37,7 @@ const pollTypesList = [
     {
         type: 'multiple-drop-down-list',
         typeName: 'Множественный вып. список',
+        typeDescr: 'Описание для элемента опроса Множественный вып. список',
         data: {
             editorValue: {},
             optionsData: {
@@ -51,6 +54,7 @@ const pollTypesList = [
     {
         type: 'multiple-choice',
         typeName: 'Множественный выбор',
+        typeDescr: 'Описание для элемента опроса Множественный выбор',
         data: {
             editorValue: {},
             optionsData: {
@@ -67,6 +71,7 @@ const pollTypesList = [
     {
         type: 'ranging',
         typeName: 'Ранжирование',
+        typeDescr: 'Описание для элемента опроса Ранжирование',
         data: {
             editorValue: {},
             optionsData: {
@@ -82,6 +87,7 @@ const pollTypesList = [
     {
         type: 'range-selection',
         typeName: 'Выбор диапазона',
+        typeDescr: 'Описание для элемента опроса Выбор диапазона',
         data: {
             editorValue: {},
             rangeData: {
@@ -93,6 +99,7 @@ const pollTypesList = [
     {
         type: 'pair-ranking',
         typeName: 'Парное ранжирование',
+        typeDescr: 'Описание для элемента опроса Парное ранжирование',
         data: {
             editorValue: {},
             optionsData: {
@@ -116,6 +123,7 @@ const pollTypesList = [
     {
         type: 'matrix',
         typeName: 'Матрица',
+        typeDescr: 'Описание для элемента опроса Матрица',
         data: {
             editorValue: {},
         }
@@ -123,6 +131,7 @@ const pollTypesList = [
     {
         type: 'free-response-matrix',
         typeName: 'Матрица свободных ответов',
+        typeDescr: 'Описание для элемента опроса Матрица свободных ответов',
         data: {
             editorValue: {},
         }
@@ -130,6 +139,7 @@ const pollTypesList = [
     {
         type: 'full-name',
         typeName: 'ФИО',
+        typeDescr: 'Описание для элемента опроса ФИО',
         data: {
             editorValue: {},
         }
@@ -137,6 +147,7 @@ const pollTypesList = [
     {
         type: 'phone-number',
         typeName: 'Номер телефона',
+        typeDescr: 'Описание для элемента опроса Номер телефона',
         data: {
             editorValue: {},
         }
@@ -144,6 +155,7 @@ const pollTypesList = [
     {
         type: 'date',
         typeName: 'Дата',
+        typeDescr: 'Описание для элемента опроса Дата',
         data: {
             editorValue: {},
         }
@@ -151,6 +163,7 @@ const pollTypesList = [
     {
         type: 'selecting-date-range',
         typeName: 'Выбор промежутка дат',
+        typeDescr: 'Описание для элемента опроса Выбор промежутка дат',
         data: {
             editorValue: {},
         }
@@ -158,6 +171,7 @@ const pollTypesList = [
     {
         type: 'email',
         typeName: 'Эл. почта',
+        typeDescr: 'Описание для элемента опроса Эл. почта',
         data: {
             editorValue: {},
         }
