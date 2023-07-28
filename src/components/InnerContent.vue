@@ -6,6 +6,7 @@
           :pollPagesList="pollPagesList"
           :currentPageId="currentPageId"
         />
+
         <div class="poll-pages">
           <poll-page
             :currenPage="currentPollPage"
@@ -78,7 +79,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.sidebrGhostItem {
-}
-</style>
+<style lang="scss"></style>

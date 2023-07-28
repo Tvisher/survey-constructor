@@ -1,40 +1,42 @@
 <template>
   <span class="editor-descr">Список пар</span>
   <div class="pairs">
-    <div
-      class="variant__pair"
-      v-for="(pairOption, index) in optionsData.optionsList"
-      :key="pairOption.id"
-    >
-      <div class="pair__num editor-descr">Пара № {{ index + 1 }}</div>
-      <div class="variant__pair-wrapper">
-        <div class="variant__pair-content">
-          <label>
-            <input
-              class="variant-item__filed"
-              type="text"
-              :value="pairOption.firstFieldValue"
-              placeholder="Вопрос"
-              @input="editValue($event, pairOption.id, 'firstFieldValue')"
-            />
-          </label>
-          <label>
-            <input
-              class="variant-item__filed"
-              type="text"
-              :value="pairOption.secondFieldValue"
-              placeholder="Ответ"
-              @input="editValue($event, pairOption.id, 'secondFieldValue')"
-            />
-          </label>
+    <transition-group type="transition" name="option-transition">
+      <div
+        class="variant__pair"
+        v-for="(pairOption, index) in optionsData.optionsList"
+        :key="pairOption.id"
+      >
+        <div class="pair__num editor-descr">Пара № {{ index + 1 }}</div>
+        <div class="variant__pair-wrapper">
+          <div class="variant__pair-content">
+            <label>
+              <input
+                class="variant-item__filed"
+                type="text"
+                :value="pairOption.firstFieldValue"
+                placeholder="Вопрос"
+                @input="editValue($event, pairOption.id, 'firstFieldValue')"
+              />
+            </label>
+            <label>
+              <input
+                class="variant-item__filed"
+                type="text"
+                :value="pairOption.secondFieldValue"
+                placeholder="Ответ"
+                @input="editValue($event, pairOption.id, 'secondFieldValue')"
+              />
+            </label>
+          </div>
+          <button
+            class="variant-item__remove"
+            :class="{ 'cant-remove': !permissionToRemoveOption }"
+            @click="removePair(pairOption.id)"
+          ></button>
         </div>
-        <button
-          class="variant-item__remove"
-          :class="{ 'cant-remove': !permissionToRemoveOption }"
-          @click="removePair(pairOption.id)"
-        ></button>
       </div>
-    </div>
+    </transition-group>
   </div>
   <button
     class="btn red-btn add-btn"

@@ -374,7 +374,48 @@ hr {
   width: 100%;
   padding: 15px !important;
   background-color: #fff !important;
-  border-radius: 10px !important;
   font-size: 16px;
-  box-shadow: 0px 0px 4px 0px rgba(34, 60, 80, 0.3) !important;
+  // border-radius: 10px !important;
+  // box-shadow: 0px 0px 4px 0px rgba(34, 60, 80, 0.3) !important;
+  border-radius: 6px !important;
+  box-shadow: 0px 1px 2px 0px rgba(56, 63, 72, 0.1),
+    0px 2px 12px 0px rgba(37, 51, 66, 0.08) !important;
+  #arrow {
+    &::before {
+      border-left: 1px solid rgba(56, 63, 72, 0.1);
+      border-bottom: 1px solid rgba(56, 63, 72, 0.1);
+      background-color: #fff !important;
+    }
+  }
+}
+
+// .poll-elements-transition {
+//   &-enter-active,
+//   &-leave-active {
+//     transition: opacity 0.3s ease, transform 0.4s ease;
+//   }
+
+//   &-enter-from {
+//     opacity: 0;
+//     transform: translateY(-5%);
+//   }
+//   &-leave-to {
+//     opacity: 0;
+//     transform: translateY(5%);
+//   }
+// }
+.option-transition {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.3s ease, transform 0.4s ease;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateX(-5%);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(5%);
+  }
 }

@@ -9,7 +9,7 @@
   >
     <transition-group
       type="transition"
-      :name="isDraggingOption ? 'flip-option-list' : null"
+      :name="isDraggingOption ? 'flip-option-list' : 'option-transition'"
     >
       <answer-option
         v-for="(variant, index) in optionsList"
@@ -118,7 +118,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .flip-option-list-move {
   transition: transform 0.5s;
 }

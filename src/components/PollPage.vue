@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       isDragging: false,
+      showPage: false,
     };
   },
   computed: {
@@ -103,10 +104,11 @@ export default {
       this.editPageComment({ pollPageId, commentValue });
     },
   },
+  mounted() {},
 };
 </script>
 
-<style>
+<style lang="scss">
 .flip-list-move {
   transition: transform 0.5s;
 }
@@ -134,6 +136,18 @@ export default {
   }
   .sidebar-item__btn {
     display: none;
+  }
+}
+
+.fade-page {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>

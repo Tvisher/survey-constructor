@@ -8,7 +8,7 @@
   >
     <transition-group
       type="transition"
-      :name="isDraggingOption ? 'flip-option-list' : null"
+      :name="isDraggingOption ? 'flip-option-list' : 'option-transition'"
     >
       <div
         class="variant-item__container"
