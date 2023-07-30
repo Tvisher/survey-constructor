@@ -9,7 +9,7 @@ const pollTypesList = [
             optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -26,7 +26,7 @@ const pollTypesList = [
             optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -43,7 +43,7 @@ const pollTypesList = [
             optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -60,7 +60,7 @@ const pollTypesList = [
             optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },

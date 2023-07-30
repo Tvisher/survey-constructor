@@ -9,12 +9,12 @@
 </template>
 
 <script>
+// import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { Delta } from "@vueup/vue-quill";
 import { mapMutations } from "vuex";
 
 export default {
   props: {
-    pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },
     editorValue: { type: Object },
   },
@@ -30,14 +30,15 @@ export default {
   watch: {
     editorValueInComponent(editorValue, oldValue) {
       if (oldValue === "") return;
-      const pollPageId = this.pollPageId;
       const pollItemId = this.pollItemId;
-      this.setSinglePollEditorValue({ pollPageId, pollItemId, editorValue });
+      this.setSinglePollEditorValue({ pollItemId, editorValue });
     },
   },
 
   mounted() {
-    this.editorValueInComponent = new Delta(this.editorValue);
+    this.editorValueInComponent = new Delta(
+      JSON.parse(JSON.stringify(this.editorValue))
+    );
   },
 };
 </script>

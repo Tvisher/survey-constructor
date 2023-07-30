@@ -8,7 +8,7 @@
         />
 
         <div class="poll-pages">
-          <poll-page
+          <app-poll-page
             :currenPage="currentPollPage"
             :currenPageNumber="currenPageNumber"
           />
@@ -19,11 +19,9 @@
           <draggable
             :list="pollTypesList"
             handle=".sidebar-item__wrapper"
-            v-bind="{ ghostClass: 'sidebrGhostItem' }"
-            :group="{ name: 'pollTypes', pull: 'clone', put: false }"
-            :sort="false"
+            v-bind="dragOptionsInSidebar"
           >
-            <sidebar-item
+            <app-sidebar-item
               v-for="(pollTemplate, index) in pollTypesList"
               :key="index"
               :name="pollTemplate.typeName"
@@ -38,14 +36,14 @@
 
 <script>
 import { VueDraggableNext } from "vue-draggable-next";
-import SidebarItem from "./SidebarItem.vue";
-import PollPage from "./PollPage.vue";
+import AppSidebarItem from "./SidebarItem.vue";
+import AppPollPage from "./PollPage.vue";
 import PollsPagesPagination from "./PollsPagesPagination";
 import { mapState } from "vuex";
 export default {
   components: {
-    PollPage,
-    SidebarItem,
+    AppPollPage,
+    AppSidebarItem,
     PollsPagesPagination,
     draggable: VueDraggableNext,
   },
@@ -74,6 +72,18 @@ export default {
         (page) => page.id === this.currentPageId
       );
       return pageIndex + 1;
+    },
+
+    dragOptionsInSidebar() {
+      return {
+        group: { name: "pollTypes", pull: "clone", put: false },
+        scrollSensitivity: 200,
+        forceFallback: true,
+        animation: 0,
+        disabled: false,
+        sort: false,
+        ghostClass: "sidebrGhostItem",
+      };
     },
   },
 };

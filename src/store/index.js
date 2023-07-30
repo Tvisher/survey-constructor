@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import pollTypesList from './pollTypesList';
 
 
-function findPollById(state, pollPageId, pollItemId) {
-  const currentPollPage = state.pollPages.find(page => page.id === pollPageId);
+function findPollById(state, pollItemId) {
+  const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
   return currentPollPage.pollList.find((poll) => poll.id === pollItemId);
 }
 
@@ -24,7 +24,7 @@ export default createStore({
             typeName: 'Одиночный выбор',
             typeDescr: 'Описание для элемента опроса Одиночный выбор',
             data: {
-              editorValue: {},
+              editorValue: { "ops": [{ "insert": "asdasdasd\n" }] },
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
@@ -127,12 +127,12 @@ export default createStore({
     },
 
     setRangeSelectionValues(state, { pollItemId, rangeData }) {
-      const currentPollItem = findPollById(state, state.currentPageId, pollItemId);
+      const currentPollItem = findPollById(state, pollItemId);
       currentPollItem.data.rangeData = rangeData;
     },
 
-    dragSortPollsInPage(state, { pollPageId, sortableList }) {
-      const currentPage = state.pollPages.find(page => page.id === pollPageId);
+    dragSortPollsInPage(state, { sortableList }) {
+      const currentPage = state.pollPages.find(page => page.id === state.currentPageId);
       const newPollList = JSON.parse(JSON.stringify(sortableList));
       const newPollElement = newPollList.find(item => !item.id);
       if (newPollElement) {
@@ -142,7 +142,7 @@ export default createStore({
     },
 
     dragSortOptionsInPoll(state, { sortableList, pollItemId }) {
-      const currentPollItem = findPollById(state, state.currentPageId, pollItemId);
+      const currentPollItem = findPollById(state, pollItemId);
       currentPollItem.data.optionsData.optionsList = sortableList;
     },
 
@@ -154,8 +154,8 @@ export default createStore({
       currentPollPage.pollList = [...currentPollPage.pollList, addedPollTmp];
     },
 
-    setSinglePollEditorValue(state, { pollPageId, pollItemId, editorValue }) {
-      const currentPoll = findPollById(state, pollPageId, pollItemId);
+    setSinglePollEditorValue(state, { pollItemId, editorValue }) {
+      const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
         currentPoll.data = { ...currentPoll.data, editorValue };
       }
@@ -166,13 +166,13 @@ export default createStore({
       currentPage.pageComment = commentValue;
     },
 
-    removePollInPage(state, { pollPageId, pollId }) {
-      const currentPollPage = state.pollPages.find(page => page.id === pollPageId);
+    removePollInPage(state, { pollId }) {
+      const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
       currentPollPage.pollList = currentPollPage.pollList.filter(poll => poll.id !== pollId);
     },
 
-    addOptionInPoll(state, { pollItemId, pollPageId }) {
-      const currentPoll = findPollById(state, pollPageId, pollItemId);
+    addOptionInPoll(state, { pollItemId }) {
+      const currentPoll = findPollById(state, pollItemId);
       const newOption = {
         id: `${uuidv4()}`,
         value: ""
@@ -196,8 +196,8 @@ export default createStore({
       pairFiled[filedType] = fieldValue;
     },
 
-    selectOptionInPoll(state, { pollPageId, pollItemId, optionId, inputsType }) {
-      const currentPoll = findPollById(state, pollPageId, pollItemId);
+    selectOptionInPoll(state, { pollItemId, optionId, inputsType }) {
+      const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
         if (inputsType === 'radio') {
           currentPoll.data.optionsData.currentAnswerId = [optionId];
@@ -212,16 +212,15 @@ export default createStore({
       }
     },
 
-    removeOptionInPoll(state, { pollPageId, pollItemId, optionId, inputsType }) {
-      const currentPoll = findPollById(state, pollPageId, pollItemId);
+    removeOptionInPoll(state, { pollItemId, optionId, inputsType }) {
+      const currentPoll = findPollById(state, pollItemId);
       const optionListLength = currentPoll.data.optionsData.optionsList.length;
-      if (optionListLength <= 2) return
-
+      const minOptionsLength = currentPoll.data.optionsData.minOptionsLength;
+      if (optionListLength <= minOptionsLength) return
       currentPoll.data.optionsData.optionsList = currentPoll.data.optionsData.optionsList.filter(option => option.id !== optionId);
-
       if (currentPoll.data.optionsData.currentAnswerId) {
         if (inputsType === 'radio' && currentPoll.data.optionsData.currentAnswerId[0] === optionId) {
-          currentPoll.data.optionsData.currentAnswerId[0] = currentPoll.data.optionsData.optionsList[0].id;
+          currentPoll.data.optionsData.currentAnswerId = [];
         }
         if (inputsType === 'checkbox') {
           currentPoll.data.optionsData.currentAnswerId = currentPoll.data.optionsData.currentAnswerId.filter(id => id !== optionId);
@@ -231,12 +230,11 @@ export default createStore({
 
     removePairInPoll(state, { pollItemId, pairId, }) {
       const currentPoll = findPollById(state, state.currentPageId, pollItemId);
-      console.log(currentPoll);
       currentPoll.data.optionsData.optionsList = currentPoll.data.optionsData.optionsList.filter(pair => pair.id !== pairId);
     },
 
-    editOptionInPoll(state, { pollPageId, pollItemId, optionId, optionValue }) {
-      const currentPoll = findPollById(state, pollPageId, pollItemId);
+    editOptionInPoll(state, { pollItemId, optionId, optionValue }) {
+      const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
         const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
         currentOption.value = optionValue

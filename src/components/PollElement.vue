@@ -20,13 +20,11 @@
 
     <editor-component
       :pollItemId="pollItemId"
-      :pollPageId="pollPageId"
       :editorValue="pollItemData.editorValue"
     />
 
     <choise-variant
       v-if="isOptionsNeeded"
-      :pollPageId="pollPageId"
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
       :inputsType="inputsType"
@@ -34,7 +32,6 @@
 
     <ranging
       v-if="pollItemType === 'ranging'"
-      :pollPageId="pollPageId"
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
     />
@@ -44,6 +41,7 @@
       :pollItemId="pollItemId"
       :rangeData="pollItemData.rangeData"
     />
+
     <pair-ranking
       v-if="pollItemType === 'pair-ranking'"
       :pollItemId="pollItemId"
@@ -56,11 +54,12 @@
 import { mapMutations } from "vuex";
 import Popper from "vue3-popper";
 import EditorComponent from "./pollSegments/EditorComponent.vue";
-import ChoiseVariant from "./ChoiseVariant.vue";
-import Ranging from "./Ranging.vue";
-import RangeSelection from "./RangeSelection.vue";
-import PairRanking from "./PairRanking.vue";
 import ImageLoader from "./pollSegments/ImageLoader";
+import ChoiseVariant from "./pollSegments/ChoiseVariant.vue";
+import Ranging from "./pollSegments/Ranging.vue";
+import RangeSelection from "./pollSegments/RangeSelection.vue";
+
+import PairRanking from "./pollSegments/PairRanking.vue";
 
 export default {
   components: {
@@ -73,7 +72,6 @@ export default {
     ImageLoader,
   },
   props: {
-    pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },
     pollItemType: { type: String },
     pollItemName: { type: String },
@@ -117,9 +115,8 @@ export default {
   methods: {
     ...mapMutations(["removePollInPage"]),
     removePoll() {
-      const pollPageId = this.pollPageId;
       const pollId = this.pollItemId;
-      this.removePollInPage({ pollPageId, pollId });
+      this.removePollInPage({ pollId });
     },
   },
   mounted() {},

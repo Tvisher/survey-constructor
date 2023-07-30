@@ -57,7 +57,6 @@ export default {
     draggable: VueDraggableNext,
   },
   props: {
-    pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },
     optionsData: { type: Object },
   },
@@ -89,11 +88,13 @@ export default {
 
     pollItemsDragOptionsInSidebar() {
       return {
-        animation: 0,
+        animation: 200,
         group: `optionGroup-${this.pollItemId}`,
+        scrollSensitivity: 200,
+        forceFallback: true,
         disabled: false,
         ghostClass: "ghost-potion",
-        sort: "true",
+        sort: true,
       };
     },
   },
@@ -105,20 +106,20 @@ export default {
       "dragSortOptionsInPoll",
     ]),
     addOption() {
-      const { pollItemId, pollPageId } = this;
-      this.addOptionInPoll({ pollPageId, pollItemId });
+      const { pollItemId } = this;
+      this.addOptionInPoll({ pollItemId });
     },
 
     removeVariant(optionId) {
-      const { pollItemId, pollPageId } = this;
+      const { pollItemId } = this;
       if (this.permissionToRemoveOption) {
-        this.removeOptionInPoll({ pollPageId, pollItemId, optionId });
+        this.removeOptionInPoll({ pollItemId, optionId });
       }
     },
     editVariant(event, optionId) {
-      const { pollItemId, pollPageId } = this;
+      const { pollItemId } = this;
       const optionValue = event.target.value.trim();
-      this.editOptionInPoll({ pollPageId, pollItemId, optionId, optionValue });
+      this.editOptionInPoll({ pollItemId, optionId, optionValue });
     },
   },
 };
@@ -157,7 +158,7 @@ export default {
 }
 
 .flip-option-list-move {
-  transition: transform 0.5s;
+  /* transition: transform 0.5s; */
 }
 .no-move {
   transition: transform 0s;

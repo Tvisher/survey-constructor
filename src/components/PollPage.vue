@@ -34,7 +34,6 @@
       >
         <poll-element
           v-for="(pollItem, index) in pollList"
-          :pollPageId="currenPage.id"
           :pollItemId="pollItem.id"
           :pollItemType="pollItem.type"
           :pollItemDescr="pollItem.typeDescr"
@@ -73,8 +72,7 @@ export default {
         return this.currenPage.pollList;
       },
       set(sortableList) {
-        const pollPageId = this.currenPage.id;
-        this.dragSortPollsInPage({ pollPageId, sortableList });
+        this.dragSortPollsInPage({ sortableList });
       },
     },
 
@@ -84,11 +82,13 @@ export default {
 
     pollItemsDragOptionsInSidebar() {
       return {
-        animation: 0,
+        scrollSensitivity: 200,
+        forceFallback: true,
+        animation: 400,
         group: "pollTypes",
         disabled: false,
         ghostClass: "ghost",
-        sort: "true",
+        sort: true,
       };
     },
   },
@@ -110,7 +110,7 @@ export default {
 
 <style lang="scss">
 .flip-list-move {
-  transition: transform 0.5s;
+  // transition: transform 0.3s;
 }
 .no-move {
   transition: transform 0s;
