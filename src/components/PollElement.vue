@@ -5,6 +5,7 @@
         <div class="poll-item__num">{{ indexNumber }}</div>
         <div class="poll-item__title">{{ pollItemName }}</div>
         <Popper
+          v-if="!isVisualType"
           :content="pollItemDescr"
           :hover="true"
           :arrow="true"
@@ -13,43 +14,53 @@
           <button class="tolltipBtn"></button>
         </Popper>
       </div>
-      <button class="poll-remove" @click="removePoll"></button>
+      <div class="poll-item__handlers">
+        <button class="poll-edit" @click="pollEdit"></button>
+        <button class="poll-remove" @click="removePoll"></button>
+      </div>
     </div>
 
-    <image-loader
-      :pollItemId="pollItemId"
-      :pollImage="pollItemData.pollImage"
-    />
-
-    <editor-component
-      :pollItemId="pollItemId"
-      :editorValue="pollItemData.editorValue"
-    />
-
-    <choise-variant
-      v-if="isOptionsNeeded"
-      :pollItemId="pollItemId"
-      :optionsData="pollItemData.optionsData"
-      :inputsType="inputsType"
-    />
-
-    <ranging
-      v-if="pollItemType === 'ranging'"
-      :pollItemId="pollItemId"
-      :optionsData="pollItemData.optionsData"
-    />
-
-    <range-selection
-      v-if="pollItemType === 'range-selection'"
-      :pollItemId="pollItemId"
-      :rangeData="pollItemData.rangeData"
-    />
-
-    <pair-ranking
-      v-if="pollItemType === 'pair-ranking'"
-      :pollItemId="pollItemId"
-      :optionsData="pollItemData.optionsData"
-    />
+    <div class="poll-body" v-if="!isVisualType">
+      <image-loader
+        :pollItemId="pollItemId"
+        :pollImage="pollItemData.pollImage"
+      />
+      <editor-component
+        :pollItemId="pollItemId"
+        :editorValue="pollItemData.editorValue"
+      />
+      <choise-variant
+        v-if="isOptionsNeeded"
+        :pollItemId="pollItemId"
+        :optionsData="pollItemData.optionsData"
+        :inputsType="inputsType"
+      />
+      <ranging
+        v-if="pollItemType === 'ranging'"
+        :pollItemId="pollItemId"
+        :optionsData="pollItemData.optionsData"
+      />
+      <range-selection
+        v-if="pollItemType === 'range-selection'"
+        :pollItemId="pollItemId"
+        :rangeData="pollItemData.rangeData"
+      />
+      <pair-ranking
+        v-if="pollItemType === 'pair-ranking'"
+        :pollItemId="pollItemId"
+        :optionsData="pollItemData.optionsData"
+      />
+    </div>
+    <div class="poll-body" v-if="isVisualType">
+      <hr />
+      <div class="poll-body__image-block" v-if="isHasImageInPoll">
+        <img
+          :src="pollItemData.pollImage.path"
+          :alt="pollItemData.pollImage.name"
+        />
+      </div>
+      <app-text-from-editor :editorValue="pollItemData.editorValue" />
+    </div>
   </div>
 </template>
 
@@ -61,8 +72,9 @@ import ImageLoader from "./pollSegments/ImageLoader";
 import ChoiseVariant from "./pollSegments/ChoiseVariant.vue";
 import Ranging from "./pollSegments/Ranging.vue";
 import RangeSelection from "./pollSegments/RangeSelection.vue";
-
 import PairRanking from "./pollSegments/PairRanking.vue";
+
+import AppTextFromEditor from "./pollSegments/visualPollSegments/TextFromEditor.vue";
 
 export default {
   components: {
@@ -73,6 +85,8 @@ export default {
     RangeSelection,
     PairRanking,
     ImageLoader,
+
+    AppTextFromEditor,
   },
   props: {
     pollItemId: { type: [Number, String] },
@@ -84,9 +98,15 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      isVisualType: false,
+    };
   },
   computed: {
+    isHasImageInPoll() {
+      const pollImage = this.pollItemData.pollImage;
+      return pollImage && Object.keys(pollImage).length !== 0;
+    },
     indexNumber() {
       return this.pollNumber + 1;
     },
@@ -121,8 +141,10 @@ export default {
       const pollId = this.pollItemId;
       this.removePollInPage({ pollId });
     },
+    pollEdit() {
+      this.isVisualType = !this.isVisualType;
+    },
   },
-  mounted() {},
 };
 </script>
 

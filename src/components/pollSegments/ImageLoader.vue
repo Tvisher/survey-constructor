@@ -114,6 +114,7 @@ export default {
 
     function onDrop(acceptFile, errors) {
       if (errors.length > 0) {
+        console.log(errors);
         return;
       }
       saveFiles(acceptFile);
@@ -217,8 +218,8 @@ export default {
   }
 
   &.has-image {
-    width: 150px;
-    height: 100px;
+    width: 300px;
+    height: 200px;
     background-image: none;
     img {
       width: 100%;

@@ -24,7 +24,7 @@ export default createStore({
             typeName: 'Одиночный выбор',
             typeDescr: 'Описание для элемента опроса Одиночный выбор',
             data: {
-              editorValue: { "ops": [{ "insert": "asdasdasd\n" }] },
+              editorValue: { "ops": [{ "insert": "Я очень важный текст который кто то сюда написал!\n\n" }, { "attributes": { "italic": true }, "insert": "Эта строка должна быть курсивом" }, { "insert": "\n" }, { "attributes": { "bold": true }, "insert": "Это строка жирная" }, { "insert": "\n" }, { "attributes": { "underline": true }, "insert": "Эта строка подчёркнутая" }, { "insert": "\n" }, { "attributes": { "strike": true }, "insert": "Эта строка перечёркнутая" }, { "insert": "\nТут строка в степени " }, { "attributes": { "script": "super" }, "insert": "2" }, { "insert": "\nТут строка с нижней степенью " }, { "attributes": { "script": "sub" }, "insert": "2" }, { "insert": "\n" }, { "attributes": { "underline": true, "strike": true, "italic": true, "bold": true }, "insert": "Тут всё подряд" }, { "insert": "\n" }] },
               pollImage: {
                 name: 'image.jpg',
                 path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
