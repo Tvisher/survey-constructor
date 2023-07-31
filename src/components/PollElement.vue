@@ -16,7 +16,10 @@
       <button class="poll-remove" @click="removePoll"></button>
     </div>
 
-    <image-loader />
+    <image-loader
+      :pollItemId="pollItemId"
+      :pollImage="pollItemData.pollImage"
+    />
 
     <editor-component
       :pollItemId="pollItemId"

@@ -25,6 +25,10 @@ export default createStore({
             typeDescr: 'Описание для элемента опроса Одиночный выбор',
             data: {
               editorValue: { "ops": [{ "insert": "asdasdasd\n" }] },
+              pollImage: {
+                name: 'image.jpg',
+                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
+              },
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
@@ -122,6 +126,14 @@ export default createStore({
   },
   getters: {},
   mutations: {
+
+    addImageinPoll(state, { pollItemId, newImageData }) {
+      const currentPollItem = findPollById(state, pollItemId);
+      if (currentPollItem) {
+        currentPollItem.data.pollImage = newImageData;
+      }
+    },
+
     setCurrentPollPage(state, pageId) {
       state.currentPageId = pageId;
     },

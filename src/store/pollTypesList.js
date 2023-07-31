@@ -5,6 +5,7 @@ const pollTypesList = [
         typeName: 'Одиночный выбор',
         typeDescr: 'Описание для элемента опроса Одиночный выбор',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -22,6 +23,7 @@ const pollTypesList = [
         typeName: 'Выпадающий список',
         typeDescr: 'Описание для элемента опроса Выпадающий список',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -39,6 +41,7 @@ const pollTypesList = [
         typeName: 'Множественный вып. список',
         typeDescr: 'Описание для элемента опроса Множественный вып. список',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -56,6 +59,7 @@ const pollTypesList = [
         typeName: 'Множественный выбор',
         typeDescr: 'Описание для элемента опроса Множественный выбор',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -73,6 +77,7 @@ const pollTypesList = [
         typeName: 'Ранжирование',
         typeDescr: 'Описание для элемента опроса Ранжирование',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -89,6 +94,7 @@ const pollTypesList = [
         typeName: 'Выбор диапазона',
         typeDescr: 'Описание для элемента опроса Выбор диапазона',
         data: {
+            pollImage: {},
             editorValue: {},
             rangeData: {
                 min: '',
@@ -101,6 +107,7 @@ const pollTypesList = [
         typeName: 'Парное ранжирование',
         typeDescr: 'Описание для элемента опроса Парное ранжирование',
         data: {
+            pollImage: {},
             editorValue: {},
             optionsData: {
                 minOptionsLength: 2,
@@ -125,6 +132,7 @@ const pollTypesList = [
         typeName: 'Матрица',
         typeDescr: 'Описание для элемента опроса Матрица',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -133,6 +141,7 @@ const pollTypesList = [
         typeName: 'Матрица свободных ответов',
         typeDescr: 'Описание для элемента опроса Матрица свободных ответов',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -141,6 +150,7 @@ const pollTypesList = [
         typeName: 'ФИО',
         typeDescr: 'Описание для элемента опроса ФИО',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -149,6 +159,7 @@ const pollTypesList = [
         typeName: 'Номер телефона',
         typeDescr: 'Описание для элемента опроса Номер телефона',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -157,6 +168,7 @@ const pollTypesList = [
         typeName: 'Дата',
         typeDescr: 'Описание для элемента опроса Дата',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -165,6 +177,7 @@ const pollTypesList = [
         typeName: 'Выбор промежутка дат',
         typeDescr: 'Описание для элемента опроса Выбор промежутка дат',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
@@ -173,6 +186,7 @@ const pollTypesList = [
         typeName: 'Эл. почта',
         typeDescr: 'Описание для элемента опроса Эл. почта',
         data: {
+            pollImage: {},
             editorValue: {},
         }
     },
