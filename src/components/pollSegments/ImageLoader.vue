@@ -145,7 +145,7 @@ export default {
         addImageinPoll(newFileData);
         imageFile.value = [{ ...newFileData }];
         loading.value = false;
-      }, 2000);
+      }, 1400);
     };
 
     const maxMbSize = 1.5;
@@ -278,32 +278,37 @@ export default {
 .loader {
   width: 48px;
   height: 48px;
-  border: 3px solid red;
-  border-bottom-color: transparent;
+  border: 10px solid #ecf4ff;
   border-radius: 50%;
-  display: inline-block;
   position: relative;
+  transform: rotate(45deg);
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
 }
-.loader::after {
+.loader::before {
   content: "";
   position: absolute;
   box-sizing: border-box;
-  left: 20px;
-  top: 31px;
-  border: 10px solid transparent;
-  border-right-color: red;
-  border-right-color: red;
-  transform: rotate(-40deg);
+  inset: -10px;
+  border-radius: 50%;
+  border: 10px solid #ff3d00;
+  animation: prixClipFix 2s infinite linear;
 }
 
-@keyframes rotation {
+@keyframes prixClipFix {
   0% {
-    transform: rotate(0deg);
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+  }
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+  }
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+  }
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
   }
   100% {
-    transform: rotate(360deg);
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
   }
 }
 </style>

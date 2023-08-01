@@ -4,7 +4,11 @@
       <div class="sidebar-item__ico"></div>
       <div class="sidebar-item__name">{{ name }}</div>
     </div>
-    <div class="sidebar-item__btn" @click="addPollInState(type)"></div>
+    <div
+      class="sidebar-item__btn"
+      @click="addPollInState(type)"
+      title="Добавить в конец страницы"
+    ></div>
   </div>
 </template>
 

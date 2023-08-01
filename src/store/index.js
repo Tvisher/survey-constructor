@@ -12,7 +12,7 @@ function findPollById(state, pollItemId) {
 export default createStore({
   state: {
     pollTypesList,
-    currentPageId: '2',
+    currentPageId: '1',
     pollPages: [
       {
         id: "1",
@@ -24,7 +24,7 @@ export default createStore({
             typeName: 'Одиночный выбор',
             typeDescr: 'Описание для элемента опроса Одиночный выбор',
             data: {
-              editorValue: { "ops": [{ "insert": "Я очень важный текст который кто то сюда написал!\n\n" }, { "attributes": { "italic": true }, "insert": "Эта строка должна быть курсивом" }, { "insert": "\n" }, { "attributes": { "bold": true }, "insert": "Это строка жирная" }, { "insert": "\n" }, { "attributes": { "underline": true }, "insert": "Эта строка подчёркнутая" }, { "insert": "\n" }, { "attributes": { "strike": true }, "insert": "Эта строка перечёркнутая" }, { "insert": "\nТут строка в степени " }, { "attributes": { "script": "super" }, "insert": "2" }, { "insert": "\nТут строка с нижней степенью " }, { "attributes": { "script": "sub" }, "insert": "2" }, { "insert": "\n" }, { "attributes": { "underline": true, "strike": true, "italic": true, "bold": true }, "insert": "Тут всё подряд" }, { "insert": "\n" }] },
+              editorValue: { "ops": [{ "insert": "Какой твой любимый персонаж в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Необходимо выбрать только одного" }, { "insert": "\n" }] },
               pollImage: {
                 name: 'image.jpg',
                 path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
@@ -32,85 +32,92 @@ export default createStore({
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
-                  { id: '1', value: "" },
-                  { id: '2', value: "" },
+                  { "id": "1", "value": "Рик" },
+                  { "id": "2", "value": "Морти" },
+                  { "id": "3", "value": "Саммер" },
+                  { "id": "4", "value": "Джерри" },
+                  { "id": "5", "value": "Бет" }
                 ],
               },
             }
           },
           {
             id: '2',
-            type: 'multiple-drop-down-list',
-            typeName: 'Множественный вып. список',
+            type: 'drop-down-list',
+            typeName: 'Выпадающий список',
             typeDescr: 'Описание для элемента опроса Выпадающий список',
             data: {
-              editorValue: {},
+              editorValue: { "ops": [{ "insert": "Какой твой любимый персонаж в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Необходимо выбрать только одного" }, { "insert": "\n" }] },
+              pollImage: {
+                name: 'image.jpg',
+                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
+              },
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
-                currentAnswerId: ['1'],
+                currentAnswerId: [],
                 optionsList: [
-                  { id: '1', value: "" },
-                  { id: '2', value: "" },
+                  { "id": "1", "value": "Рик" },
+                  { "id": "2", "value": "Морти" },
+                  { "id": "3", "value": "Саммер" },
+                  { "id": "4", "value": "Джерри" },
+                  { "id": "5", "value": "Бет" }
                 ],
               },
             }
           },
           {
             id: '3',
-            type: 'ranging',
-            typeName: 'Ранжирование',
+            type: 'multiple-drop-down-list',
+            typeName: 'Множественный вып. список',
             typeDescr: 'Описание для элемента опроса Множественный вып. список',
             data: {
-              editorValue: {},
+              editorValue: { "ops": [{ "insert": "Какие персонажи тебе больше всего нравятся в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Можно выбрать несколько" }, { "insert": "\n" }] },
+              pollImage: {
+                name: 'image.jpg',
+                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
+              },
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
+                currentAnswerId: [],
                 optionsList: [
-                  { id: '1', value: "123" },
-                  { id: '2', value: "321" },
+                  { "id": "1", "value": "Рик" },
+                  { "id": "2", "value": "Морти" },
+                  { "id": "3", "value": "Саммер" },
+                  { "id": "4", "value": "Джерри" },
+                  { "id": "5", "value": "Бет" },
+                  { "id": "6", "value": "Злой Морти" },
+                  { "id": "7", "value": "Мистер Жопосранчик" }
                 ],
               },
             }
           },
           {
-            id: "4",
-            type: "range-selection",
-            typeName: "Выбор диапазона",
+            id: '4',
+            type: 'multiple-choice',
+            typeName: 'Множественный выбор',
             typeDescr: 'Описание для элемента опроса Множественный выбор',
             data: {
-              editorValue: {},
-              rangeData: {
-                min: '20',
-                max: '40'
-              }
-            },
-          },
-          {
-            id: '5',
-            type: 'pair-ranking',
-            typeName: 'Парное ранжирование',
-            typeDescr: 'Описание для элемента опроса Ранжирование',
-            data: {
-              editorValue: {},
+              editorValue: { "ops": [{ "insert": "Какие персонажи тебе больше всего нравятся в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Можно выбрать несколько" }, { "insert": "\n" }] },
+              pollImage: {
+                name: 'image.jpg',
+                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
+              },
               optionsData: {
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
+                currentAnswerId: [],
                 optionsList: [
-                  {
-                    id: '1',
-                    firstFieldValue: 'Какой то вопрос для первой пары',
-                    secondFieldValue: 'Какой то ответ для первой пары',
-                  },
-                  {
-                    id: '2',
-                    firstFieldValue: 'Какой то вопрос для второй пары',
-                    secondFieldValue: 'Какой то ответ для второй пары',
-                  },
-                ]
-              }
+                  { "id": "1", "value": "Рик" },
+                  { "id": "2", "value": "Морти" },
+                  { "id": "3", "value": "Саммер" },
+                  { "id": "4", "value": "Джерри" },
+                  { "id": "5", "value": "Бет" }
+                ],
+              },
             }
           },
         ],
@@ -189,7 +196,7 @@ export default createStore({
         id: `${uuidv4()}`,
         value: ""
       };
-      currentPoll.data.optionsData.optionsList.push(newOption);
+      currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
 
     addPairInPoll(state, pollItemId) {
