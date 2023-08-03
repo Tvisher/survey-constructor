@@ -85,6 +85,12 @@
         :optionsData="pollItemData.optionsData"
         :pollItemId="pollItemId"
       />
+
+      <app-range-slider
+        v-if="pollItemType === 'range-selection'"
+        :rangeData="pollItemData.rangeData"
+        :pollItemId="pollItemId"
+      />
     </div>
   </div>
 </template>
@@ -104,6 +110,7 @@ import AppSingleChoiseVariant from "./pollSegments/visualPollSegments/SingleChio
 import AppMultiChoiseVariant from "./pollSegments/visualPollSegments/MultiChioseVariant.vue";
 import AppSingleSelect from "./pollSegments/visualPollSegments/SingleSelect.vue";
 import AppMultiSelect from "./pollSegments/visualPollSegments/MultiSelect.vue";
+import AppRangeSlider from "./pollSegments/visualPollSegments/RangeSlider.vue";
 
 export default {
   components: {
@@ -120,6 +127,7 @@ export default {
     AppSingleSelect,
     AppMultiSelect,
     AppMultiChoiseVariant,
+    AppRangeSlider,
   },
   props: {
     pollItemId: { type: [Number, String] },

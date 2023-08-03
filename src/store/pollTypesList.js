@@ -98,7 +98,9 @@ const pollTypesList = [
             editorValue: {},
             rangeData: {
                 min: '',
-                max: ''
+                max: '',
+                defaultMin: '',
+                defaultMax: '',
             }
         }
     },

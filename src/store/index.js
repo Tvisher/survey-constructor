@@ -120,6 +120,25 @@ export default createStore({
               },
             }
           },
+          {
+            id: '5',
+            type: 'range-selection',
+            typeName: 'Выбор диапазона',
+            typeDescr: 'Описание для элемента опроса Выбор диапазона',
+            data: {
+              editorValue: { "ops": [{ "insert": "Сколько часов в день ты страдаешь у монитра?\n" }, { "attributes": { "underline": true, "italic": true, "script": "sub" }, "insert": "Укажи диапазон" }, { "insert": "\n" }] },
+              pollImage: {
+                name: 'image.jpg',
+                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
+              },
+              rangeData: {
+                min: '1',
+                max: '24',
+                defaultMin: '3',
+                defaultMax: '8',
+              }
+            }
+          },
         ],
       },
       {
