@@ -91,6 +91,18 @@
         :rangeData="pollItemData.rangeData"
         :pollItemId="pollItemId"
       />
+
+      <app-ranging-visual
+        v-if="pollItemType === 'ranging'"
+        :optionsData="pollItemData.optionsData"
+        :pollItemId="pollItemId"
+      />
+
+      <!-- <app-pair-ranking-visual
+        v-if="pollItemType === 'pair-ranking'"
+        :rangeData="pollItemData.rangeData"
+        :pollItemId="pollItemId"
+      /> -->
     </div>
   </div>
 </template>
@@ -99,7 +111,7 @@
 import { mapMutations } from "vuex";
 import Popper from "vue3-popper";
 import EditorComponent from "./pollSegments/EditorComponent.vue";
-import ImageLoader from "./pollSegments/ImageLoader";
+import ImageLoader from "./pollSegments/ImageLoader.vue";
 import ChoiseVariant from "./pollSegments/ChoiseVariant.vue";
 import Ranging from "./pollSegments/Ranging.vue";
 import RangeSelection from "./pollSegments/RangeSelection.vue";
@@ -111,6 +123,8 @@ import AppMultiChoiseVariant from "./pollSegments/visualPollSegments/MultiChiose
 import AppSingleSelect from "./pollSegments/visualPollSegments/SingleSelect.vue";
 import AppMultiSelect from "./pollSegments/visualPollSegments/MultiSelect.vue";
 import AppRangeSlider from "./pollSegments/visualPollSegments/RangeSlider.vue";
+import AppPairRankingVisual from "./pollSegments/visualPollSegments/PairRankingVisual.vue";
+import AppRangingVisual from "./pollSegments/visualPollSegments/RangingVisual.vue";
 
 export default {
   components: {
@@ -128,6 +142,8 @@ export default {
     AppMultiSelect,
     AppMultiChoiseVariant,
     AppRangeSlider,
+    AppPairRankingVisual,
+    AppRangingVisual,
   },
   props: {
     pollItemId: { type: [Number, String] },

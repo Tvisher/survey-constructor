@@ -77,7 +77,6 @@ export default {
     let loading = ref(false);
 
     const pollImage = toRef(props, "pollImage");
-
     if (pollImage.value) {
       imageFile.value = [{ ...pollImage.value }];
     }
