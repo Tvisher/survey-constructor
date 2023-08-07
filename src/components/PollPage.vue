@@ -39,7 +39,7 @@
           :pollItemDescr="pollItem.typeDescr"
           :pollItemName="pollItem.typeName"
           :pollItemData="pollItem.data"
-          :key="pollItem.id"
+          :key="`${currenPage.id}-${pollItem.id}`"
           :pollNumber="index"
         />
       </transition-group>

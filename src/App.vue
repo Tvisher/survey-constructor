@@ -14,6 +14,9 @@ export default {
   },
   computed: {},
   methods: {},
+  mounted() {
+    this.$store.dispatch("setPollTypesList");
+  },
 };
 </script>
 

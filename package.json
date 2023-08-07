@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@vueform/slider": "^2.1.7",
+    "@vuepic/vue-datepicker": "^5.4.0",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",

@@ -45,7 +45,6 @@ export default {
     draggable: VueDraggableNext,
   },
   props: {
-    // pollPageId: { type: [Number, String] },
     pollItemId: { type: [Number, String] },
     optionsData: { type: Object },
     inputsType: { type: String },

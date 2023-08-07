@@ -105,93 +105,98 @@ const pollTypesList = [
         }
     },
     {
-        type: 'pair-ranking',
-        typeName: 'Парное ранжирование',
-        typeDescr: 'Описание для элемента опроса Парное ранжирование',
-        data: {
-            pollImage: {},
-            editorValue: {},
-            optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                optionsList: [
-                    {
-                        id: '1',
-                        firstFieldValue: '',
-                        secondFieldValue: '',
-                    },
-                    {
-                        id: '2',
-                        firstFieldValue: '',
-                        secondFieldValue: '',
-                    },
-                ]
-            }
-        }
-    },
-    {
-        type: 'matrix',
-        typeName: 'Матрица',
-        typeDescr: 'Описание для элемента опроса Матрица',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
-    {
-        type: 'free-response-matrix',
-        typeName: 'Матрица свободных ответов',
-        typeDescr: 'Описание для элемента опроса Матрица свободных ответов',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
-    {
-        type: 'full-name',
-        typeName: 'ФИО',
-        typeDescr: 'Описание для элемента опроса ФИО',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
-    {
-        type: 'phone-number',
-        typeName: 'Номер телефона',
-        typeDescr: 'Описание для элемента опроса Номер телефона',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
-    {
         type: 'date',
-        typeName: 'Дата',
+        typeName: 'Выбор даты',
         typeDescr: 'Описание для элемента опроса Дата',
         data: {
             pollImage: {},
             editorValue: {},
+            dateData: {
+                range: false,
+            }
         }
     },
-    {
-        type: 'selecting-date-range',
-        typeName: 'Выбор промежутка дат',
-        typeDescr: 'Описание для элемента опроса Выбор промежутка дат',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
-    {
-        type: 'email',
-        typeName: 'Эл. почта',
-        typeDescr: 'Описание для элемента опроса Эл. почта',
-        data: {
-            pollImage: {},
-            editorValue: {},
-        }
-    },
+    // {
+    //     type: 'pair-ranking',
+    //     typeName: 'Парное ранжирование',
+    //     typeDescr: 'Описание для элемента опроса Парное ранжирование',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //         optionsData: {
+    //             minOptionsLength: 2,
+    //             maxOptionsLength: 10,
+    //             optionsList: [
+    //                 {
+    //                     id: '1',
+    //                     firstFieldValue: '',
+    //                     secondFieldValue: '',
+    //                 },
+    //                 {
+    //                     id: '2',
+    //                     firstFieldValue: '',
+    //                     secondFieldValue: '',
+    //                 },
+    //             ]
+    //         }
+    //     }
+    // },
+    // {
+    //     type: 'matrix',
+    //     typeName: 'Матрица',
+    //     typeDescr: 'Описание для элемента опроса Матрица',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+    // {
+    //     type: 'free-response-matrix',
+    //     typeName: 'Матрица свободных ответов',
+    //     typeDescr: 'Описание для элемента опроса Матрица свободных ответов',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+    // {
+    //     type: 'full-name',
+    //     typeName: 'ФИО',
+    //     typeDescr: 'Описание для элемента опроса ФИО',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+    // {
+    //     type: 'phone-number',
+    //     typeName: 'Номер телефона',
+    //     typeDescr: 'Описание для элемента опроса Номер телефона',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+    // {
+    //     type: 'email',
+    //     typeName: 'Эл. почта',
+    //     typeDescr: 'Описание для элемента опроса Эл. почта',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+
+    // {
+    //     type: 'selecting-date-range',
+    //     typeName: 'Выбор промежутка дат',
+    //     typeDescr: 'Описание для элемента опроса Выбор промежутка дат',
+    //     data: {
+    //         pollImage: {},
+    //         editorValue: {},
+    //     }
+    // },
+
 
 ]
 

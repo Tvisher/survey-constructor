@@ -11,13 +11,54 @@ function findPollById(state, pollItemId) {
 
 export default createStore({
   state: {
-    pollTypesList,
     currentPageId: '2',
     pollPages: [
       {
         id: "1",
         pageComment: 'Комментарий к первой странице',
         pollList: [
+          {
+            id: '7',
+            type: 'date',
+            typeName: 'Дата',
+            typeDescr: 'Описание для элемента опроса Дата',
+            data: {
+              pollImage: {
+                name: "calendar.jpg",
+                path: "https://ru-cafe.ru/content/images/news/kalendar-s-chasami.webp"
+              },
+              editorValue: { "ops": [{ "insert": "Укажите дату, когда вам будет " }, { "attributes": { "bold": true }, "insert": "удобно " }, { "insert": "посетить наше мероприятие\n" }] },
+              dateData: {
+                range: false,
+              }
+            }
+          },
+          {
+            id: '6',
+            type: 'ranging',
+            typeName: 'Ранжирование',
+            typeDescr: 'Описание для элемента опроса Ранжирование',
+            data: {
+              pollImage: {
+                name: "calendar.jpg",
+                path: "https://ru-cafe.ru/content/images/news/kalendar-s-chasami.webp"
+              },
+              editorValue: { "ops": [{ "insert": "Укажите верный порядок дней недели\n" }] },
+              optionsData: {
+                minOptionsLength: 2,
+                maxOptionsLength: 10,
+                optionsList: [
+                  { id: '1', value: "Понедельник" },
+                  { id: '2', value: "Вторник" },
+                  { id: '3', value: "Среда" },
+                  { id: '4', value: "Четверг" },
+                  { id: '5', value: "Пятница" },
+                  { id: '6', value: "Суббота" },
+                  { id: '7', value: "Воскресенье" },
+                ],
+              },
+            }
+          },
           {
             id: '1',
             type: 'single-choice',
@@ -145,32 +186,6 @@ export default createStore({
         id: "2",
         pageComment: 'Комментарий к третьей странице, тут пока пусто',
         pollList: [
-          {
-            id: '18',
-            type: 'ranging',
-            typeName: 'Ранжирование',
-            typeDescr: 'Описание для элемента опроса Ранжирование',
-            data: {
-              pollImage: {
-                name: "calendar.jpg",
-                path: "https://www.pnp.ru/upload/entities/2019/12/31/article/detailPicture/56/9c/db/d7/0900ad08e5803e586635c30de18907b2.jpg"
-              },
-              editorValue: { "ops": [{ "insert": "Укажите верный порядок дней недели\n" }] },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                optionsList: [
-                  { id: '1', value: "Понедельник" },
-                  { id: '2', value: "Вторник" },
-                  { id: '3', value: "Среда" },
-                  { id: '4', value: "Четверг" },
-                  { id: '5', value: "Пятница" },
-                  { id: '6', value: "Суббота" },
-                  { id: '7', value: "Воскресенье" },
-                ],
-              },
-            }
-          },
         ],
       }
     ],
@@ -244,7 +259,7 @@ export default createStore({
     },
 
     addPairInPoll(state, pollItemId) {
-      const currentPoll = findPollById(state, state.currentPageId, pollItemId);
+      const currentPoll = findPollById(state, pollItemId);
       const newPair = {
         id: uuidv4(),
         firstFieldValue: '',
@@ -254,7 +269,7 @@ export default createStore({
     },
 
     editPairValue(state, { pollItemId, fieldValue, pairId, filedType }) {
-      const currentPoll = findPollById(state, state.currentPageId, pollItemId);
+      const currentPoll = findPollById(state, pollItemId);
       const pairFiled = currentPoll.data.optionsData.optionsList.find(pair => pair.id === pairId);
       pairFiled[filedType] = fieldValue;
     },
@@ -302,11 +317,23 @@ export default createStore({
         const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
         currentOption.value = optionValue
       }
-    }
+    },
 
+    setPollTypesListInApp(state, pollTypesList) {
+      state.pollTypesList = pollTypesList;
+    },
+
+    setDateOption(state, { pollItemId, dateDataInComponent }) {
+      const currentPoll = findPollById(state, pollItemId);
+      currentPoll.data.dateData = dateDataInComponent;
+    }
   },
   actions: {
-
+    setPollTypesList({ commit }) {
+      setTimeout(() => {
+        commit("setPollTypesListInApp", pollTypesList)
+      }, 0);
+    }
   }
 });
 

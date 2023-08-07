@@ -3,7 +3,7 @@
     <draggable
       v-model="optionsList"
       v-bind="pollItemsDragOptionsInSidebar"
-      handle=".rangin-visual__dragg"
+      handle=".rangin-visual__content"
       @start="isDraggingOption = true"
       @end="isDraggingOption = false"
     >
@@ -41,65 +41,69 @@
             </div>
             <div class="rangin-visual__num">{{ index + 1 }}</div>
             <div class="rangin-visual__text">{{ variant.value }}</div>
-            <div class="rangin-visual__btns">
-              <div
-                class="rangin-visual__top-btn"
-                @click="rangeVariant(index, 'top')"
+          </div>
+          <div class="rangin-visual__btns">
+            <div
+              class="rangin-visual__top-btn"
+              @click="rangeVariant(index, 'top')"
+            >
+              <svg
+                width="33"
+                height="33"
+                viewBox="0 0 33 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  width="33"
-                  height="33"
-                  viewBox="0 0 33 33"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.4138 20.586H22.5858C22.7836 20.586 22.9769 20.5273 23.1413 20.4174C23.3057 20.3075 23.4339 20.1514 23.5095 19.9687C23.5852 19.786 23.605 19.5849 23.5664 19.391C23.5279 19.197 23.4327 19.0189 23.2928 18.879L17.7068 13.293C17.5193 13.1056 17.265 13.0002 16.9998 13.0002C16.7347 13.0002 16.4804 13.1056 16.2928 13.293L10.7068 18.879C10.567 19.0189 10.4718 19.197 10.4333 19.391C10.3947 19.5849 10.4145 19.786 10.4902 19.9687C10.5658 20.1514 10.694 20.3075 10.8584 20.4174C11.0228 20.5273 11.2161 20.586 11.4138 20.586Z"
-                    fill="#868DA4"
-                  />
-                  <rect
-                    x="1"
-                    y="1"
-                    width="31"
-                    height="31"
-                    rx="7"
-                    stroke="#868DA4"
-                    stroke-width="2"
-                  />
-                </svg>
-              </div>
-              <div
-                class="rangin-visual__bottom-btn"
-                @click="rangeVariant(index, 'bottom')"
+                <path
+                  d="M11.4138 20.586H22.5858C22.7836 20.586 22.9769 20.5273 23.1413 20.4174C23.3057 20.3075 23.4339 20.1514 23.5095 19.9687C23.5852 19.786 23.605 19.5849 23.5664 19.391C23.5279 19.197 23.4327 19.0189 23.2928 18.879L17.7068 13.293C17.5193 13.1056 17.265 13.0002 16.9998 13.0002C16.7347 13.0002 16.4804 13.1056 16.2928 13.293L10.7068 18.879C10.567 19.0189 10.4718 19.197 10.4333 19.391C10.3947 19.5849 10.4145 19.786 10.4902 19.9687C10.5658 20.1514 10.694 20.3075 10.8584 20.4174C11.0228 20.5273 11.2161 20.586 11.4138 20.586Z"
+                  fill="#868DA4"
+                />
+                <rect
+                  x="1"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="7"
+                  stroke="#868DA4"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <div
+              class="rangin-visual__bottom-btn"
+              @click="rangeVariant(index, 'bottom')"
+            >
+              <svg
+                width="33"
+                height="33"
+                viewBox="0 0 33 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  width="33"
-                  height="33"
-                  viewBox="0 0 33 33"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.4138 14H22.5858C22.7836 14 22.9769 14.0587 23.1413 14.1686C23.3057 14.2785 23.4339 14.4346 23.5095 14.6173C23.5852 14.8 23.605 15.0011 23.5664 15.195C23.5279 15.389 23.4327 15.5671 23.2928 15.707L17.7068 21.293C17.5193 21.4805 17.265 21.5858 16.9998 21.5858C16.7347 21.5858 16.4804 21.4805 16.2928 21.293L10.7068 15.707C10.567 15.5671 10.4718 15.389 10.4333 15.195C10.3947 15.0011 10.4145 14.8 10.4902 14.6173C10.5658 14.4346 10.694 14.2785 10.8584 14.1686C11.0228 14.0587 11.2161 14 11.4138 14Z"
-                    fill="#868DA4"
-                  />
-                  <rect
-                    x="1"
-                    y="1"
-                    width="31"
-                    height="31"
-                    rx="7"
-                    stroke="#868DA4"
-                    stroke-width="2"
-                  />
-                </svg>
-              </div>
+                <path
+                  d="M11.4138 14H22.5858C22.7836 14 22.9769 14.0587 23.1413 14.1686C23.3057 14.2785 23.4339 14.4346 23.5095 14.6173C23.5852 14.8 23.605 15.0011 23.5664 15.195C23.5279 15.389 23.4327 15.5671 23.2928 15.707L17.7068 21.293C17.5193 21.4805 17.265 21.5858 16.9998 21.5858C16.7347 21.5858 16.4804 21.4805 16.2928 21.293L10.7068 15.707C10.567 15.5671 10.4718 15.389 10.4333 15.195C10.3947 15.0011 10.4145 14.8 10.4902 14.6173C10.5658 14.4346 10.694 14.2785 10.8584 14.1686C11.0228 14.0587 11.2161 14 11.4138 14Z"
+                  fill="#868DA4"
+                />
+                <rect
+                  x="1"
+                  y="1"
+                  width="31"
+                  height="31"
+                  rx="7"
+                  stroke="#868DA4"
+                  stroke-width="2"
+                />
+              </svg>
             </div>
           </div>
         </div>
       </transition-group>
     </draggable>
   </div>
+
+  <h1 style="color: red; text-align: center" v-if="correctOrder">
+    Верный порядок, Ура!!!
+  </h1>
 </template>
 
 <script>
@@ -109,15 +113,15 @@ export default {
   components: {
     draggable: VueDraggableNext,
   },
+  props: {
+    optionsData: { type: Object },
+    pollItemId: { type: String },
+  },
   data() {
     return {
       optionsList: [],
       isDraggingOption: false,
     };
-  },
-  props: {
-    optionsData: { type: Object },
-    pollItemId: { type: String },
   },
   computed: {
     pollItemsDragOptionsInSidebar() {
@@ -130,6 +134,12 @@ export default {
         ghostClass: "ghost-potion",
         sort: true,
       };
+    },
+    correctOrder() {
+      console.log(this.optionsData.optionsList, this.optionsList);
+      return this.optionsList.every(
+        (item, i) => item.id == this.optionsData.optionsList[i].id
+      );
     },
   },
   methods: {
@@ -166,16 +176,6 @@ export default {
 </script>
 
 <style lang="scss">
-// .fade-range-enter-active,
-// .fade-range-leave-active {
-//   transition: opacity 0.5s ease;
-// }
-
-// .fade-range-enter-from,
-// .fade-range-leave-to {
-//   opacity: 0;
-// }
-
 .rangin-visual__text {
   &::selection {
     background-color: transparent;
@@ -190,7 +190,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: grab;
 }
 .rangin-visual__num {
   margin: 0 10px;
@@ -205,38 +204,49 @@ export default {
 }
 
 .rangin-visual__item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
   color: #262b31;
   font-size: 18px;
   font-weight: 400;
   line-height: 140%; /* 25.2px */
   margin-bottom: 5px;
   border-radius: 4px;
-  &:hover {
-    border-color: #fa0056 !important;
-    & + .rangin-visual__item {
-      // border-top: 1px solid transparent;
-    }
-  }
-  transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
   position: relative;
   width: 100%;
   border: 1px solid rgba(0, 66, 105, 0.28);
-  // border-bottom: 1px solid transparent;
-  // &:first-child {
-  //   border-radius: 4px 4px 0px 0px;
-  // }
-  // &:last-child {
-  //   border-radius: 0px 0px 4px 4px;
-  //   border-bottom: 1px solid rgba(0, 66, 105, 0.28);
-  // }
+  overflow: hidden;
+  &:hover {
+    border-color: #fa0056 !important;
+    transition: border 0.2s ease-in-out;
+  }
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    content: "";
+    background-color: #fa0056;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
 }
 .rangin-visual__content {
+  cursor: grab;
+  position: relative;
+  z-index: 2;
+  width: 100%;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease-in-out;
 }
 .rangin-visual__btns {
+  padding: 10px 20px;
   padding-left: 10px;
   margin-left: auto;
   flex-shrink: 0;
@@ -255,8 +265,9 @@ export default {
 }
 
 .rangin-visual__item.ghost-potion {
-  .rangin-visual__content {
-    background-color: #fa0056;
+  &::before {
+    opacity: 1;
+    visibility: visible;
   }
   .rangin-visual__text,
   .rangin-visual__num {

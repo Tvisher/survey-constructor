@@ -23,127 +23,33 @@
         <button class="poll-remove" @click="removePoll"></button>
       </div>
     </div>
+    <app-settings-poll-body
+      v-if="!isVisualType"
+      :pollItemId="pollItemId"
+      :pollItemType="pollItemType"
+      :pollItemData="pollItemData"
+    />
 
-    <div class="poll-body" v-if="!isVisualType">
-      <image-loader
-        :pollItemId="pollItemId"
-        :pollImage="pollItemData.pollImage"
-      />
-      <editor-component
-        :pollItemId="pollItemId"
-        :editorValue="pollItemData.editorValue"
-      />
-      <choise-variant
-        v-if="isOptionsNeeded"
-        :pollItemId="pollItemId"
-        :optionsData="pollItemData.optionsData"
-        :inputsType="inputsType"
-      />
-      <ranging
-        v-if="pollItemType === 'ranging'"
-        :pollItemId="pollItemId"
-        :optionsData="pollItemData.optionsData"
-      />
-      <range-selection
-        v-if="pollItemType === 'range-selection'"
-        :pollItemId="pollItemId"
-        :rangeData="pollItemData.rangeData"
-      />
-      <pair-ranking
-        v-if="pollItemType === 'pair-ranking'"
-        :pollItemId="pollItemId"
-        :optionsData="pollItemData.optionsData"
-      />
-    </div>
-    <div class="poll-body" v-if="isVisualType">
-      <hr />
-      <div class="poll-body__image-block" v-if="isHasImageInPoll">
-        <img
-          :src="pollItemData.pollImage.path"
-          :alt="pollItemData.pollImage.name"
-        />
-      </div>
-      <app-text-from-editor :editorValue="pollItemData.editorValue" />
-      <app-single-choise-variant
-        v-if="pollItemType === 'single-choice'"
-        :optionsData="pollItemData.optionsData"
-        :pollItemId="pollItemId"
-      />
-      <app-multi-choise-variant
-        v-if="pollItemType === 'multiple-choice'"
-        :optionsData="pollItemData.optionsData"
-        :pollItemId="pollItemId"
-      />
-      <app-single-select
-        v-if="pollItemType === 'drop-down-list'"
-        :optionsData="pollItemData.optionsData"
-        :pollItemId="pollItemId"
-      />
-
-      <app-multi-select
-        v-if="pollItemType === 'multiple-drop-down-list'"
-        :optionsData="pollItemData.optionsData"
-        :pollItemId="pollItemId"
-      />
-
-      <app-range-slider
-        v-if="pollItemType === 'range-selection'"
-        :rangeData="pollItemData.rangeData"
-        :pollItemId="pollItemId"
-      />
-
-      <app-ranging-visual
-        v-if="pollItemType === 'ranging'"
-        :optionsData="pollItemData.optionsData"
-        :pollItemId="pollItemId"
-      />
-
-      <!-- <app-pair-ranking-visual
-        v-if="pollItemType === 'pair-ranking'"
-        :rangeData="pollItemData.rangeData"
-        :pollItemId="pollItemId"
-      /> -->
-    </div>
+    <app-visual-poll-body
+      v-if="isVisualType"
+      :pollItemId="pollItemId"
+      :pollItemType="pollItemType"
+      :pollItemData="pollItemData"
+    />
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import Popper from "vue3-popper";
-import EditorComponent from "./pollSegments/EditorComponent.vue";
-import ImageLoader from "./pollSegments/ImageLoader.vue";
-import ChoiseVariant from "./pollSegments/ChoiseVariant.vue";
-import Ranging from "./pollSegments/Ranging.vue";
-import RangeSelection from "./pollSegments/RangeSelection.vue";
-import PairRanking from "./pollSegments/PairRanking.vue";
-
-import AppTextFromEditor from "./pollSegments/visualPollSegments/TextFromEditor.vue";
-import AppSingleChoiseVariant from "./pollSegments/visualPollSegments/SingleChioseVariant.vue";
-import AppMultiChoiseVariant from "./pollSegments/visualPollSegments/MultiChioseVariant.vue";
-import AppSingleSelect from "./pollSegments/visualPollSegments/SingleSelect.vue";
-import AppMultiSelect from "./pollSegments/visualPollSegments/MultiSelect.vue";
-import AppRangeSlider from "./pollSegments/visualPollSegments/RangeSlider.vue";
-import AppPairRankingVisual from "./pollSegments/visualPollSegments/PairRankingVisual.vue";
-import AppRangingVisual from "./pollSegments/visualPollSegments/RangingVisual.vue";
+import AppSettingsPollBody from "./pollSegments/SettingsPollBody.vue";
+import AppVisualPollBody from "./pollSegments/VisualPollBody.vue";
 
 export default {
   components: {
     Popper,
-    EditorComponent,
-    ChoiseVariant,
-    Ranging,
-    RangeSelection,
-    PairRanking,
-    ImageLoader,
-
-    AppTextFromEditor,
-    AppSingleChoiseVariant,
-    AppSingleSelect,
-    AppMultiSelect,
-    AppMultiChoiseVariant,
-    AppRangeSlider,
-    AppPairRankingVisual,
-    AppRangingVisual,
+    AppSettingsPollBody,
+    AppVisualPollBody,
   },
   props: {
     pollItemId: { type: [Number, String] },
@@ -160,36 +66,8 @@ export default {
     };
   },
   computed: {
-    isHasImageInPoll() {
-      const pollImage = this.pollItemData.pollImage;
-      return pollImage && Object.keys(pollImage).length !== 0;
-    },
     indexNumber() {
       return this.pollNumber + 1;
-    },
-
-    isOptionsNeeded() {
-      return [
-        "single-choice",
-        "drop-down-list",
-        "multiple-drop-down-list",
-        "multiple-choice",
-      ].includes(this.pollItemType);
-    },
-
-    inputsType() {
-      if (
-        this.pollItemType === "single-choice" ||
-        this.pollItemType === "drop-down-list"
-      ) {
-        return "radio";
-      }
-      if (
-        this.pollItemType === "multiple-drop-down-list" ||
-        this.pollItemType === "multiple-choice"
-      ) {
-        return "checkbox";
-      }
     },
   },
   methods: {
