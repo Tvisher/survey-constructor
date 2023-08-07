@@ -29,7 +29,6 @@
       :pollItemType="pollItemType"
       :pollItemData="pollItemData"
     />
-
     <app-visual-poll-body
       v-if="isVisualType"
       :pollItemId="pollItemId"

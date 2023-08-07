@@ -338,6 +338,7 @@ hr {
 .custom-cb {
   position: relative;
   .custom-cb__checkbox {
+    z-index: 2;
     margin: 0;
     cursor: pointer;
     opacity: 0;
@@ -367,7 +368,8 @@ hr {
       content: "";
       position: absolute;
       left: 0;
-      top: 1px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 16px;
       height: 16px;
       border-radius: 4px;
@@ -378,7 +380,8 @@ hr {
       content: "";
       position: absolute;
       left: 0;
-      top: 1px;
+      top: 50%;
+      transform: translateY(-45%);
       width: 16px;
       height: 16px;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cg clip-path='url(%23clip0_1212_7094)'%3e%3cpath d='M2.58306 6.88763C2.35598 6.88772 2.13819 6.79746 1.97775 6.63675L0.147687 4.80737C-0.049229 4.61039 -0.049229 4.29109 0.147687 4.09411C0.344666 3.89719 0.663969 3.89719 0.860947 4.09411L2.58306 5.81623L7.13905 1.26024C7.33603 1.06332 7.65533 1.06332 7.85231 1.26024C8.04923 1.45721 8.04923 1.77652 7.85231 1.9735L3.18838 6.63675C3.02794 6.79746 2.81015 6.88772 2.58306 6.88763Z' fill='white'/%3e%3c/g%3e%3cdefs%3e%3cclipPath id='clip0_1212_7094'%3e%3crect width='8' height='8' fill='white'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e ");
@@ -454,4 +457,13 @@ hr {
 .poll-item__answer {
   font-size: 18px;
   color: #202020;
+}
+
+.custom-fields-choise {
+  display: flex;
+  align-items: center;
+}
+.custom-fields-title {
+  margin-right: 20px;
+  font-weight: 500;
 }

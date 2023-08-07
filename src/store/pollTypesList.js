@@ -116,6 +116,22 @@ const pollTypesList = [
             }
         }
     },
+    {
+        type: 'custom-fields',
+        typeName: 'Кастомные поля',
+        typeDescr: 'Описание для элемента опроса Кастомные поля',
+        data: {
+            pollImage: {},
+            editorValue: {},
+            optionsData: {
+                minOptionsLength: 1,
+                maxOptionsLength: 10,
+                optionsList: [
+                    { id: '1', type: 'text', value: "" },
+                ],
+            },
+        }
+    },
     // {
     //     type: 'pair-ranking',
     //     typeName: 'Парное ранжирование',

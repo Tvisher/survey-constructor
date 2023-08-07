@@ -326,7 +326,23 @@ export default createStore({
     setDateOption(state, { pollItemId, dateDataInComponent }) {
       const currentPoll = findPollById(state, pollItemId);
       currentPoll.data.dateData = dateDataInComponent;
+    },
+
+    addCustomField(state, { pollItemId }) {
+      const currentPoll = findPollById(state, pollItemId);
+      const newOption = {
+        id: `${uuidv4()}`,
+        type: 'text',
+        value: ""
+      };
+      currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
+    },
+    setCustomFieldType(state, { pollItemId, optionId, selectedType }) {
+      const currentPoll = findPollById(state, pollItemId);
+      const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
+      currentOption.type = selectedType
     }
+
   },
   actions: {
     setPollTypesList({ commit }) {

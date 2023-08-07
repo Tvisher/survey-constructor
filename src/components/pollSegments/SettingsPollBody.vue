@@ -35,6 +35,11 @@
       :pollItemId="pollItemId"
       :dateData="pollItemData.dateData"
     />
+    <app-custom-fields
+      v-if="pollItemType === 'custom-fields'"
+      :pollItemId="pollItemId"
+      :optionsData="pollItemData.optionsData"
+    />
   </div>
 </template>
 
@@ -46,6 +51,7 @@ import AppRanging from "./Ranging.vue";
 import AppRangeSelection from "./RangeSelection.vue";
 import AppPairRanking from "./PairRanking.vue";
 import AppDateOption from "./DateOption.vue";
+import AppCustomFields from "./CustomFields.vue";
 export default {
   components: {
     AppEditorComponent,
@@ -55,6 +61,7 @@ export default {
     AppPairRanking,
     AppImageLoader,
     AppDateOption,
+    AppCustomFields,
   },
   props: {
     pollItemId: { type: [Number, String] },

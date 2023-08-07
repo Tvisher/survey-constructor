@@ -120,9 +120,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.flip-option-list-move {
-  // transition: transform 0.5s;
-}
 .no-move {
   transition: transform 0s;
 }
