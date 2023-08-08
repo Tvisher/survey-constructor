@@ -48,7 +48,7 @@
   background: #ecf4ff;
 }
 .polls-pagination {
-  margin-bottom: 23px;
+  margin-bottom: 20px;
   padding: 10px;
   border-radius: 8px;
   background: #ecf4ff;
@@ -135,23 +135,27 @@
 .app-container {
   align-items: flex-start;
   display: flex;
-  gap: 30px;
+  // gap: 30px;
+  gap: 20px;
 }
 
 .poll-list-sidebar {
   max-width: 380px;
   width: 100%;
-  padding: 15px;
+  // padding: 15px;
+  padding: 20px;
   background: #ecf4ff;
   position: sticky;
   top: 30px;
   left: 0;
+  border-radius: 8px;
 }
 
 .poll-item {
   background: #fff;
   padding: 30px;
   margin: 20px 0;
+  border-radius: 8px;
 }
 .poll-item__head,
 .poll-item__name {
