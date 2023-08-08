@@ -1,4 +1,5 @@
 <template>
+  <span class="editor-descr">Опции ранжирования</span>
   <draggable
     v-model="optionsList"
     v-bind="pollItemsDragOptionsInSidebar"

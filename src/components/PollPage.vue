@@ -1,6 +1,11 @@
 <template>
   <div class="poll-page-head">
     <div class="poll-page-number">Страница {{ currenPageNumber }}</div>
+    <button
+      v-if="showRemoveBtnInPage"
+      class="remove-btn"
+      @click="removePage"
+    ></button>
   </div>
   <div class="poll-page-comment">
     <input
@@ -53,6 +58,7 @@ import PollElement from "./PollElement.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 export default {
   props: {
+    showRemoveBtnInPage: { type: Boolean },
     currenPage: { type: Object },
     currenPageNumber: { type: [String, Number] },
   },
@@ -97,21 +103,22 @@ export default {
       "editPageComment",
       "dragSortPollsInPage",
       "dragAddPollInPage",
+      "removePollPage",
     ]),
     editComment(event) {
       const pollPageId = this.currenPage.id;
       const commentValue = event.target.value.trim();
       this.editPageComment({ pollPageId, commentValue });
     },
+
+    removePage() {
+      this.removePollPage(this.currenPage.id);
+    },
   },
-  mounted() {},
 };
 </script>
 
 <style lang="scss">
-.flip-list-move {
-  // transition: transform 0.3s;
-}
 .no-move {
   transition: transform 0s;
 }

@@ -22,6 +22,7 @@
             <input
               type="text"
               class="variant-item__filed"
+              :value="variant.value"
               @input="editVariant($event, variant.id)"
               placeholder="Заголовок поля"
             />
@@ -151,6 +152,7 @@ export default {
       "removeOptionInPoll",
       "dragSortOptionsInPoll",
     ]),
+
     addOption() {
       const { pollItemId } = this;
       this.addCustomField({ pollItemId });

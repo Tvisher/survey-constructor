@@ -48,25 +48,21 @@
   background: #ecf4ff;
 }
 .polls-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   margin-bottom: 23px;
-  padding: 15px 20px;
+  padding: 10px;
+  border-radius: 8px;
   background: #ecf4ff;
 }
-.poll-page-head {
-  margin-bottom: 20px;
-  color: #202020;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 100%;
+.polls-pagination__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .polls-page-btn {
   cursor: pointer;
-  margin-right: 21px;
+  margin: 10px;
   width: 50px;
   height: 44px;
   display: flex;
@@ -82,10 +78,24 @@
   }
 }
 
+.poll-page-head {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  color: #202020;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+}
+
 .poll-page-comment {
   margin-bottom: 20px;
 }
 .comment__input {
+  outline: none;
   padding: 10px 12px;
   width: 100%;
   font-size: 18px;
@@ -188,12 +198,14 @@
 }
 
 .poll-item__handlers {
+  gap: 10px;
   display: flex;
   align-items: center;
   margin-left: auto;
 }
 
 .poll-remove,
+.remove-btn,
 .poll-edit {
   background-color: transparent;
   cursor: pointer;
@@ -300,6 +312,10 @@ hr {
   &:focus {
     border-color: #7db1fa;
   }
+}
+textarea.variant-item__filed {
+  resize: vertical;
+  min-height: 150px;
 }
 
 .variant-item__wrapper {
@@ -423,21 +439,6 @@ hr {
   }
 }
 
-// .poll-elements-transition {
-//   &-enter-active,
-//   &-leave-active {
-//     transition: opacity 0.3s ease, transform 0.4s ease;
-//   }
-
-//   &-enter-from {
-//     opacity: 0;
-//     transform: translateY(-5%);
-//   }
-//   &-leave-to {
-//     opacity: 0;
-//     transform: translateY(5%);
-//   }
-// }
 .option-transition {
   &-enter-active,
   &-leave-active {
@@ -461,7 +462,11 @@ hr {
 
 .custom-fields-choise {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  .custom-cb:last-child {
+    margin-right: 0;
+  }
 }
 .custom-fields-title {
   margin-right: 20px;

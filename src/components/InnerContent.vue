@@ -5,12 +5,14 @@
         <polls-pages-pagination
           :pollPagesList="pollPagesList"
           :currentPageId="currentPageId"
+          :pagesLimit="pagesLimit"
         />
 
         <div class="poll-pages">
           <app-poll-page
             :currenPage="currentPollPage"
             :currenPageNumber="currenPageNumber"
+            :showRemoveBtnInPage="showRemoveBtnInPage"
           />
         </div>
       </div>
@@ -48,20 +50,20 @@ export default {
     draggable: VueDraggableNext,
   },
   data() {
-    return {
-      sidebarItemDraggablePositions: {
-        indexInPage: "",
-        indexInSidebar: "",
-      },
-    };
+    return {};
   },
   methods: {},
   computed: {
     ...mapState({
       currentPageId: (state) => state.currentPageId,
+      pagesLimit: (state) => state.pagesLimit,
+      pagesMinLength: (state) => state.pagesMinLength,
       pollPagesList: (state) => state.pollPages,
       pollTypesList: (state) => state.pollTypesList,
     }),
+    showRemoveBtnInPage() {
+      return this.pollPagesList.length > this.pagesMinLength;
+    },
 
     currentPollPage() {
       return this.pollPagesList.find((page) => page.id === this.currentPageId);

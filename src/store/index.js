@@ -11,12 +11,44 @@ function findPollById(state, pollItemId) {
 
 export default createStore({
   state: {
-    currentPageId: '2',
+    currentPageId: '1',
+    pagesLimit: 5,
+    pagesMinLength: 1,
     pollPages: [
       {
         id: "1",
         pageComment: 'Комментарий к первой странице',
         pollList: [
+          {
+            id: '8',
+            type: 'custom-fields',
+            typeName: 'Кастомные поля',
+            typeDescr: 'Описание для элемента опроса Кастомные поля',
+            data: {
+              pollImage: {
+                name: 'formImage.jpg',
+                path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
+              },
+              editorValue: {
+                "ops": [
+                  { "insert": "Пожалуйста, дайте нам обратную связь, что бы мы могли сделать наш сервис лучше " },
+                  { "attributes": { "italic": true, "bold": true }, "insert": "=)" }, { "insert": "\n" }
+                ]
+              },
+              optionsData: {
+                minOptionsLength: 1,
+                maxOptionsLength: 10,
+                optionsList:
+                  [
+                    { "id": "1", "type": "text", "value": "Имя" },
+                    { "id": "92338df8-c3b0-4ccd-a7fa-5b56993a05d2", "type": "text", "value": "Фамилия" },
+                    { "id": "4f212647-b594-4740-8619-8ea7150edc26", "type": "email", "value": "Email" },
+                    { "id": "9b3f5549-0e20-4b96-ace4-eaf8a80a0edb", "type": "phone", "value": "Ваш телефон" },
+                    { "id": "fbc3b9e9-e836-4cd7-a8ca-9b7e97e16a10", "type": "textarea", "value": "Напишите нам что думаете о нашем сервисе" }
+                  ],
+              },
+            }
+          },
           {
             id: '7',
             type: 'date',
@@ -182,12 +214,6 @@ export default createStore({
           },
         ],
       },
-      {
-        id: "2",
-        pageComment: 'Комментарий к третьей странице, тут пока пусто',
-        pollList: [
-        ],
-      }
     ],
   },
   getters: {},
@@ -319,10 +345,6 @@ export default createStore({
       }
     },
 
-    setPollTypesListInApp(state, pollTypesList) {
-      state.pollTypesList = pollTypesList;
-    },
-
     setDateOption(state, { pollItemId, dateDataInComponent }) {
       const currentPoll = findPollById(state, pollItemId);
       currentPoll.data.dateData = dateDataInComponent;
@@ -337,11 +359,45 @@ export default createStore({
       };
       currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
+
     setCustomFieldType(state, { pollItemId, optionId, selectedType }) {
       const currentPoll = findPollById(state, pollItemId);
       const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
       currentOption.type = selectedType
-    }
+    },
+
+    addPollPage(state) {
+      const pagesLimit = state.pagesLimit;
+      if (state.pollPages.length >= pagesLimit) return;
+
+      const newPage = {
+        id: `page-${uuidv4()}`,
+        pageComment: '',
+        pollList: []
+      }
+      state.pollPages = [...state.pollPages, newPage]
+      state.currentPageId = newPage.id;
+    },
+
+    removePollPage(state, pageId) {
+      const pagesMinLength = state.pagesMinLength;
+      if (state.pollPages.length <= pagesMinLength) return;
+
+      const removedPageIndex = state.pollPages.findIndex(page => page.id === pageId);
+      let newCurrentPage;
+      if (removedPageIndex === 0) {
+        newCurrentPage = 1
+      } else {
+        newCurrentPage = removedPageIndex - 1;
+      }
+      state.currentPageId = state.pollPages.find((item, index) => index === newCurrentPage).id;
+      state.pollPages = state.pollPages.filter(page => page.id !== pageId);
+    },
+
+    setPollTypesListInApp(state, pollTypesList) {
+      state.pollTypesList = pollTypesList;
+    },
+
 
   },
   actions: {

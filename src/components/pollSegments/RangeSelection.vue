@@ -19,22 +19,24 @@
       />
     </label>
   </div>
-  <span class="editor-descr"
-    >Укажите стартовое положение ползунков для пользователя</span
-  >
-  <div class="range-selection__creater" v-if="showDefaultMinMax">
-    <div class="range-slider-visual">
-      <div class="range-slider__min">
-        {{ range.min }}
-      </div>
-      <Slider
-        :direction="sliderDirection"
-        v-model="sliderDefaultValues"
-        :min="minToSlider"
-        :max="maxToSlider"
-      />
-      <div class="range-slider__max">
-        {{ range.max }}
+  <div v-if="showDefaultMinMax">
+    <span class="editor-descr"
+      >Укажите стартовое положение ползунков для пользователя</span
+    >
+    <div class="range-selection__creater">
+      <div class="range-slider-visual">
+        <div class="range-slider__min">
+          {{ range.min }}
+        </div>
+        <Slider
+          :direction="sliderDirection"
+          v-model="sliderDefaultValues"
+          :min="minToSlider"
+          :max="maxToSlider"
+        />
+        <div class="range-slider__max">
+          {{ range.max }}
+        </div>
       </div>
     </div>
   </div>

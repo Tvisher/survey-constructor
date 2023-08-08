@@ -45,6 +45,11 @@
       v-if="pollItemType === 'date'"
       :dateData="pollItemData.dateData"
     />
+    <app-custom-fields-visual
+      v-if="pollItemType === 'custom-fields'"
+      :optionsData="pollItemData.optionsData"
+      :pollItemId="pollItemId"
+    />
   </div>
 </template>
 
@@ -58,6 +63,7 @@ import AppRangeSlider from "./visualPollSegments/RangeSlider.vue";
 import AppPairRankingVisual from "./visualPollSegments/PairRankingVisual.vue";
 import AppRangingVisual from "./visualPollSegments/RangingVisual.vue";
 import AppDatapickerVisual from "./visualPollSegments/DatapickerVisual.vue";
+import AppCustomFieldsVisual from "./visualPollSegments/CustomFieldsVisual.vue";
 export default {
   components: {
     AppTextFromEditor,
@@ -69,6 +75,7 @@ export default {
     AppPairRankingVisual,
     AppRangingVisual,
     AppDatapickerVisual,
+    AppCustomFieldsVisual,
   },
   props: {
     pollItemId: { type: [Number, String] },
