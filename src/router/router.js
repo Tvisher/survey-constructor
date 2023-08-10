@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import SettingsPage from '../components/SettingsPage';
 import ConstructorPage from '../components/ConstructorPage';
 
