@@ -1,6 +1,8 @@
 <template>
-  <div class="container">
-    <router-view></router-view>
+  <div class="poll-app">
+    <div class="container">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -20,6 +22,9 @@ export default {
 </script>
 
 <style>
+.poll-app {
+  padding-bottom: 90px;
+}
 * {
   font-family: Montserrat;
 }

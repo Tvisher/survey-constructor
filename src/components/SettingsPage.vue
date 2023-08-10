@@ -57,19 +57,46 @@
       />
     </label>
 
-    <router-link to="/constructor" class="btn red-btn">К созданию</router-link>
+    <app-toggle-option> Присваивать вопросам баллы </app-toggle-option>
+
+    <app-toggle-option>
+      Добавить параметр правильный ответ для вопроса</app-toggle-option
+    >
+    <app-toggle-option>
+      Показывать баллы после окончания теста</app-toggle-option
+    >
+    <app-toggle-option>Добавить разветвление вопросов</app-toggle-option>
+
+    <app-toggle-option>Добавить разветвление вопросов</app-toggle-option>
+
+    <label class="settings-label">
+      <div class="settings-label__text">
+        Форма текста после завершение опроса
+      </div>
+      <textarea
+        class="settings-textarea"
+        placeholder="Введите текст"
+        @input="appFieldEdit($event, 'appFinalMessage')"
+      ></textarea>
+    </label>
+
+    <router-link to="/constructor" class="btn red-btn centered-btn"
+      >К созданию</router-link
+    >
   </div>
 </template>
 
 <script>
 import AppImageLoader from "./pollSegments/ImageLoader.vue";
 import AppColorSelection from "./pollSegments/ColorSelection.vue";
+import AppToggleOption from "./pollSegments/ToggleOption.vue";
 import { mapState, mapMutations } from "vuex";
 
 export default {
   components: {
     AppImageLoader,
     AppColorSelection,
+    AppToggleOption,
   },
   computed: {
     ...mapState({

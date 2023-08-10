@@ -31,6 +31,7 @@ export default createStore({
       appTitle: 'Заголовок опроса',
       appDescription: "Описание для  опроса",
       appPromo: "",
+      appFinalMessage: "",
       appLogo: {
         name: 'formImage.jpg',
         path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
