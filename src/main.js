@@ -1,6 +1,7 @@
 import { createApp, h } from 'vue'
 import App from './App.vue'
 import store from './store'
+import router from "./router/router";
 
 import "./assets/scss/style.scss";
 import { QuillEditor } from '@vueup/vue-quill'
@@ -36,4 +37,5 @@ const app = createApp(App)
     .component('QuillEditor', QuillEditor)
     .component('vSelect', vSelect)
     .use(store)
+    .use(router)
     .mount('#app')

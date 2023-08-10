@@ -43,14 +43,18 @@ export default {
   flex-direction: column;
 }
 .single-choise-visual__label {
-  &:hover {
-    border-color: #fa0056 !important;
-    & + .single-choise-visual__label {
-      border-top: 1px solid transparent;
-    }
+  &.checked::before {
+    opacity: 0.2;
   }
-  &.checked {
-    background-color: #ffe7ef;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--app-color);
+    opacity: 0;
   }
   transition: border 0.2s ease-in-out, background-color 0.2s ease-in-out;
   cursor: pointer;
@@ -65,6 +69,12 @@ export default {
   &:last-child {
     border-radius: 0px 0px 4px 4px;
     border-bottom: 1px solid rgba(0, 66, 105, 0.28);
+  }
+  &:hover {
+    border-color: var(--app-color) !important;
+    & + .single-choise-visual__label {
+      border-top: 1px solid transparent;
+    }
   }
 }
 
@@ -96,7 +106,7 @@ export default {
     left: 4px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #fa0056;
+    background-color: var(--app-color);
     border-radius: 50%;
     width: 8px;
     height: 8px;
@@ -105,6 +115,7 @@ export default {
 }
 
 .single-choise-visual__input {
+  margin: 0;
   cursor: pointer;
   position: absolute;
   left: 0;
@@ -114,7 +125,7 @@ export default {
   opacity: 0;
   &:checked + .single-choise-visual__text {
     &:before {
-      border-color: #fa0056;
+      border-color: var(--app-color);
     }
     &:after {
       opacity: 1;

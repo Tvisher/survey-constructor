@@ -69,7 +69,7 @@ export default {
 .slider-touch-area {
   cursor: grab !important;
   background-color: transparent;
-  border: 2px solid #fa0056;
+  border: 2px solid var(--app-color);
   border-radius: 50%;
   width: 16px;
   height: 16px;
@@ -91,7 +91,7 @@ export default {
   background: rgba(0, 66, 105, 0.07);
 }
 .slider-connect {
-  background-color: #fa0056 !important;
+  background-color: var(--app-color) !important;
 }
 .slider-tooltip {
   background-color: #fff !important;

@@ -69,7 +69,7 @@ export default {
 .dp__range_start,
 .dp__active_date,
 .dp__overlay_cell_active {
-  background-color: #fa0056;
+  background-color: var(--app-color);
 }
 .dp__range_between {
   border-radius: 0% !important;
@@ -84,7 +84,7 @@ export default {
   border-radius: 50%;
 }
 .dp__today {
-  border-color: #fa0056;
+  border-color: var(--app-color);
 }
 .dp__menu_inner {
   padding: 30px;

@@ -219,7 +219,7 @@ export default {
   border: 1px solid rgba(0, 66, 105, 0.28);
   overflow: hidden;
   &:hover {
-    border-color: #fa0056 !important;
+    border-color: var(--app-color) !important;
     transition: border 0.2s ease-in-out;
   }
   &::before {
@@ -229,7 +229,7 @@ export default {
     bottom: 0;
     right: 0;
     content: "";
-    background-color: #fa0056;
+    background-color: var(--app-color);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;

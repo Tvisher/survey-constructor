@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid';
 import pollTypesList from './pollTypesList';
+import axios from "axios";
 
 
 function findPollById(state, pollItemId) {
@@ -11,9 +12,32 @@ function findPollById(state, pollItemId) {
 
 export default createStore({
   state: {
+    pollTypesList: [],
     currentPageId: '1',
     pagesLimit: 5,
     pagesMinLength: 1,
+    colors: [
+      { name: "Intercom", value: "#FA0056" },
+      { name: "Оранжевый", value: "#FF6B00" },
+      { name: "Желтый", value: "#FFD600" },
+      { name: "Салатовый", value: "#BDFF00" },
+      { name: "Зеленый", value: "#24D421" },
+      { name: "Морской", value: "#13EADD" },
+      { name: "Синий", value: "#1369EA" },
+      { name: "Фиолетовый", value: "#7213EA" },
+      { name: "Пурпурный", value: "#EA13D4" },
+    ],
+    appSettings: {
+      appTitle: 'Заголовок опроса',
+      appDescription: "Описание для  опроса",
+      appPromo: "",
+      appLogo: {
+        name: 'formImage.jpg',
+        path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
+      },
+      appColor: { name: "Intercom", value: "#FA0056" },
+    },
+
     pollPages: [
       {
         id: "1",
@@ -218,6 +242,9 @@ export default createStore({
   },
   getters: {},
   mutations: {
+    editAppSettings(state, { field, payload }) {
+      state.appSettings[field] = payload;
+    },
 
     addImageinPoll(state, { pollItemId, newImageData }) {
       const currentPollItem = findPollById(state, pollItemId);
@@ -405,6 +432,24 @@ export default createStore({
       setTimeout(() => {
         commit("setPollTypesListInApp", pollTypesList)
       }, 0);
+      axios
+        .get('https://dev.vnutricom.ru/bitrix/templates/quiz/polltypeslist.php',
+          {
+            method: 'GET',
+            mode: 'no-cors',
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+            credentials: 'same-origin',
+          })
+        .then((response) => {
+          console.info(response.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }
 });

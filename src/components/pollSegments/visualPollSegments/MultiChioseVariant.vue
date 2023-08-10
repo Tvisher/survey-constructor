@@ -57,6 +57,6 @@ export default {
 .multiple-choise-visual
   .single-choise-visual__input:checked
   + .single-choise-visual__text:before {
-  background-color: #fa0056;
+  background-color: var(--app-color);
 }
 </style>

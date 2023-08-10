@@ -1,20 +1,19 @@
 <template>
-  <InnerContent />
+  <div class="container">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import InnerContent from "./components/InnerContent.vue";
 export default {
   name: "App",
-  components: {
-    InnerContent,
-  },
   data() {
     return {};
   },
   computed: {},
   methods: {},
-  mounted() {
+
+  beforeMount() {
     this.$store.dispatch("setPollTypesList");
   },
 };
@@ -23,5 +22,8 @@ export default {
 <style>
 * {
   font-family: Montserrat;
+}
+:root {
+  --app-color: #fa0056;
 }
 </style>

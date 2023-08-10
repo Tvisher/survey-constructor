@@ -1,9 +1,12 @@
 <template>
   <div class="poll-body">
+    <div class="editor-descr">Изображение для вопроса</div>
     <app-image-loader
-      :pollItemId="pollItemId"
-      :pollImage="pollItemData.pollImage"
+      :addedImage="pollItemData.pollImage"
+      @imageAdded="addImageInPoll"
     />
+    <hr />
+
     <app-editor-component
       :pollItemId="pollItemId"
       :editorValue="pollItemData.editorValue"
@@ -91,6 +94,15 @@ export default {
       ) {
         return "checkbox";
       }
+    },
+  },
+  methods: {
+    addImageInPoll(newImageData) {
+      const { pollItemId } = this;
+      this.$store.commit("addImageinPoll", {
+        newImageData,
+        pollItemId,
+      });
     },
   },
 };

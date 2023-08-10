@@ -1,13 +1,15 @@
 <template>
-  <div class="container">
-    <div class="app-container">
+  <div class="app-container">
+    <div class="constructor__handlers">
+      <router-link to="/" class="btn red-btn">К настройкам</router-link>
+    </div>
+    <div class="app-container__inner">
       <div class="polls-container">
         <polls-pages-pagination
           :pollPagesList="pollPagesList"
           :currentPageId="currentPageId"
           :pagesLimit="pagesLimit"
         />
-
         <div class="poll-pages">
           <app-poll-page
             :currenPage="currentPollPage"
@@ -16,38 +18,21 @@
           />
         </div>
       </div>
-      <div class="poll-list-sidebar">
-        <div class="poll-list-sidebar__wrapper">
-          <draggable
-            :list="pollTypesList"
-            handle=".sidebar-item__wrapper"
-            v-bind="dragOptionsInSidebar"
-          >
-            <app-sidebar-item
-              v-for="(pollTemplate, index) in pollTypesList"
-              :key="index"
-              :name="pollTemplate.typeName"
-              :type="pollTemplate.type"
-            />
-          </draggable>
-        </div>
-      </div>
+      <app-sidebar :pollTypesList="pollTypesList" />
     </div>
   </div>
 </template>
 
 <script>
-import { VueDraggableNext } from "vue-draggable-next";
-import AppSidebarItem from "./SidebarItem.vue";
 import AppPollPage from "./PollPage.vue";
+import AppSidebar from "./Sidebar.vue";
 import PollsPagesPagination from "./PollsPagesPagination";
 import { mapState } from "vuex";
 export default {
   components: {
     AppPollPage,
-    AppSidebarItem,
+    AppSidebar,
     PollsPagesPagination,
-    draggable: VueDraggableNext,
   },
   data() {
     return {};
@@ -74,18 +59,6 @@ export default {
         (page) => page.id === this.currentPageId
       );
       return pageIndex + 1;
-    },
-
-    dragOptionsInSidebar() {
-      return {
-        group: { name: "pollTypes", pull: "clone", put: false },
-        scrollSensitivity: 200,
-        forceFallback: true,
-        animation: 0,
-        disabled: false,
-        sort: false,
-        ghostClass: "sidebrGhostItem",
-      };
     },
   },
 };

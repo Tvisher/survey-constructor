@@ -1,0 +1,108 @@
+<template>
+  <div class="color-selection">
+    <div
+      class="color-selection__item"
+      v-for="(color, index) in colors"
+      :key="index"
+      :style="{
+        borderColor:
+          color.value == defaultColor.value
+            ? color.value
+            : 'rgba(0, 66, 105, 0.28)',
+      }"
+    >
+      <input
+        :checked="color.value == defaultColor.value"
+        type="radio"
+        :value="color.value"
+        name="color-selection"
+        class="color-selection__input"
+        @input="colorSelect(color)"
+      />
+      <div
+        class="color-selection__example"
+        :style="{
+          borderColor: color.value,
+          backgroundColor: color.value,
+        }"
+      ></div>
+      <div class="color-selection__name">{{ color.name }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    defaultColor: { type: Object },
+    colors: { type: Array },
+  },
+  data() {
+    return {
+      selectedColor: {},
+    };
+  },
+  computed: {},
+
+  methods: {
+    colorSelect(color) {
+      this.$emit("colorSelect", color);
+      this.selectedColor = color;
+      document.body.style.setProperty("--app-color", color.value);
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.color-selection {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+  margin-bottom: 25px;
+}
+.color-selection__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 5px;
+  padding: 10px;
+  width: calc(25% - 10px);
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.color-selection__input {
+  margin: 0;
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+  &:checked + .color-selection__example::before {
+    opacity: 0;
+  }
+}
+
+.color-selection__example {
+  width: 24px;
+  height: 24px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  position: relative;
+  overflow: hidden;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+  }
+}
+</style>
