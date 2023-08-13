@@ -1,24 +1,33 @@
 import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import SettingsPage from '../components/SettingsPage';
 import ConstructorPage from '../components/ConstructorPage';
+import NotFound from '../components/NotFound';
 
 const routes = [
     {
         path: '/',
+        name: 'SettingsPage',
         component: SettingsPage
     },
     {
         path: '/constructor',
+        name: 'Constructor',
         component: ConstructorPage
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound
     },
 
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
     scrollBehavior(to, from, savedPosition) {
         return { top: 0 }
     },
+    // history: createWebHistory('/poll'),
+    history: createWebHashHistory(),
     routes,
 })
 

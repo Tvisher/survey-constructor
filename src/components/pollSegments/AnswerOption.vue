@@ -11,7 +11,7 @@
           @input="$emit('editVariant', $event)"
         />
       </label>
-      <label class="custom-cb">
+      <label class="custom-cb" v-if="hasCorrectAnswers">
         <input
           :type="inputsType"
           class="custom-cb__checkbox"
@@ -29,6 +29,8 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   props: {
     numberPosition: { type: [String, Number] },
@@ -41,6 +43,9 @@ export default {
     return {};
   },
   computed: {
+    ...mapState({
+      hasCorrectAnswers: (state) => state.appSettings.hasCorrectAnswers,
+    }),
     optionNumber() {
       return this.numberPosition + 1;
     },
@@ -58,4 +63,18 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.variant-item.ghost-potion {
+  margin-right: 0;
+  margin-left: 0;
+  border-style: dashed;
+  border-color: var(--app-color);
+  * {
+    opacity: 0;
+  }
+}
+.variant-item.sortable-drag {
+  opacity: 1 !important;
+  background: #ecf4ff;
+}
+</style>

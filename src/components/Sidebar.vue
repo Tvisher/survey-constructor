@@ -36,11 +36,18 @@ export default {
         animation: 0,
         disabled: false,
         sort: false,
-        ghostClass: "sidebrGhostItem",
       };
     },
   },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.sortable-drag {
+  opacity: 1 !important;
+  background-color: #fff;
+  .sidebar-item__btn {
+    margin-left: 0 !important;
+  }
+}
+</style>

@@ -39,7 +39,7 @@
     </transition-group>
   </div>
   <button
-    class="btn red-btn add-btn"
+    class="btn app-btn add-btn"
     v-if="permissionToAddOption"
     @click="addPair"
   >

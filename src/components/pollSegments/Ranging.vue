@@ -41,7 +41,7 @@
     </transition-group>
   </draggable>
   <button
-    class="btn red-btn add-btn"
+    class="btn app-btn add-btn"
     v-if="permissionToAddOption"
     @click="addOption"
   >
@@ -126,8 +126,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .variant-item__container {
+  border-radius: 8px;
   align-items: center;
   padding: 8px 15px;
   margin-right: -15px;
@@ -158,14 +159,18 @@ export default {
   margin-top: 0;
 }
 
-.flip-option-list-move {
-  /* transition: transform 0.5s; */
-}
-.no-move {
-  transition: transform 0s;
-}
 .ghost-potion {
-  opacity: 0.8;
+  margin-right: 0;
+  margin-left: 0;
+  & > * {
+    opacity: 0;
+  }
+  border-style: dashed;
+  border-color: var(--app-color);
+}
+
+.sortable-drag {
+  opacity: 1 !important;
   background: #ecf4ff;
 }
 </style>

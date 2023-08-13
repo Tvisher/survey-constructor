@@ -26,7 +26,7 @@
     </transition-group>
   </draggable>
   <button
-    class="btn red-btn add-btn"
+    class="btn app-btn add-btn"
     v-if="permissionToAddOption"
     @click="addOption"
   >
@@ -119,12 +119,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.no-move {
-  transition: transform 0s;
-}
-.ghost-potion {
-  opacity: 0.8;
-  background: #ecf4ff;
-}
-</style>
+<style scoped lang="scss"></style>

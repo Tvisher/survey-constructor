@@ -1,7 +1,12 @@
 <template>
   <div class="toggle-option">
     <label class="toggle-option__label">
-      <input type="checkbox" class="toggle-option__cb" />
+      <input
+        type="checkbox"
+        :checked="toggleParam"
+        class="toggle-option__cb"
+        @input="$emit('toggleCheck', $event.target.checked)"
+      />
       <div class="toggle-option__text">
         <slot></slot>
       </div>
@@ -22,6 +27,9 @@
 import Popper from "vue3-popper";
 
 export default {
+  props: {
+    toggleParam: { type: Boolean, default: false },
+  },
   components: {
     Popper,
   },
@@ -38,8 +46,8 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   margin: 0;
   opacity: 0;
   z-index: 2;

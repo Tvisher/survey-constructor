@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="constructor__handlers">
-      <router-link to="/" class="btn red-btn">К настройкам</router-link>
+      <router-link to="/" class="btn app-btn">К настройкам</router-link>
     </div>
     <div class="app-container__inner">
       <div class="polls-container">

@@ -175,7 +175,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .rangin-visual__text {
   &::selection {
     background-color: transparent;
@@ -264,7 +264,18 @@ export default {
   margin-bottom: 4px;
 }
 
-.rangin-visual__item.ghost-potion {
+.ghost-potion {
+  margin-right: 0;
+  margin-left: 0;
+  & > * {
+    opacity: 0;
+  }
+  border-style: dashed;
+  border-color: var(--app-color);
+}
+.sortable-drag {
+  opacity: 1 !important;
+  background: #ecf4ff;
   &::before {
     opacity: 1;
     visibility: visible;

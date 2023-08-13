@@ -34,11 +34,7 @@
       @end="isDragging = false"
     >
       <div class="poll-page-zone" v-if="!hasPollElements">
-        <img
-          class="poll-page-zone__image"
-          src="./../assets/img/add-ico.svg"
-          alt=""
-        />
+        <div class="poll-page-zone__image"></div>
         <span>Перенесите нужный вам тип вопроса в эту</span>
         <span>область страницы</span>
       </div>
@@ -131,39 +127,37 @@ export default {
 .no-move {
   transition: transform 0s;
 }
-.ghost {
-  opacity: 0.5;
-  background-color: #c8ebfb;
-}
+// .ghost {
+//   opacity: 0.5;
+//   background-color: #c8ebfb;
+// }
+
+.poll-item.ghost,
 .sidebar-item.ghost {
-  opacity: 0.7;
-  margin-bottom: 0;
   background-color: transparent;
-  .sidebar-item__wrapper {
-    padding: 30px 20px !important;
-  }
-  .sidebar-item__ico {
-    width: 24px;
-    height: 24px;
-  }
-  .sidebar-item__name {
-    font-size: 18px;
-    font-weight: 500;
-  }
-  .sidebar-item__btn {
-    display: none;
-  }
-}
-
-.fade-page {
-  &-enter-active,
-  &-leave-active {
-    transition: opacity 0.5s ease;
-  }
-
-  &-enter-from,
-  &-leave-to {
+  border: 1px dashed var(--app-color);
+  border-radius: 4px;
+  & > * {
     opacity: 0;
   }
+}
+// .sidebar-item.ghost {
+//   .sidebar-item__btn,
+//   .sidebar-item__wrapper::after,
+//   .sidebar-item__ico {
+//     display: none;
+//   }
+//   .sidebar-item__name {
+//     width: 100%;
+//     font-size: 22px;
+//   }
+//   border: 1px dashed var(--app-color);
+// }
+
+.poll-item.sortable-drag {
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  border: 1px solid #ecf4ff;
+  transform: rotate(-3deg);
+  opacity: 1 !important;
 }
 </style>

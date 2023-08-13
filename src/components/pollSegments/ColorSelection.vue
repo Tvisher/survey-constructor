@@ -1,6 +1,6 @@
 <template>
   <div class="color-selection">
-    <div
+    <label
       class="color-selection__item"
       v-for="(color, index) in colors"
       :key="index"
@@ -27,7 +27,7 @@
         }"
       ></div>
       <div class="color-selection__name">{{ color.name }}</div>
-    </div>
+    </label>
   </div>
 </template>
 
@@ -80,8 +80,8 @@ export default {
   z-index: 2;
   left: 0;
   top: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   cursor: pointer;
   &:checked + .color-selection__example::before {

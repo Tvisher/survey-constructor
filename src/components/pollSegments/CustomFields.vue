@@ -84,7 +84,7 @@
     </transition-group>
   </draggable>
   <button
-    class="btn red-btn add-btn"
+    class="btn app-btn add-btn"
     v-if="permissionToAddOption"
     @click="addOption"
   >
@@ -178,12 +178,22 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .custom-cb {
   margin-right: 20px;
 }
 .ghost-potion {
-  opacity: 0.8;
+  margin-right: 0;
+  margin-left: 0;
+  & > * {
+    opacity: 0;
+  }
+  border-style: dashed;
+  border-color: var(--app-color);
+}
+
+.sortable-drag {
+  opacity: 1 !important;
   background: #ecf4ff;
 }
 </style>

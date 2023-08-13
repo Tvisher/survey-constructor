@@ -16,17 +16,7 @@ export default createStore({
     currentPageId: '1',
     pagesLimit: 5,
     pagesMinLength: 1,
-    colors: [
-      { name: "Intercom", value: "#FA0056" },
-      { name: "Оранжевый", value: "#FF6B00" },
-      { name: "Желтый", value: "#FFD600" },
-      { name: "Салатовый", value: "#BDFF00" },
-      { name: "Зеленый", value: "#24D421" },
-      { name: "Морской", value: "#13EADD" },
-      { name: "Синий", value: "#1369EA" },
-      { name: "Фиолетовый", value: "#7213EA" },
-      { name: "Пурпурный", value: "#EA13D4" },
-    ],
+    colors: [],
     appSettings: {
       appTitle: 'Заголовок опроса',
       appDescription: "Описание для  опроса",
@@ -37,6 +27,7 @@ export default createStore({
         path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
       },
       appColor: { name: "Intercom", value: "#FA0056" },
+      hasCorrectAnswers: false,
     },
 
     pollPages: [
@@ -425,7 +416,9 @@ export default createStore({
     setPollTypesListInApp(state, pollTypesList) {
       state.pollTypesList = pollTypesList;
     },
-
+    setColorListInApp(state, colorList) {
+      state.colors = colorList;
+    },
 
   },
   actions: {
@@ -451,6 +444,42 @@ export default createStore({
         .catch((err) => {
           console.error(err);
         });
+    },
+
+    setCollorsTemplates({ commit }) {
+      const colors = [
+        { name: "Intercom", value: "#FA0056" },
+        { name: "Оранжевый", value: "#FF6B00" },
+        { name: "Желтый", value: "#FFD600" },
+        { name: "Салатовый", value: "#BDFF00" },
+        { name: "Зеленый", value: "#24D421" },
+        { name: "Морской", value: "#13EADD" },
+        { name: "Синий", value: "#1369EA" },
+        { name: "Фиолетовый", value: "#7213EA" },
+        { name: "Пурпурный", value: "#EA13D4" },
+      ];
+
+      axios
+        .get('https://dev.vnutricom.ru/bitrix/templates/quiz/pollcolorlist.php',
+          {
+            method: 'GET',
+            mode: 'no-cors',
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+            credentials: 'same-origin',
+          })
+        .then((response) => {
+          const colorsRes = response.data;
+          commit("setColorListInApp", colorsRes)
+        })
+        .catch((err) => {
+          console.error(err);
+          commit("setColorListInApp", colors)
+        });
+
     }
   }
 });
