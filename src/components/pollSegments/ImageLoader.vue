@@ -32,11 +32,11 @@
       v-else
       v-bind="getRootProps()"
       class="dropzone-wrapper"
-      :class="{ loading: loading }"
+      :class="{ uploading: loading }"
     >
       <input v-bind="getInputProps()" />
       <div class="poll-dropzone">
-        <div class="dropzone-bg" :class="{ loading: loading }">
+        <div class="dropzone-bg" :class="{ uploading: loading }">
           <span class="loader" v-if="loading"></span>
         </div>
         <div class="loading__text" v-if="loading">
@@ -112,30 +112,23 @@ export default {
 
     const saveFiles = (acceptFile) => {
       const formData = new FormData();
-      formData.append(`${acceptFile[0].name}`, acceptFile);
-
+      formData.append("poll", acceptFile[0]);
       loading.value = true;
-      setTimeout(() => {
-        //   axios
-        //     .post(url, formData, {
-        //       headers: {
-        //         "Content-Type": "multipart/form-data",
-        //       },
-        //     })
-        //     .then((response) => {
-        //       console.info(response.data);
-        //     })
-        //     .catch((err) => {
-        //       console.error(err);
-        //     });
-        const newFileData = {
-          name: "uploadedFileName.jpg",
-          path: "https://avatars.dzeninfra.ru/get-zen_doc/1567788/pub_5f7eeeb81e2da6289ede72dc_5f7eef3c15099c198a714de0/scale_1200",
-        };
-        addImageinPoll(newFileData);
-        imageFile.value = [{ ...newFileData }];
-        loading.value = false;
-      }, 1400);
+      axios({
+        method: "post",
+        url: "/bitrix/templates/quiz/files.php",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+        .then((response) => {
+          const newFileData = response.data.fileInfo;
+          addImageinPoll(newFileData);
+          imageFile.value = [{ ...newFileData }];
+          loading.value = false;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     };
 
     const maxMbSize = 1.5;
@@ -166,8 +159,11 @@ export default {
 </script>
 
 <style lang="scss">
-.dropzone-wrapper.loading {
+.dropzone-wrapper.uploading {
   pointer-events: none;
+}
+.dropzone-wrapper {
+  width: 100%;
 }
 
 .file-name {
@@ -203,7 +199,7 @@ export default {
   background-position: center;
   width: 72px;
   height: 72px;
-  &.loading {
+  &.uploading {
     background-image: none;
   }
 
@@ -280,7 +276,7 @@ export default {
   box-sizing: border-box;
   inset: -10px;
   border-radius: 50%;
-  border: 10px solid #ff3d00;
+  border: 10px solid var(--app-color);
   animation: prixClipFix 2s infinite linear;
 }
 

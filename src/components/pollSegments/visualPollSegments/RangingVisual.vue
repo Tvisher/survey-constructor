@@ -101,9 +101,9 @@
     </draggable>
   </div>
 
-  <h1 style="color: red; text-align: center" v-if="correctOrder">
+  <!-- <h3 style="color: red; text-align: center" v-if="correctOrder">
     Верный порядок, Ура!!!
-  </h1>
+  </h3> -->
 </template>
 
 <script>
@@ -136,7 +136,6 @@ export default {
       };
     },
     correctOrder() {
-      console.log(this.optionsData.optionsList, this.optionsList);
       return this.optionsList.every(
         (item, i) => item.id == this.optionsData.optionsList[i].id
       );
@@ -168,9 +167,15 @@ export default {
     },
   },
   beforeMount() {
-    this.optionsList = [...this.optionsData.optionsList].sort(
-      () => Math.random() - 0.5
-    );
+    const sortList = () => {
+      this.optionsList = [...this.optionsData.optionsList].sort(
+        () => Math.random() - 0.5
+      );
+    };
+
+    while (this.correctOrder) {
+      sortList();
+    }
   },
 };
 </script>

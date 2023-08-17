@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid';
-import pollTypesList from './pollTypesList';
+import pollTypesListDefault from './pollTypesList';
 import axios from "axios";
+// import devJson from "./dev-api.js";
 
 
 function findPollById(state, pollItemId) {
@@ -9,226 +10,35 @@ function findPollById(state, pollItemId) {
   return currentPollPage.pollList.find((poll) => poll.id === pollItemId);
 }
 
+const quizID = document.querySelector('#app').dataset.pollId;
+const quizType = document.querySelector('#app').dataset.pollType;
 
 export default createStore({
   state: {
+    appType: null,
+    applicationReady: false,
     pollTypesList: [],
-    currentPageId: '1',
+    currentPageId: "1",
     pagesLimit: 5,
     pagesMinLength: 1,
     colors: [],
     appSettings: {
-      appTitle: 'Заголовок опроса',
-      appDescription: "Описание для  опроса",
+      appTitle: "",
+      appDescription: "",
       appPromo: "",
       appFinalMessage: "",
-      appLogo: {
-        name: 'formImage.jpg',
-        path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
-      },
-      appColor: { name: "Intercom", value: "#FA0056" },
       hasCorrectAnswers: false,
+      appColor: { name: "Intercom", value: "#FA0056" },
+      appLogo: {
+        name: "",
+        path: ""
+      },
     },
-
     pollPages: [
       {
         id: "1",
-        pageComment: 'Комментарий к первой странице',
-        pollList: [
-          {
-            id: '8',
-            type: 'custom-fields',
-            typeName: 'Кастомные поля',
-            typeDescr: 'Описание для элемента опроса Кастомные поля',
-            data: {
-              pollImage: {
-                name: 'formImage.jpg',
-                path: 'https://ru.experrto.io/blog/media/2020/06/19/1_DIYRN40.png'
-              },
-              editorValue: {
-                "ops": [
-                  { "insert": "Пожалуйста, дайте нам обратную связь, что бы мы могли сделать наш сервис лучше " },
-                  { "attributes": { "italic": true, "bold": true }, "insert": "=)" }, { "insert": "\n" }
-                ]
-              },
-              optionsData: {
-                minOptionsLength: 1,
-                maxOptionsLength: 10,
-                optionsList:
-                  [
-                    { "id": "1", "type": "text", "value": "Имя" },
-                    { "id": "92338df8-c3b0-4ccd-a7fa-5b56993a05d2", "type": "text", "value": "Фамилия" },
-                    { "id": "4f212647-b594-4740-8619-8ea7150edc26", "type": "email", "value": "Email" },
-                    { "id": "9b3f5549-0e20-4b96-ace4-eaf8a80a0edb", "type": "phone", "value": "Ваш телефон" },
-                    { "id": "fbc3b9e9-e836-4cd7-a8ca-9b7e97e16a10", "type": "textarea", "value": "Напишите нам что думаете о нашем сервисе" }
-                  ],
-              },
-            }
-          },
-          {
-            id: '7',
-            type: 'date',
-            typeName: 'Дата',
-            typeDescr: 'Описание для элемента опроса Дата',
-            data: {
-              pollImage: {
-                name: "calendar.jpg",
-                path: "https://ru-cafe.ru/content/images/news/kalendar-s-chasami.webp"
-              },
-              editorValue: { "ops": [{ "insert": "Укажите дату, когда вам будет " }, { "attributes": { "bold": true }, "insert": "удобно " }, { "insert": "посетить наше мероприятие\n" }] },
-              dateData: {
-                range: false,
-              }
-            }
-          },
-          {
-            id: '6',
-            type: 'ranging',
-            typeName: 'Ранжирование',
-            typeDescr: 'Описание для элемента опроса Ранжирование',
-            data: {
-              pollImage: {
-                name: "calendar.jpg",
-                path: "https://ru-cafe.ru/content/images/news/kalendar-s-chasami.webp"
-              },
-              editorValue: { "ops": [{ "insert": "Укажите верный порядок дней недели\n" }] },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                optionsList: [
-                  { id: '1', value: "Понедельник" },
-                  { id: '2', value: "Вторник" },
-                  { id: '3', value: "Среда" },
-                  { id: '4', value: "Четверг" },
-                  { id: '5', value: "Пятница" },
-                  { id: '6', value: "Суббота" },
-                  { id: '7', value: "Воскресенье" },
-                ],
-              },
-            }
-          },
-          {
-            id: '1',
-            type: 'single-choice',
-            typeName: 'Одиночный выбор',
-            typeDescr: 'Описание для элемента опроса Одиночный выбор',
-            data: {
-              editorValue: { "ops": [{ "insert": "Какой твой любимый персонаж в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Необходимо выбрать только одного" }, { "insert": "\n" }] },
-              pollImage: {
-                name: 'image.jpg',
-                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
-              },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                currentAnswerId: [],
-                optionsList: [
-                  { "id": "1", "value": "Рик" },
-                  { "id": "2", "value": "Морти" },
-                  { "id": "3", "value": "Саммер" },
-                  { "id": "4", "value": "Джерри" },
-                  { "id": "5", "value": "Бет" }
-                ],
-              },
-            }
-          },
-          {
-            id: '2',
-            type: 'drop-down-list',
-            typeName: 'Выпадающий список',
-            typeDescr: 'Описание для элемента опроса Выпадающий список',
-            data: {
-              editorValue: { "ops": [{ "insert": "Какой твой любимый персонаж в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Необходимо выбрать только одного" }, { "insert": "\n" }] },
-              pollImage: {
-                name: 'image.jpg',
-                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
-              },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                currentAnswerId: [],
-                optionsList: [
-                  { "id": "1", "value": "Рик" },
-                  { "id": "2", "value": "Морти" },
-                  { "id": "3", "value": "Саммер" },
-                  { "id": "4", "value": "Джерри" },
-                  { "id": "5", "value": "Бет" }
-                ],
-              },
-            }
-          },
-          {
-            id: '3',
-            type: 'multiple-drop-down-list',
-            typeName: 'Множественный вып. список',
-            typeDescr: 'Описание для элемента опроса Множественный вып. список',
-            data: {
-              editorValue: { "ops": [{ "insert": "Какие персонажи тебе больше всего нравятся в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Можно выбрать несколько" }, { "insert": "\n" }] },
-              pollImage: {
-                name: 'image.jpg',
-                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
-              },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                currentAnswerId: [],
-                optionsList: [
-                  { "id": "1", "value": "Рик" },
-                  { "id": "2", "value": "Морти" },
-                  { "id": "3", "value": "Саммер" },
-                  { "id": "4", "value": "Джерри" },
-                  { "id": "5", "value": "Бет" },
-                  { "id": "6", "value": "Злой Морти" },
-                  { "id": "7", "value": "Мистер Жопосранчик" }
-                ],
-              },
-            }
-          },
-          {
-            id: '4',
-            type: 'multiple-choice',
-            typeName: 'Множественный выбор',
-            typeDescr: 'Описание для элемента опроса Множественный выбор',
-            data: {
-              editorValue: { "ops": [{ "insert": "Какие персонажи тебе больше всего нравятся в сериале \"Рик и Морти\"? \n" }, { "attributes": { "italic": true, "script": "sub" }, "insert": "Можно выбрать несколько" }, { "insert": "\n" }] },
-              pollImage: {
-                name: 'image.jpg',
-                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
-              },
-              optionsData: {
-                minOptionsLength: 2,
-                maxOptionsLength: 10,
-                currentAnswerId: [],
-                optionsList: [
-                  { "id": "1", "value": "Рик" },
-                  { "id": "2", "value": "Морти" },
-                  { "id": "3", "value": "Саммер" },
-                  { "id": "4", "value": "Джерри" },
-                  { "id": "5", "value": "Бет" }
-                ],
-              },
-            }
-          },
-          {
-            id: '5',
-            type: 'range-selection',
-            typeName: 'Выбор диапазона',
-            typeDescr: 'Описание для элемента опроса Выбор диапазона',
-            data: {
-              editorValue: { "ops": [{ "insert": "Сколько часов в день ты страдаешь у монитра?\n" }, { "attributes": { "underline": true, "italic": true, "script": "sub" }, "insert": "Укажи диапазон" }, { "insert": "\n" }] },
-              pollImage: {
-                name: 'image.jpg',
-                path: 'https://www.soyuz.ru/public/uploads/files/5/7211786/1005x558_20180704173248b3636157a5.jpg'
-              },
-              rangeData: {
-                min: '1',
-                max: '24',
-                defaultMin: '3',
-                defaultMax: '8',
-              }
-            }
-          },
-        ],
+        pageComment: '',
+        pollList: [],
       },
     ],
   },
@@ -289,7 +99,7 @@ export default createStore({
       currentPage.pageComment = commentValue;
     },
 
-    removePollInPage(state, { pollId }) {
+    removePollInPage(state, pollId) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
       currentPollPage.pollList = currentPollPage.pollList.filter(poll => poll.id !== pollId);
     },
@@ -413,73 +223,81 @@ export default createStore({
       state.pollPages = state.pollPages.filter(page => page.id !== pageId);
     },
 
-    setPollTypesListInApp(state, pollTypesList) {
-      state.pollTypesList = pollTypesList;
+
+
+
+    setQuizState(state, newState) {
+      Object.assign(state, newState);
+      document.body.style.setProperty("--app-color", state.appSettings.appColor.value);
+      state.applicationReady = true;
+      state.appType = quizType;
+      if (quizType === 'viktorina') {
+        state.appSettings.hasCorrectAnswers = true;
+      }
     },
+
+    setPollTypesListInApp(state, resPollTypesList) {
+      const typeToData = Object.fromEntries(pollTypesListDefault.map(obj => [obj.type, obj.data]));
+      const appPollTypesList = resPollTypesList.map(obj => ({
+        ...obj,
+        data: typeToData[obj.type] || null,
+      }));
+      state.pollTypesList = appPollTypesList;
+    },
+
     setColorListInApp(state, colorList) {
       state.colors = colorList;
     },
-
   },
   actions: {
-    setPollTypesList({ commit }) {
-      setTimeout(() => {
-        commit("setPollTypesListInApp", pollTypesList)
-      }, 0);
-      axios
-        .get('https://dev.vnutricom.ru/bitrix/templates/quiz/polltypeslist.php',
-          {
-            method: 'GET',
-            mode: 'no-cors',
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-            credentials: 'same-origin',
-          })
-        .then((response) => {
-          console.info(response.data);
+    getQuizTemplate({ commit }) {
+      axios.get('/bitrix/templates/quiz/itemjson.php', {
+        params: {
+          id: quizID,
+          type: quizType,
+        }
+      })
+        .then(function (response) {
+          console.table(response);
+          const resJson = response.data;
+          const resState = JSON.parse(resJson.resState);
+          const resColors = resJson.colors;
+          const resPollTypesList = resJson.pollTypesList;
+
+          commit("setQuizState", resState);
+          commit("setColorListInApp", resColors)
+          commit("setPollTypesListInApp", resPollTypesList)
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(function (error) {
+          console.log(error);
+          // DEV
+          // const resState = JSON.parse(devJson.resState);
+          // const resColors = devJson.colors;
+          // const resPollTypesList = devJson.pollTypesList;
+          // commit("setQuizState", resState);
+          // commit("setColorListInApp", resColors)
+          // commit("setPollTypesListInApp", resPollTypesList)
         });
     },
 
-    setCollorsTemplates({ commit }) {
-      const colors = [
-        { name: "Intercom", value: "#FA0056" },
-        { name: "Оранжевый", value: "#FF6B00" },
-        { name: "Желтый", value: "#FFD600" },
-        { name: "Салатовый", value: "#BDFF00" },
-        { name: "Зеленый", value: "#24D421" },
-        { name: "Морской", value: "#13EADD" },
-        { name: "Синий", value: "#1369EA" },
-        { name: "Фиолетовый", value: "#7213EA" },
-        { name: "Пурпурный", value: "#EA13D4" },
-      ];
-
-      axios
-        .get('https://dev.vnutricom.ru/bitrix/templates/quiz/pollcolorlist.php',
-          {
-            method: 'GET',
-            mode: 'no-cors',
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Content-Type': 'application/json',
-            },
-            withCredentials: true,
-            credentials: 'same-origin',
-          })
-        .then((response) => {
-          const colorsRes = response.data;
-          commit("setColorListInApp", colorsRes)
+    setQuizData({ state }) {
+      let newAppData = JSON.parse(JSON.stringify(state));
+      newAppData.pollTypesList = [];
+      newAppData.colors = [];
+      newAppData.applicationReady = false;
+      newAppData = JSON.stringify(newAppData);
+      axios.get('/bitrix/templates/quiz/itemjson.php', {
+        params: {
+          id: quizID,
+          payload: newAppData,
+        }
+      })
+        .then(function (response) {
+          console.log(response.data);
         })
-        .catch((err) => {
-          console.error(err);
-          commit("setColorListInApp", colors)
+        .catch(function (error) {
+          console.log(error);
         });
-
     }
   }
 });

@@ -51,7 +51,11 @@
             />
           </svg>
         </button>
-        <button class="poll-remove" @click="removePoll">
+        <!-- <button class="poll-remove" @click="showModal = true"> -->
+        <button
+          class="poll-remove"
+          @click="$emit('removePollElement', { pollItemId, pollItemName })"
+        >
           <svg
             width="16"
             height="16"
@@ -114,11 +118,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["removePollInPage"]),
-    removePoll() {
-      const pollId = this.pollItemId;
-      this.removePollInPage({ pollId });
-    },
     pollEdit() {
       this.isVisualType = !this.isVisualType;
     },

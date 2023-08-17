@@ -1,9 +1,15 @@
 <template>
-  <div class="poll-app">
-    <div class="container">
-      <router-view></router-view>
+  <transition name="fade">
+    <div class="poll-app" v-if="applicationReady">
+      <div class="container">
+        <router-view v-slot="{ Component }">
+          <transition name="fade">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -11,36 +17,18 @@ import { mapState } from "vuex";
 
 export default {
   name: "App",
-  data() {
-    return {};
-  },
   computed: {
     ...mapState({
       appColor: (state) => state.appSettings.appColor,
+      applicationReady: (state) => state.applicationReady,
     }),
   },
   methods: {},
 
   beforeMount() {
-    this.$store.dispatch("setCollorsTemplates");
-    this.$store.dispatch("setPollTypesList");
-
-    if (this.appColor && this.appColor.value) {
-      document.body.style.setProperty("--app-color", this.appColor.value);
-    }
+    this.$store.dispatch("getQuizTemplate");
   },
 };
 </script>
 
-<style>
-.poll-app {
-  padding-bottom: 90px;
-  min-height: 100vh;
-}
-* {
-  font-family: Montserrat;
-}
-:root {
-  --app-color: #fa0056;
-}
-</style>
+<style></style>

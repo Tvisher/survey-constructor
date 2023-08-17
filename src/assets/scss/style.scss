@@ -2,8 +2,14 @@
 @import "./pollListStyles";
 @import "vue-select/dist/vue-select.css";
 
+:root {
+  --app-color: #fa0056;
+}
+
 #app {
-  margin-top: 60px;
+  padding: 60px 0;
+  min-height: 100vh;
+  font-family: Montserrat;
 }
 
 .btn {
@@ -14,7 +20,7 @@
   border-radius: 4px;
   font-size: 14px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 140%;
   width: fit-content;
   transition: background-color 0.2s ease-in-out;
@@ -145,8 +151,6 @@
   margin-bottom: 20px;
 }
 
-.app-container {
-}
 .app-container__inner {
   align-items: flex-start;
   display: flex;
@@ -161,7 +165,7 @@
   padding: 20px;
   background: #ecf4ff;
   position: sticky;
-  top: 20px;
+  top: 85px;
   left: 0;
   border-radius: 8px;
 }
@@ -309,7 +313,7 @@ hr {
   display: flex;
   align-items: flex-start;
   padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 4px;
   overflow: hidden;
   margin-right: -15px;
   margin-left: -15px;
@@ -530,4 +534,23 @@ textarea.variant-item__filed {
 
 .sortable-drag {
   box-shadow: 0px 0px 4px 0px rgba(34, 60, 80, 0.2);
+}
+
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.constructor__handlers {
+  display: flex;
+  gap: 10px;
+}
+
+.in-dev {
+  opacity: 0.3;
+  pointer-events: none;
 }

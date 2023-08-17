@@ -13,8 +13,11 @@
             type="text"
             class="settings-input"
             placeholder="Опрос о развитии в компании"
+            :value="appSettings.appTitle"
             @input="appFieldEdit($event, 'appTitle')"
+            ref="appTitle"
           />
+          <div class="err-mes">Необходимо заполнить это поле</div>
         </label>
 
         <label class="settings-label">
@@ -25,8 +28,11 @@
           <textarea
             class="settings-textarea"
             placeholder="Опрос о развитии в компании"
+            :value="appSettings.appDescription"
             @input="appFieldEdit($event, 'appDescription')"
+            ref="appDescription"
           ></textarea>
+          <div class="err-mes">Необходимо заполнить это поле</div>
         </label>
 
         <div>
@@ -46,11 +52,8 @@
           />
         </div>
 
-        <label class="settings-label">
-          <div class="settings-label__text">
-            Промокод
-            <span class="settings-label__req">*</span>
-          </div>
+        <label class="settings-label in-dev">
+          <div class="settings-label__text">Промокод</div>
           <input
             type="text"
             class="settings-input"
@@ -64,6 +67,7 @@
         </app-toggle-option>
 
         <app-toggle-option
+          v-if="appType != 'viktorina'"
           @toggleCheck="toggleCheck($event, 'hasCorrectAnswers')"
           :toggleParam="appSettings.hasCorrectAnswers"
         >
@@ -89,9 +93,9 @@
           ></textarea>
         </label>
 
-        <router-link to="/constructor" class="btn app-btn centered-btn"
-          >Сохранить и продолжить</router-link
-        >
+        <div class="btn app-btn centered-btn" @click="validAndSave">
+          Сохранить и продолжить
+        </div>
       </div>
     </div>
   </div>
@@ -111,13 +115,25 @@ export default {
   },
   computed: {
     ...mapState({
+      appType: (state) => state.appType,
       appSettings: (state) => state.appSettings,
       colors: (state) => state.colors,
     }),
+    isValidAppTitle() {
+      const { appTitle } = this.appSettings;
+      return appTitle.trim() !== "";
+    },
+
+    isValidAppDescription() {
+      const { appDescription } = this.appSettings;
+      return appDescription.trim() !== "";
+    },
+
+    isValidReqFields() {
+      return this.isValidAppTitle && this.isValidAppDescription;
+    },
   },
-  data() {
-    return {};
-  },
+
   methods: {
     ...mapMutations(["editAppSettings"]),
     colorSelect(selectedColor) {
@@ -133,6 +149,9 @@ export default {
       });
     },
     appFieldEdit(e, type) {
+      if (e.target.classList.contains("err-field")) {
+        e.target.classList.remove("err-field");
+      }
       const value = e.target.value.trim();
       this.editAppSettings({
         field: type,
@@ -145,6 +164,27 @@ export default {
         payload: value,
       });
     },
+
+    validAndSave() {
+      if (!this.isValidAppTitle) {
+        this.$refs.appTitle.classList.add("err-field");
+      }
+      if (!this.isValidAppDescription) {
+        this.$refs.appDescription.classList.add("err-field");
+      }
+      const errField = Object.values(this.$refs)[0];
+      if (errField) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      if (this.isValidReqFields) {
+        this.$store.dispatch("setQuizData");
+        this.$router.push({ path: "/constructor" });
+      }
+    },
   },
 };
 </script>
@@ -153,8 +193,14 @@ export default {
 .poll-dropzone__container {
   margin-bottom: 30px;
 }
+.err-mes {
+  color: red;
+  font-size: 14px;
+  opacity: 0;
+}
 .settings-label {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 30px;
   width: 100%;
 }
@@ -187,14 +233,15 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 27px */
+  &.err-field {
+    border-color: red;
+    & + .err-mes {
+      opacity: 1;
+    }
+  }
 }
 .settings-textarea {
   resize: vertical;
   min-height: 150px;
-}
-
-.in-dev {
-  opacity: 0.3;
-  pointer-events: none;
 }
 </style>

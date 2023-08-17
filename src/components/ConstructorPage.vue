@@ -2,10 +2,12 @@
   <div class="app-container">
     <div class="constructor__handlers">
       <router-link to="/" class="btn app-btn">К настройкам</router-link>
+      <div class="btn app-btn" @click="saveData">Сохранить</div>
     </div>
     <div class="app-container__inner">
       <div class="polls-container">
         <polls-pages-pagination
+          v-if="appType != 'viktorina'"
           :pollPagesList="pollPagesList"
           :currentPageId="currentPageId"
           :pagesLimit="pagesLimit"
@@ -18,7 +20,9 @@
           />
         </div>
       </div>
-      <app-sidebar :pollTypesList="pollTypesList" />
+      <transition name="fade">
+        <app-sidebar :pollTypesList="pollTypesList" v-if="sidebarVisible" />
+      </transition>
     </div>
   </div>
 </template>
@@ -37,9 +41,15 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    saveData() {
+      this.$store.dispatch("setQuizData");
+      alert("Успешно сохранено");
+    },
+  },
   computed: {
     ...mapState({
+      appType: (state) => state.appType,
       currentPageId: (state) => state.currentPageId,
       pagesLimit: (state) => state.pagesLimit,
       pagesMinLength: (state) => state.pagesMinLength,
@@ -59,6 +69,9 @@ export default {
         (page) => page.id === this.currentPageId
       );
       return pageIndex + 1;
+    },
+    sidebarVisible() {
+      return this.pollTypesList.length > 0;
     },
   },
 };

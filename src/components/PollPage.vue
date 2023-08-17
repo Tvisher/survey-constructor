@@ -51,15 +51,24 @@
           :pollItemData="pollItem.data"
           :key="`${currenPage.id}-${pollItem.id}`"
           :pollNumber="index"
+          @removePollElement="removePollElement"
         />
       </transition-group>
     </draggable>
   </div>
+  <app-confirm-modal
+    :showModal="showModal"
+    :title="modalData.title"
+    :description="modalData.description"
+    @confirmRemove="removeElememt(modalData.type)"
+    @cancel="showModal = false"
+  />
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import PollElement from "./PollElement.vue";
+import AppConfirmModal from "./ConfirmModal.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 export default {
   props: {
@@ -69,12 +78,20 @@ export default {
   },
   components: {
     PollElement,
+    AppConfirmModal,
     draggable: VueDraggableNext,
   },
   data() {
     return {
       isDragging: false,
       showPage: false,
+      showModal: false,
+      modalData: {
+        title: "",
+        description: "",
+        type: "",
+        removedItemId: "",
+      },
     };
   },
   computed: {
@@ -109,6 +126,7 @@ export default {
       "dragSortPollsInPage",
       "dragAddPollInPage",
       "removePollPage",
+      "removePollInPage",
     ]),
     editComment(event) {
       const pollPageId = this.currenPage.id;
@@ -117,7 +135,34 @@ export default {
     },
 
     removePage() {
-      this.removePollPage(this.currenPage.id);
+      this.modalData = {
+        title: "Удаление страницы",
+        description: `Вы действительно хотите удалить страницу${"\u00A0"} № ${
+          this.currenPageNumber
+        }?`,
+        type: "page",
+        removedItemId: this.currenPage.id,
+      };
+      this.showModal = true;
+    },
+    removePollElement({ pollItemId, pollItemName }) {
+      this.modalData = {
+        title: "Удаление вопроса",
+        description: `Вы действительно хотите удалить вопрос ${pollItemName}?`,
+        type: "poll",
+        removedItemId: pollItemId,
+      };
+      this.showModal = true;
+    },
+    removeElememt(type) {
+      this.showModal = false;
+      const removedItemId = this.modalData.removedItemId;
+      if (type === "page") {
+        setTimeout(() => this.removePollPage(removedItemId), 300);
+      }
+      if (type === "poll") {
+        setTimeout(() => this.removePollInPage(removedItemId), 300);
+      }
     },
   },
 };
@@ -127,10 +172,6 @@ export default {
 .no-move {
   transition: transform 0s;
 }
-// .ghost {
-//   opacity: 0.5;
-//   background-color: #c8ebfb;
-// }
 
 .poll-item.ghost,
 .sidebar-item.ghost {
@@ -141,18 +182,6 @@ export default {
     opacity: 0;
   }
 }
-// .sidebar-item.ghost {
-//   .sidebar-item__btn,
-//   .sidebar-item__wrapper::after,
-//   .sidebar-item__ico {
-//     display: none;
-//   }
-//   .sidebar-item__name {
-//     width: 100%;
-//     font-size: 22px;
-//   }
-//   border: 1px dashed var(--app-color);
-// }
 
 .poll-item.sortable-drag {
   box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
