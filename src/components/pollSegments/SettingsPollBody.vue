@@ -3,6 +3,7 @@
     <div class="editor-descr">Изображение для вопроса</div>
     <app-image-loader
       :addedImage="pollItemData.pollImage"
+      :maxFileSize="1.5"
       @imageAdded="addImageInPoll"
     />
     <hr />

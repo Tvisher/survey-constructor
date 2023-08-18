@@ -1,6 +1,9 @@
 <template>
   <div class="poll-page-head">
-    <div class="poll-page-number">Страница {{ currenPageNumber }}</div>
+    <div class="poll-page-number" v-if="appType != 'quiz'">
+      Страница {{ currenPageNumber }}
+    </div>
+    <div class="poll-page-number" v-else>Сборка викторины</div>
     <button v-if="showRemoveBtnInPage" class="remove-btn" @click="removePage">
       <svg
         width="16"
@@ -16,7 +19,7 @@
       </svg>
     </button>
   </div>
-  <div class="poll-page-comment">
+  <div class="poll-page-comment" v-if="appType != 'quiz'">
     <input
       type="text"
       class="comment__input"
@@ -66,7 +69,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import PollElement from "./PollElement.vue";
 import AppConfirmModal from "./ConfirmModal.vue";
 import { VueDraggableNext } from "vue-draggable-next";
@@ -95,6 +98,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      appType: (state) => state.appType,
+    }),
     pollList: {
       get() {
         return this.currenPage.pollList;

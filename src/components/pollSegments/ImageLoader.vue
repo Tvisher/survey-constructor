@@ -47,14 +47,27 @@
             Перетащите изображениe или <span>загрузите</span>
           </div>
           <div class="poll-dropzone__descr">
-            Поддерживаемые форматы: PNG, TIFF, JPG
+            Поддерживаемые форматы:
+            <span class="take-note">PNG, TIFF, JPG</span>
           </div>
           <div class="poll-dropzone__descr">
-            Максималяный размер файла 1.5 МБ
+            Максималяный размер файла
+            <span class="take-note">{{ maxFileSize }} МБ</span>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div v-if="showSettingsData" class="image-settings">
+    <label class="custom-cb">
+      <input
+        class="custom-cb__checkbox"
+        type="checkbox"
+        :checked="stretchImage"
+        @input="selectOption"
+      />
+      <span class="custom-cb__text">Растянуть изображение на весь блок</span>
+    </label>
   </div>
 </template>
 
@@ -65,16 +78,23 @@ import axios from "axios";
 
 export default {
   props: {
-    addedImage: Object,
+    addedImage: { type: Object },
+    maxFileSize: { type: [Number, String] },
+    hasSettings: { type: Boolean, default: true },
   },
   emits: ["imageAdded"],
   setup(props, { emit }) {
     let imageFile = ref([]);
     let loading = ref(false);
+    let stretchImage = ref(false);
 
     const addedImage = toRef(props, "addedImage");
+    const maxFileSize = toRef(props, "maxFileSize");
+    const hasSettings = toRef(props, "hasSettings");
+
     if (addedImage.value) {
       imageFile.value = [{ ...addedImage.value }];
+      stretchImage.value = addedImage.value.stretchImage;
     }
     const imageUploaded = computed(() => {
       return imageFile.value.length > 0;
@@ -82,6 +102,10 @@ export default {
 
     const hasUploadedImage = computed(() => {
       return addedImage.value && addedImage.value.path;
+    });
+
+    const showSettingsData = computed(() => {
+      return hasUploadedImage.value && hasSettings.value;
     });
 
     const fileName = computed(() => {
@@ -110,6 +134,12 @@ export default {
       saveFiles(acceptFile);
     }
 
+    function selectOption(e) {
+      stretchImage.value = e.target.checked;
+      imageFile.value[0].stretchImage = stretchImage.value;
+      addImageinPoll(imageFile.value[0]);
+    }
+
     const saveFiles = (acceptFile) => {
       const formData = new FormData();
       formData.append("poll", acceptFile[0]);
@@ -122,19 +152,28 @@ export default {
       })
         .then((response) => {
           const newFileData = response.data.fileInfo;
+          newFileData.stretchImage = stretchImage.value;
           addImageinPoll(newFileData);
           imageFile.value = [{ ...newFileData }];
           loading.value = false;
         })
         .catch((err) => {
           console.error(err);
+          // const testData = {
+          //   name: "file.jpg",
+          //   path: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          //   stretchImage: true,
+          // };
+
+          // addImageinPoll(testData);
+          // imageFile.value = [{ ...testData }];
+          // loading.value = false;
         });
     };
 
-    const maxMbSize = 1.5;
     const options = {
       multiple: false,
-      maxSize: maxMbSize * 1000000,
+      maxSize: Number(maxFileSize.value) * 1000000,
       onDrop,
       accept: [".jpg", ".jpeg", ".png"],
     };
@@ -142,7 +181,9 @@ export default {
     const { getRootProps, getInputProps, ...rest } = useDropzone(options);
 
     return {
+      showSettingsData,
       imageFile,
+      hasSettings,
       loading,
       imageUploaded,
       fileName,
@@ -152,6 +193,8 @@ export default {
       getRootProps,
       getInputProps,
       handleClickDeleteFile,
+      selectOption,
+      stretchImage,
       ...rest,
     };
   },
@@ -218,18 +261,19 @@ export default {
 .poll-dropzone__text {
   color: rgba(0, 32, 51, 0.6);
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 140%;
   span {
+    display: inline;
     cursor: pointer;
     color: #0078d2;
   }
 }
 .poll-dropzone__descr {
-  color: rgba(0, 32, 51, 0.3);
+  color: rgba(0, 32, 51, 0.5);
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;

@@ -7,7 +7,7 @@
     <div class="app-container__inner">
       <div class="polls-container">
         <polls-pages-pagination
-          v-if="appType != 'viktorina'"
+          v-if="appType != 'quiz'"
           :pollPagesList="pollPagesList"
           :currentPageId="currentPageId"
           :pagesLimit="pagesLimit"

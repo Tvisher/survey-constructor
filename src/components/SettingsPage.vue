@@ -40,15 +40,37 @@
           <app-image-loader
             :addedImage="appSettings.appLogo"
             @imageAdded="addImageInAppSettings"
+            :maxFileSize="1.5"
+          />
+        </div>
+
+        <div v-if="appType == 'quiz'">
+          <div class="settings-label__text">Фон для викторины</div>
+          <app-image-loader
+            :addedImage="appSettings.appQuizBg"
+            @imageAdded="addAppQuizBg"
+            :maxFileSize="5"
+            :hasSettings="false"
           />
         </div>
 
         <div>
           <div class="settings-label__text">Цветовая гамма</div>
           <app-color-selection
-            :colors="colors"
+            :colors="appColors"
             :defaultColor="appSettings.appColor"
-            @colorSelect="colorSelect"
+            :colorBinding="'appColor'"
+            @colorSelect="appColorSelect"
+          />
+        </div>
+
+        <div>
+          <div class="settings-label__text">Цветовая гамма текста кнопок</div>
+          <app-color-selection
+            :colors="appTextColors"
+            :defaultColor="appSettings.appTextColor"
+            :colorBinding="'appTextColor'"
+            @colorSelect="appTextColorSelect"
           />
         </div>
 
@@ -67,7 +89,7 @@
         </app-toggle-option>
 
         <app-toggle-option
-          v-if="appType != 'viktorina'"
+          v-if="appType != 'quiz'"
           @toggleCheck="toggleCheck($event, 'hasCorrectAnswers')"
           :toggleParam="appSettings.hasCorrectAnswers"
         >
@@ -117,7 +139,8 @@ export default {
     ...mapState({
       appType: (state) => state.appType,
       appSettings: (state) => state.appSettings,
-      colors: (state) => state.colors,
+      appColors: (state) => state.colors,
+      appTextColors: (state) => state.textColors,
     }),
     isValidAppTitle() {
       const { appTitle } = this.appSettings;
@@ -136,15 +159,29 @@ export default {
 
   methods: {
     ...mapMutations(["editAppSettings"]),
-    colorSelect(selectedColor) {
+    appColorSelect(selectedColor) {
       this.editAppSettings({
         field: "appColor",
         payload: selectedColor,
       });
+      document.body.style.setProperty("--app-color", selectedColor.value);
+    },
+    appTextColorSelect(selectedColor) {
+      this.editAppSettings({
+        field: "appTextColor",
+        payload: selectedColor,
+      });
+      document.body.style.setProperty("--app-text-color", selectedColor.value);
     },
     addImageInAppSettings(imageData) {
       this.editAppSettings({
         field: "appLogo",
+        payload: imageData,
+      });
+    },
+    addAppQuizBg(imageData) {
+      this.editAppSettings({
+        field: "appQuizBg",
         payload: imageData,
       });
     },
@@ -190,13 +227,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.settings-title {
+  margin-bottom: 20px;
+}
 .poll-dropzone__container {
   margin-bottom: 30px;
 }
 .err-mes {
   color: red;
   font-size: 14px;
-  opacity: 0;
+  display: none;
 }
 .settings-label {
   display: flex;
@@ -236,7 +276,7 @@ export default {
   &.err-field {
     border-color: red;
     & + .err-mes {
-      opacity: 1;
+      display: block;
     }
   }
 }

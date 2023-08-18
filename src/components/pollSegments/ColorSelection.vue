@@ -7,7 +7,7 @@
       :style="{
         borderColor:
           color.value == defaultColor.value
-            ? color.value
+            ? '#0078d2'
             : 'rgba(0, 66, 105, 0.28)',
       }"
     >
@@ -15,7 +15,7 @@
         :checked="color.value == defaultColor.value"
         type="radio"
         :value="color.value"
-        name="color-selection"
+        :name="`color-selection-${colorBinding}`"
         class="color-selection__input"
         @input="colorSelect(color)"
       />
@@ -36,6 +36,7 @@ export default {
   props: {
     defaultColor: { type: Object },
     colors: { type: Array },
+    colorBinding: { type: String },
   },
   data() {
     return {
@@ -48,7 +49,6 @@ export default {
     colorSelect(color) {
       this.$emit("colorSelect", color);
       this.selectedColor = color;
-      document.body.style.setProperty("--app-color", color.value);
     },
   },
 };
@@ -63,6 +63,7 @@ export default {
   margin-bottom: 25px;
 }
 .color-selection__item {
+  background-color: #ecf4ff;
   position: relative;
   display: flex;
   align-items: center;
@@ -71,7 +72,7 @@ export default {
   padding: 10px;
   width: calc(25% - 10px);
   border-radius: 4px;
-  border: 1px solid;
+  border: 1px solid rgba(0, 66, 105, 0.28);
 }
 
 .color-selection__input {
@@ -102,7 +103,14 @@ export default {
     content: "";
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background-color: #ecf4ff;
   }
+}
+.color-selection__name {
+  color: #868da4;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 27px */
 }
 </style>

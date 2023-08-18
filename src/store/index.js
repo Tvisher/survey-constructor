@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import { v4 as uuidv4 } from 'uuid';
 import pollTypesListDefault from './pollTypesList';
 import axios from "axios";
-// import devJson from "./dev-api.js";
+import devJson from "./dev-api.js";
 
 
 function findPollById(state, pollItemId) {
@@ -22,6 +22,10 @@ export default createStore({
     pagesLimit: 5,
     pagesMinLength: 1,
     colors: [],
+    textColors: [
+      { name: "Белый", value: "#FFFFFF" },
+      { name: "Чёрный", value: "#000000" }
+    ],
     appSettings: {
       appTitle: "",
       appDescription: "",
@@ -29,10 +33,9 @@ export default createStore({
       appFinalMessage: "",
       hasCorrectAnswers: false,
       appColor: { name: "Intercom", value: "#FA0056" },
-      appLogo: {
-        name: "",
-        path: ""
-      },
+      appTextColor: { name: "Белый", value: "#FFFFFF" },
+      appLogo: {},
+      appQuizBg: {},
     },
     pollPages: [
       {
@@ -224,14 +227,13 @@ export default createStore({
     },
 
 
-
-
     setQuizState(state, newState) {
       Object.assign(state, newState);
       document.body.style.setProperty("--app-color", state.appSettings.appColor.value);
+      document.body.style.setProperty("--app-text-color", state.appSettings.appTextColor.value);
       state.applicationReady = true;
       state.appType = quizType;
-      if (quizType === 'viktorina') {
+      if (quizType === 'quiz') {
         state.appSettings.hasCorrectAnswers = true;
       }
     },
@@ -271,12 +273,12 @@ export default createStore({
         .catch(function (error) {
           console.log(error);
           // DEV
-          // const resState = JSON.parse(devJson.resState);
-          // const resColors = devJson.colors;
-          // const resPollTypesList = devJson.pollTypesList;
-          // commit("setQuizState", resState);
-          // commit("setColorListInApp", resColors)
-          // commit("setPollTypesListInApp", resPollTypesList)
+          const resState = JSON.parse(devJson.resState);
+          const resColors = devJson.colors;
+          const resPollTypesList = devJson.pollTypesList;
+          commit("setQuizState", resState);
+          commit("setColorListInApp", resColors)
+          commit("setPollTypesListInApp", resPollTypesList)
         });
     },
 

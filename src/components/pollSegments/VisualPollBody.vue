@@ -1,7 +1,11 @@
 <template>
   <div class="poll-body">
     <hr />
-    <div class="poll-body__image-block" v-if="isHasImageInPoll">
+    <div
+      class="poll-body__image-block"
+      v-if="isHasImageInPoll"
+      :class="imagePositionType"
+    >
       <img
         :src="pollItemData.pollImage.path"
         :alt="pollItemData.pollImage.name"
@@ -86,6 +90,11 @@ export default {
     isHasImageInPoll() {
       const pollImage = this.pollItemData.pollImage;
       return pollImage && Object.keys(pollImage).length !== 0;
+    },
+    imagePositionType() {
+      if (this.isHasImageInPoll) {
+        return this.pollItemData.pollImage.stretchImage ? "_cover" : "_contain";
+      }
     },
   },
 };
