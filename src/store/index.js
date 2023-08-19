@@ -20,6 +20,7 @@ export default createStore({
     pollTypesList: [],
     currentPageId: "1",
     pagesLimit: 5,
+    pollsInPageLimit: 10,
     pagesMinLength: 1,
     colors: [],
     textColors: [
@@ -45,7 +46,12 @@ export default createStore({
       },
     ],
   },
-  getters: {},
+  getters: {
+    isHasPagePollsLimit(state) {
+      const currenPage = state.pollPages.find(page => page.id === state.currentPageId);
+      return currenPage.pollList.length === state.pollsInPageLimit;
+    }
+  },
   mutations: {
     editAppSettings(state, { field, payload }) {
       state.appSettings[field] = payload;
@@ -260,7 +266,7 @@ export default createStore({
         }
       })
         .then(function (response) {
-          console.table(response);
+          console.log(response.data);
           const resJson = response.data;
           const resState = JSON.parse(resJson.resState);
           const resColors = resJson.colors;

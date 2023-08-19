@@ -168,7 +168,7 @@
     </div>
     <div
       class="sidebar-item__btn"
-      @click="addPollInState(type)"
+      @click="addPollItem"
       title="Добавить в конец страницы"
     >
       <svg
@@ -200,15 +200,16 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-
 export default {
   props: {
     name: { type: String },
     type: { type: String },
   },
   methods: {
-    ...mapMutations(["addPollInState"]),
+    addPollItem() {
+      const pollType = this.type;
+      this.$emit("addPollItem", pollType);
+    },
   },
 };
 </script>

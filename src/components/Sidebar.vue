@@ -9,25 +9,48 @@
         <app-sidebar-item
           v-for="(pollTemplate, index) in pollTypesList"
           :key="index"
-          :name="pollTemplate.typeName"
           :type="pollTemplate.type"
+          :name="pollTemplate.typeName"
+          @addPollItem="addPollItem"
         />
       </draggable>
     </div>
+    <app-confirm-modal
+      :showModal="showModal"
+      :title="modalData.title"
+      :description="modalData.description"
+      :isOkModalType="true"
+      @confirmRemove="showModal = false"
+      @cancel="showModal = false"
+    />
   </div>
 </template>
 
 <script>
 import { VueDraggableNext } from "vue-draggable-next";
 import AppSidebarItem from "./pollSegments/SidebarItem.vue";
+import { mapMutations, mapGetters } from "vuex";
+import AppConfirmModal from "./ConfirmModal.vue";
 
 export default {
+  props: { pollTypesList: { type: Array } },
   components: {
     AppSidebarItem,
     draggable: VueDraggableNext,
+    AppConfirmModal,
   },
-  props: { pollTypesList: { type: Array } },
+
+  data() {
+    return {
+      showModal: false,
+      modalData: {
+        title: "Превышен лимит вопросов на странице",
+        description: "Для увеличения лимита, необходим другой тариф",
+      },
+    };
+  },
   computed: {
+    ...mapGetters(["isHasPagePollsLimit"]),
     dragOptionsInSidebar() {
       return {
         group: { name: "pollTypes", pull: "clone", put: false },
@@ -37,6 +60,17 @@ export default {
         disabled: false,
         sort: false,
       };
+    },
+  },
+
+  methods: {
+    ...mapMutations(["addPollInState"]),
+    addPollItem(type) {
+      if (this.isHasPagePollsLimit) {
+        this.showModal = true;
+      } else {
+        this.addPollInState(type);
+      }
     },
   },
 };

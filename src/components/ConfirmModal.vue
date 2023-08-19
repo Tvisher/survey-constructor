@@ -4,7 +4,16 @@
       <div class="confirm-modal__close" @click="$emit('cancel')"></div>
       <h3 class="confirm-modal__title">{{ title }}</h3>
       <span class="confirm-modal__descr">{{ description }}</span>
-      <div class="confirm-modal__btns">
+      <div class="confirm-modal__btns" v-if="isOkModalType">
+        <button
+          class="btn app-btn"
+          style="width: 100%"
+          @click="$emit('cancel')"
+        >
+          Понятно
+        </button>
+      </div>
+      <div class="confirm-modal__btns" v-else>
         <button class="btn app-btn" @click="$emit('confirmRemove')">
           Удалить
         </button>
@@ -22,6 +31,7 @@ export default {
     showModal: { type: Boolean },
     title: { type: String },
     description: { type: String },
+    isOkModalType: { type: Boolean, default: false },
   },
 };
 </script>
@@ -66,6 +76,7 @@ export default {
   cursor: pointer;
 }
 .confirm-modal__title {
+  padding-right: 20px;
   color: #262b31;
   font-size: 25px;
   font-style: normal;

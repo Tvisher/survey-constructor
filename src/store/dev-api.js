@@ -1,5 +1,5 @@
 const devJson = {
-  "resState": "{\r\n  \"pollTypesList\": [],\r\n  \"currentPageId\": \"1\",\r\n  \"pagesLimit\": 5,\r\n  \"pagesMinLength\": 1,\r\n  \"colors\": [],\r\n  \"appSettings\": {\r\n    \"appTitle\": \"\",\r\n    \"appDescription\": \"\",\r\n    \"appPromo\": \"\",\r\n    \"appFinalMessage\": \"\",\r\n    \"hasCorrectAnswers\": false,\r\n    \"appColor\": { \"name\": \"Intercom\", \"value\": \"#FA0056\" },\r\n    \"appLogo\": { \"name\": \"\", \"path\": \"\" }\r\n  },\r\n  \"pollPages\": [{ \"id\": \"1\", \"pageComment\": \"\", \"pollList\": [] }]\r\n}\r\n",
+  "resState": "{\"appType\":\"survey\",\"applicationReady\":false,\"pollTypesList\":[],\"currentPageId\":\"1\",\"pagesLimit\":5,\"pagesMinLength\":1,\"colors\":[],\"textColors\":[{\"name\":\"Белый\",\"value\":\"#FFFFFF\"},{\"name\":\"Чёрный\",\"value\":\"#000000\"}],\"appSettings\":{\"appTitle\":\"45\",\"appDescription\":\"345\",\"appPromo\":\"\",\"appFinalMessage\":\"\",\"hasCorrectAnswers\":true,\"appColor\":{\"name\":\"Зеленый\",\"value\":\"#24D421\"},\"appTextColor\":{\"name\":\"Белый\",\"value\":\"#FFFFFF\"},\"appLogo\":{\"name\":\"stone-3.png\",\"path\":\"https://dev.vnutricom.ru/upload/tmp/poll/42e/zs39i0m21a2gj3al2vobmad1fkthd8da.png\"},\"appQuizBg\":{\"name\":\"stone-9.png\",\"path\":\"https://dev.vnutricom.ru/upload/tmp/poll/839/v9kpk7sc2zgxjwk3vw69kb86nv5szg2n.png\"}},\"pollPages\":[{\"id\":\"1\",\"pageComment\":\"\",\"pollList\":[{\"type\":\"single-choice\",\"typeName\":\"Одиночный выбор\",\"typeDescr\":\"Описание для элемента опроса Одиночный выбор\",\"data\":{\"pollImage\":{\"name\":\"stone-9.png\",\"path\":\"https://dev.vnutricom.ru/upload/tmp/poll/839/v9kpk7sc2zgxjwk3vw69kb86nv5szg2n.png\"},\"editorValue\":{\"ops\":[{\"insert\":\"ТекстТекстТекс\"},{\"attributes\":{\"bold\":true},\"insert\":\"тТекстТекстТекст\"},{\"insert\":\"\\n\"},{\"attributes\":{\"italic\":true},\"insert\":\"ТекстТекстТекстТекст\"},{\"insert\":\"\\n\"}]},\"optionsData\":{\"minOptionsLength\":2,\"maxOptionsLength\":10,\"currentAnswerId\":[],\"optionsList\":[{\"id\":\"1\",\"value\":\"1\"},{\"id\":\"5e398e4e-c670-4603-8725-d665811c9926\",\"value\":\"1\"},{\"id\":\"2\",\"value\":\"1\"},{\"id\":\"d668929a-a2fa-4d36-8708-8f0ed6b9385b\",\"value\":\"1\"}]}},\"id\":\"82d49679-d42c-4fd6-aff2-2623f4aca1be\"},{\"type\":\"multiple-drop-down-list\",\"typeName\":\"Множественный вып. список\",\"typeDescr\":\"Описание для элемента опроса Множественный вып. список\",\"data\":{\"pollImage\":{},\"editorValue\":{},\"optionsData\":{\"minOptionsLength\":2,\"maxOptionsLength\":10,\"currentAnswerId\":[],\"optionsList\":[{\"id\":\"1\",\"value\":\"\"},{\"id\":\"2\",\"value\":\"\"}]}},\"id\":\"418fe059-2d60-4e6f-a545-9f3267364f2f\"},{\"type\":\"multiple-choice\",\"typeName\":\"Множественный выбор\",\"typeDescr\":\"Описание для элемента опроса Множественный выбор\",\"data\":{\"pollImage\":{},\"editorValue\":{},\"optionsData\":{\"minOptionsLength\":2,\"maxOptionsLength\":10,\"currentAnswerId\":[],\"optionsList\":[{\"id\":\"1\",\"value\":\"\"},{\"id\":\"2\",\"value\":\"\"}]}},\"id\":\"11f75abc-9e20-45e9-9182-c18f92fd92bc\"}]}]}",
   "colors": [
     {
       "name": "Intercom",
@@ -63,16 +63,6 @@ const devJson = {
       "type": "ranging",
       "typeName": "Ранжирование",
       "typeDescr": "Описание для элемента опроса Ранжирование"
-    },
-    {
-      "type": "range-selection",
-      "typeName": "Выбор диапазона",
-      "typeDescr": "Описание для элемента опроса Выбор диапазона"
-    },
-    {
-      "type": "date",
-      "typeName": "Дата",
-      "typeDescr": "Описание для элемента опроса Дата"
     },
     {
       "type": "custom-fields",

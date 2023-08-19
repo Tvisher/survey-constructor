@@ -63,13 +63,14 @@
     :showModal="showModal"
     :title="modalData.title"
     :description="modalData.description"
+    :isOkModalType="modalData.isOkModalType"
     @confirmRemove="removeElememt(modalData.type)"
     @cancel="showModal = false"
   />
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState, mapGetters } from "vuex";
 import PollElement from "./PollElement.vue";
 import AppConfirmModal from "./ConfirmModal.vue";
 import { VueDraggableNext } from "vue-draggable-next";
@@ -90,6 +91,7 @@ export default {
       showPage: false,
       showModal: false,
       modalData: {
+        isOkModalType: false,
         title: "",
         description: "",
         type: "",
@@ -98,6 +100,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["isHasPagePollsLimit"]),
     ...mapState({
       appType: (state) => state.appType,
     }),
@@ -106,7 +109,16 @@ export default {
         return this.currenPage.pollList;
       },
       set(sortableList) {
-        this.dragSortPollsInPage({ sortableList });
+        if (this.isHasPagePollsLimit) {
+          this.showModal = true;
+          this.modalData = {
+            title: "Превышен лимит вопросов на странице",
+            description: "Для увеличения лимита, необходим другой тариф",
+            isOkModalType: true,
+          };
+        } else {
+          this.dragSortPollsInPage({ sortableList });
+        }
       },
     },
 

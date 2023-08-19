@@ -6,10 +6,14 @@
 
         <label class="settings-label">
           <div class="settings-label__text">
-            Заголовок Вашего опроса
+            <span>Заголовок Вашего опроса</span>
             <span class="settings-label__req">*</span>
+            <div class="letters-limit" :class="{ _err: isAppTitleLengthMore }">
+              {{ appTitleLength }}/{{ titleLettersLimit }}
+            </div>
           </div>
           <input
+            :class="{ _err: isAppTitleLengthMore }"
             type="text"
             class="settings-input"
             placeholder="Опрос о развитии в компании"
@@ -18,14 +22,24 @@
             ref="appTitle"
           />
           <div class="err-mes">Необходимо заполнить это поле</div>
+          <div v-if="isAppTitleLengthMore" class="err-mes _limit">
+            Привышен лимит символов для этого поля
+          </div>
         </label>
 
         <label class="settings-label">
           <div class="settings-label__text">
-            Описание опроса
+            <span>Описание опроса</span>
             <span class="settings-label__req">*</span>
+            <div
+              class="letters-limit"
+              :class="{ _err: isAppDescriptionLengthMore }"
+            >
+              {{ appDescriptionLength }}/{{ descriptionLettersLimit }}
+            </div>
           </div>
           <textarea
+            :class="{ _err: isAppDescriptionLengthMore }"
             class="settings-textarea"
             placeholder="Опрос о развитии в компании"
             :value="appSettings.appDescription"
@@ -33,6 +47,9 @@
             ref="appDescription"
           ></textarea>
           <div class="err-mes">Необходимо заполнить это поле</div>
+          <div v-if="isAppDescriptionLengthMore" class="err-mes _limit">
+            Привышен лимит символов для этого поля
+          </div>
         </label>
 
         <div>
@@ -135,6 +152,12 @@ export default {
     AppColorSelection,
     AppToggleOption,
   },
+  data() {
+    return {
+      titleLettersLimit: 90,
+      descriptionLettersLimit: 700,
+    };
+  },
   computed: {
     ...mapState({
       appType: (state) => state.appType,
@@ -146,14 +169,22 @@ export default {
       const { appTitle } = this.appSettings;
       return appTitle.trim() !== "";
     },
+    appTitleLength() {
+      return this.appSettings.appTitle.length;
+    },
+    isAppTitleLengthMore() {
+      return this.appTitleLength > this.titleLettersLimit;
+    },
 
     isValidAppDescription() {
       const { appDescription } = this.appSettings;
       return appDescription.trim() !== "";
     },
-
-    isValidReqFields() {
-      return this.isValidAppTitle && this.isValidAppDescription;
+    appDescriptionLength() {
+      return this.appSettings.appDescription.length;
+    },
+    isAppDescriptionLengthMore() {
+      return this.appDescriptionLength > this.descriptionLettersLimit;
     },
   },
 
@@ -209,15 +240,19 @@ export default {
       if (!this.isValidAppDescription) {
         this.$refs.appDescription.classList.add("err-field");
       }
-      const errField = Object.values(this.$refs)[0];
-      if (errField) {
+
+      const fieldsErrors =
+        this.isAppTitleLengthMore ||
+        this.isAppDescriptionLengthMore ||
+        !this.isValidAppTitle ||
+        !this.isValidAppDescription;
+      console.log(fieldsErrors);
+      if (fieldsErrors) {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
-      }
-
-      if (this.isValidReqFields) {
+      } else {
         this.$store.dispatch("setQuizData");
         this.$router.push({ path: "/constructor" });
       }
@@ -237,6 +272,9 @@ export default {
   color: red;
   font-size: 14px;
   display: none;
+  &._limit {
+    display: block;
+  }
 }
 .settings-label {
   display: flex;
@@ -278,6 +316,9 @@ export default {
     & + .err-mes {
       display: block;
     }
+  }
+  &._err {
+    border-color: red;
   }
 }
 .settings-textarea {
