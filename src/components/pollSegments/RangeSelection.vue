@@ -19,7 +19,8 @@
       />
     </label>
   </div>
-  <div v-if="showDefaultMinMax">
+
+  <Vue3SlideUpDown :duration="300" v-model="showDropdownSettings">
     <span class="editor-descr"
       >Укажите стартовое положение ползунков для пользователя</span
     >
@@ -39,15 +40,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </Vue3SlideUpDown>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import Slider from "@vueform/slider";
-
+import { Vue3SlideUpDown } from "vue3-slide-up-down";
 export default {
-  components: { Slider },
+  components: { Slider, Vue3SlideUpDown },
   props: {
     pollItemId: { type: [Number, String] },
     rangeData: { type: Object },
@@ -60,7 +61,15 @@ export default {
         defaultMin: "",
         defaultMax: "",
       },
+      showDropdownSettings: false,
     };
+  },
+  watch: {
+    showDefaultMinMax(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.showDropdownSettings = this.showDefaultMinMax;
+      }
+    },
   },
   computed: {
     showDefaultMinMax() {
@@ -119,7 +128,7 @@ export default {
       if (/^0[0-9]/.test(filteredValue)) {
         filteredValue = filteredValue.slice(1);
       }
-      this.range[type] = +filteredValue;
+      this.range[type] = filteredValue !== "" ? +filteredValue : "";
       this.range.defaultMax = this.range.max;
       this.range.defaultMin = this.range.min;
       this.setData();
@@ -131,12 +140,17 @@ export default {
     },
 
     strToNum(value) {
-      return +String(value).replace(/[^0-9]/g, "");
+      if (value === "") {
+        return "";
+      } else {
+        return +String(value).replace(/[^0-9]/g, "");
+      }
     },
   },
 
   mounted() {
     this.range = { ...this.rangeData };
+    this.showDropdownSettings = this.showDefaultMinMax;
   },
 };
 </script>

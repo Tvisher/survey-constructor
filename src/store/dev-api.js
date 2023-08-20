@@ -68,6 +68,11 @@ const devJson = {
       "type": "custom-fields",
       "typeName": "Кастомные поля",
       "typeDescr": "Описание для элемента опроса Кастомные поля"
+    },
+    {
+      "type": 'range-selection',
+      "typeName": 'Выбор диапазона',
+      "typeDescr": 'Описание для элемента опроса Выбор диапазона',
     }
   ]
 }
