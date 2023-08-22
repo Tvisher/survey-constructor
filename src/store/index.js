@@ -33,6 +33,14 @@ export default createStore({
       appPromo: "",
       appFinalMessage: "",
       hasCorrectAnswers: false,
+      takeTheQuizagain: false,
+      customFinishLink: {
+        enable: false,
+        data: {
+          linkText: '',
+          linkUrl: ''
+        }
+      },
       appColor: { name: "Intercom", value: "#FA0056" },
       appTextColor: { name: "Белый", value: "#FFFFFF" },
       appLogo: {},
@@ -53,6 +61,16 @@ export default createStore({
     }
   },
   mutations: {
+    setCustomLink(state, flag) {
+      state.appSettings.customFinishLink.enable = flag;
+      if (flag === false) {
+        state.appSettings.customFinishLink.data.linkText = '';
+        state.appSettings.customFinishLink.data.linkUrl = '';
+      }
+    },
+    setCustomLinkValues(state, { type, value }) {
+      state.appSettings.customFinishLink[type] = value;
+    },
     editAppSettings(state, { field, payload }) {
       state.appSettings[field] = payload;
     },
@@ -279,12 +297,12 @@ export default createStore({
         .catch(function (error) {
           console.log(error);
           // DEV
-          const resState = JSON.parse(devJson.resState);
-          const resColors = devJson.colors;
-          const resPollTypesList = devJson.pollTypesList;
-          commit("setQuizState", resState);
-          commit("setColorListInApp", resColors)
-          commit("setPollTypesListInApp", resPollTypesList)
+          // const resState = JSON.parse(devJson.resState);
+          // const resColors = devJson.colors;
+          // const resPollTypesList = devJson.pollTypesList;
+          // commit("setQuizState", resState);
+          // commit("setColorListInApp", resColors)
+          // commit("setPollTypesListInApp", resPollTypesList)
         });
     },
 

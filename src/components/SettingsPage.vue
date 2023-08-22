@@ -113,6 +113,49 @@
           Добавить параметр правильный ответ для вопроса
         </app-toggle-option>
 
+        <app-toggle-option
+          v-if="appType == 'quiz'"
+          @toggleCheck="toggleCheck($event, 'takeTheQuizagain')"
+          :toggleParam="appSettings.takeTheQuizagain"
+        >
+          Разрешить пройти викторину повторно
+        </app-toggle-option>
+
+        <app-toggle-option
+          v-if="appType == 'quiz'"
+          @toggleCheck="enableCustomLink($event)"
+          :toggleParam="appSettings.customFinishLink.enable"
+        >
+          Кастомная сслыка после завершения викторины
+        </app-toggle-option>
+        <Vue3SlideUpDown :duration="300" v-model="isHasCustomLink">
+          <div class="range-selection__creater link-creater">
+            <label class="range-selection__label">
+              <span class="editor-descr">Название кнопки</span>
+              <input
+                class="variant-item__filed settings-input"
+                type="text"
+                placeholder="Например: Посетить наш сайт"
+                v-model="customLinkData.linkText"
+                @input="setCustomLinkValue($event, 'linkText')"
+                ref="linkText"
+              />
+              <div class="err-mes">Поле не может быть пустым</div>
+            </label>
+            <label class="range-selection__label">
+              <span class="editor-descr">Ссылка для кнопки</span>
+              <input
+                class="variant-item__filed settings-input"
+                type="text"
+                placeholder="Например: https://examplesitename.ru"
+                v-model="customLinkData.linkUrl"
+                @input="setCustomLinkValue($event, 'linkUrl')"
+                ref="linkUrl"
+              />
+              <div class="err-mes">Поле не может быть пустым</div>
+            </label>
+          </div>
+        </Vue3SlideUpDown>
         <app-toggle-option class="in-dev">
           Показывать баллы после окончания теста
         </app-toggle-option>
@@ -144,6 +187,7 @@
 import AppImageLoader from "./pollSegments/ImageLoader.vue";
 import AppColorSelection from "./pollSegments/ColorSelection.vue";
 import AppToggleOption from "./pollSegments/ToggleOption.vue";
+import { Vue3SlideUpDown } from "vue3-slide-up-down";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -151,6 +195,7 @@ export default {
     AppImageLoader,
     AppColorSelection,
     AppToggleOption,
+    Vue3SlideUpDown,
   },
   data() {
     return {
@@ -165,6 +210,12 @@ export default {
       appColors: (state) => state.colors,
       appTextColors: (state) => state.textColors,
     }),
+    customLinkData() {
+      return this.appSettings.customFinishLink.data;
+    },
+    isHasCustomLink() {
+      return this.appSettings.customFinishLink.enable;
+    },
     isValidAppTitle() {
       const { appTitle } = this.appSettings;
       return appTitle.trim() !== "";
@@ -189,7 +240,14 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["editAppSettings"]),
+    ...mapMutations([
+      "editAppSettings",
+      "setCustomLink",
+      "setCustomLinkValues",
+    ]),
+    enableCustomLink(flag) {
+      this.setCustomLink(flag);
+    },
     appColorSelect(selectedColor) {
       this.editAppSettings({
         field: "appColor",
@@ -232,7 +290,13 @@ export default {
         payload: value,
       });
     },
-
+    setCustomLinkValue(e, type) {
+      if (e.target.classList.contains("err-field")) {
+        e.target.classList.remove("err-field");
+      }
+      const value = e.target.value.trim();
+      this.setCustomLinkValues({ type, value });
+    },
     validAndSave() {
       if (!this.isValidAppTitle) {
         this.$refs.appTitle.classList.add("err-field");
@@ -241,15 +305,21 @@ export default {
         this.$refs.appDescription.classList.add("err-field");
       }
 
-      const fieldsErrors =
-        this.isAppTitleLengthMore ||
-        this.isAppDescriptionLengthMore ||
-        !this.isValidAppTitle ||
-        !this.isValidAppDescription;
-      console.log(fieldsErrors);
-      if (fieldsErrors) {
+      if (this.isHasCustomLink) {
+        if (this.$refs.linkText.value.trim().length < 1) {
+          this.$refs.linkText.classList.add("err-field");
+        }
+        if (this.$refs.linkUrl.value.trim().length < 1) {
+          this.$refs.linkUrl.classList.add("err-field");
+        }
+      }
+
+      const errBlock = document.querySelectorAll("._err, .err-field")[0];
+      if (errBlock) {
+        const errBlocktopPos =
+          errBlock.getBoundingClientRect().top + window.scrollY - 50;
         window.scrollTo({
-          top: 0,
+          top: errBlocktopPos,
           behavior: "smooth",
         });
       } else {
@@ -324,5 +394,9 @@ export default {
 .settings-textarea {
   resize: vertical;
   min-height: 150px;
+}
+.link-creater {
+  margin-bottom: 0;
+  padding-bottom: 20px;
 }
 </style>
