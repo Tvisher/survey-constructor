@@ -2,7 +2,20 @@
   <div class="app-container">
     <div class="constructor__handlers">
       <router-link to="/" class="btn app-btn">К настройкам</router-link>
-      <div class="btn app-btn" @click="saveData">Сохранить</div>
+      <transition name="fade">
+        <div class="btn app-btn" v-if="pollHasElements" @click="saveData">
+          Сохранить
+        </div>
+      </transition>
+      <transition name="fade">
+        <div
+          class="btn app-btn"
+          v-if="pollHasElements"
+          @click="saveAndOpenResult"
+        >
+          Посмотреть результат
+        </div>
+      </transition>
     </div>
     <div class="app-container__inner">
       <div class="polls-container">
@@ -43,12 +56,31 @@ export default {
   },
   methods: {
     saveData() {
-      this.$store.dispatch("setQuizData");
-      alert("Успешно сохранено");
+      this.$store
+        .dispatch("setQuizData")
+        .then((response) => {
+          alert("Успешно сохранено");
+        })
+        .catch((error) => {
+          alert("Произошла ошибка");
+        });
+    },
+    saveAndOpenResult() {
+      this.$store
+        .dispatch("setQuizData")
+        .then((response) => {
+          console.log(response);
+          window.open(`/lk/poll/public/quizelem/?id=${this.appId}`, "_blank");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Произошла ошибка");
+        });
     },
   },
   computed: {
     ...mapState({
+      appId: (state) => state.appId,
       appType: (state) => state.appType,
       currentPageId: (state) => state.currentPageId,
       pagesLimit: (state) => state.pagesLimit,
@@ -56,12 +88,15 @@ export default {
       pollPagesList: (state) => state.pollPages,
       pollTypesList: (state) => state.pollTypesList,
     }),
+
     showRemoveBtnInPage() {
       return this.pollPagesList.length > this.pagesMinLength;
     },
-
     currentPollPage() {
       return this.pollPagesList.find((page) => page.id === this.currentPageId);
+    },
+    pollHasElements() {
+      return this.pollPagesList[0].pollList.length > 0;
     },
 
     currenPageNumber() {

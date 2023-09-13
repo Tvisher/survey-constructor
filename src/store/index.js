@@ -10,11 +10,29 @@ function findPollById(state, pollItemId) {
   return currentPollPage.pollList.find((poll) => poll.id === pollItemId);
 }
 
+function mergeState(state, newState) {
+  // Перебираем все свойства newState
+  for (const key in newState) {
+    if (newState.hasOwnProperty(key)) {
+      // Если свойство существует в state и является объектом, рекурсивно объединяем их
+      if (typeof state[key] === 'object' && typeof newState[key] === 'object') {
+        state[key] = mergeState(state[key], newState[key]);
+      } else {
+        // В противном случае просто копируем значение из newState в state
+        state[key] = newState[key];
+      }
+    }
+  }
+
+  return state;
+}
+
 const quizID = document.querySelector('#app').dataset.pollId;
-const quizType = document.querySelector('#app').dataset.pollType;
+const appType = document.querySelector('#app').dataset.pollType;
 
 export default createStore({
   state: {
+    appId: quizID,
     appType: null,
     applicationReady: false,
     pollTypesList: [],
@@ -58,7 +76,7 @@ export default createStore({
     isHasPagePollsLimit(state) {
       const currenPage = state.pollPages.find(page => page.id === state.currentPageId);
       return currenPage.pollList.length === state.pollsInPageLimit;
-    }
+    },
   },
   mutations: {
     setCustomLink(state, flag) {
@@ -69,7 +87,7 @@ export default createStore({
       }
     },
     setCustomLinkValues(state, { type, value }) {
-      state.appSettings.customFinishLink[type] = value;
+      state.appSettings.customFinishLink.data[type] = value;
     },
     editAppSettings(state, { field, payload }) {
       state.appSettings[field] = payload;
@@ -252,12 +270,14 @@ export default createStore({
 
 
     setQuizState(state, newState) {
-      Object.assign(state, newState);
+      // Поправить склейку данных
+      // Object.assign(state, newState);
+      mergeState(state, newState)
       document.body.style.setProperty("--app-color", state.appSettings.appColor.value);
       document.body.style.setProperty("--app-text-color", state.appSettings.appTextColor.value);
       state.applicationReady = true;
-      state.appType = quizType;
-      if (quizType === 'quiz') {
+      state.appType = appType;
+      if (appType === 'quiz') {
         state.appSettings.hasCorrectAnswers = true;
       }
     },
@@ -280,7 +300,7 @@ export default createStore({
       axios.get('/bitrix/templates/quiz/itemjson.php', {
         params: {
           id: quizID,
-          type: quizType,
+          type: appType,
         }
       })
         .then(function (response) {
@@ -297,33 +317,45 @@ export default createStore({
         .catch(function (error) {
           console.log(error);
           // DEV
-          // const resState = JSON.parse(devJson.resState);
-          // const resColors = devJson.colors;
-          // const resPollTypesList = devJson.pollTypesList;
-          // commit("setQuizState", resState);
-          // commit("setColorListInApp", resColors)
-          // commit("setPollTypesListInApp", resPollTypesList)
+          const resState = JSON.parse(devJson.resState);
+          const resColors = devJson.colors;
+          const resPollTypesList = devJson.pollTypesList;
+          commit("setQuizState", resState);
+          commit("setColorListInApp", resColors)
+          commit("setPollTypesListInApp", resPollTypesList)
         });
     },
 
     setQuizData({ state }) {
-      let newAppData = JSON.parse(JSON.stringify(state));
-      newAppData.pollTypesList = [];
-      newAppData.colors = [];
-      newAppData.applicationReady = false;
-      newAppData = JSON.stringify(newAppData);
-      axios.get('/bitrix/templates/quiz/itemjson.php', {
-        params: {
-          id: quizID,
-          payload: newAppData,
-        }
-      })
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
+      return new Promise((resolve, reject) => {
+        let newAppData = JSON.parse(JSON.stringify(state));
+        newAppData.pollTypesList = [];
+        newAppData.colors = [];
+        newAppData.applicationReady = false;
+        newAppData = JSON.stringify(newAppData);
+        console.log({
+          quizID,
+          newAppData,
         });
+        axios.post('/bitrix/templates/quiz/itemjson.php',
+          {
+            id: quizID,
+            payload: newAppData,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+            reject(error);
+          });
+      });
     }
   }
 });

@@ -169,6 +169,7 @@
             Форма текста после завершение опроса
           </div>
           <textarea
+            :value="appSettings.appFinalMessage"
             class="settings-textarea"
             placeholder="Введите текст"
             @input="appFieldEdit($event, 'appFinalMessage')"
