@@ -4,12 +4,13 @@ import pollTypesListDefault from './pollTypesList';
 import axios from "axios";
 import devJson from "./dev-api.js";
 
-
+// Получаем конкретный вопрос для работы с ним в mutations
 function findPollById(state, pollItemId) {
   const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
   return currentPollPage.pollList.find((poll) => poll.id === pollItemId);
 }
 
+// Соединяем данные которые пришли с сервера с данными нашего приложения.
 function mergeState(state, newState) {
   // Перебираем все свойства newState
   for (const key in newState) {
@@ -23,7 +24,6 @@ function mergeState(state, newState) {
       }
     }
   }
-
   return state;
 }
 
@@ -79,6 +79,7 @@ export default createStore({
     },
   },
   mutations: {
+    // Включить/выключить опцию кастомной ссылки после завершения опроса/викторины
     setCustomLink(state, flag) {
       state.appSettings.customFinishLink.enable = flag;
       if (flag === false) {
@@ -86,13 +87,17 @@ export default createStore({
         state.appSettings.customFinishLink.data.linkUrl = '';
       }
     },
+    // Указать название и занчение для кастомной ссылки после завершения опроса/викторины
     setCustomLinkValues(state, { type, value }) {
       state.appSettings.customFinishLink.data[type] = value;
     },
+
+    // Метод для добавления/редактирования настроект приложения(цвета, данные экрана настроек)
     editAppSettings(state, { field, payload }) {
       state.appSettings[field] = payload;
     },
 
+    // Добавить изображение к вопросу
     addImageinPoll(state, { pollItemId, newImageData }) {
       const currentPollItem = findPollById(state, pollItemId);
       if (currentPollItem) {
@@ -100,15 +105,18 @@ export default createStore({
       }
     },
 
+    // Выбрать конкретную страницу в опросе
     setCurrentPollPage(state, pageId) {
       state.currentPageId = pageId;
     },
 
+    // Установить дефолтные значения для порльзователя в компоненте вопроса выбора диапозона
     setRangeSelectionValues(state, { pollItemId, rangeData }) {
       const currentPollItem = findPollById(state, pollItemId);
       currentPollItem.data.rangeData = rangeData;
     },
 
+    // Drag&Drop сортировка вопросов на станице  
     dragSortPollsInPage(state, { sortableList }) {
       const currentPage = state.pollPages.find(page => page.id === state.currentPageId);
       const newPollList = JSON.parse(JSON.stringify(sortableList));
@@ -119,11 +127,13 @@ export default createStore({
       currentPage.pollList = [...newPollList];
     },
 
+    // Drag&Drop сортировка вариантов ответа в вопросах где это возможно 
     dragSortOptionsInPoll(state, { sortableList, pollItemId }) {
       const currentPollItem = findPollById(state, pollItemId);
       currentPollItem.data.optionsData.optionsList = sortableList;
     },
 
+    // Добавить на конкретную страниицу(для опросов) или в общий список вопросов(для викторины) новый вопрос с указанием типа(шаблона вопроса)
     addPollInState(state, pollType) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
       const pollTmp = state.pollTypesList.find(pollTypeItem => pollTypeItem.type === pollType);
@@ -132,6 +142,7 @@ export default createStore({
       currentPollPage.pollList = [...currentPollPage.pollList, addedPollTmp];
     },
 
+    // Установить значение тексторого редактора в конкретном вопросе
     setSinglePollEditorValue(state, { pollItemId, editorValue }) {
       const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
@@ -139,16 +150,19 @@ export default createStore({
       }
     },
 
+    // Редактировать комментарий к конкретной страницце(для опросов)
     editPageComment(state, { pollPageId, commentValue }) {
       const currentPage = state.pollPages.find(page => page.id === pollPageId);
       currentPage.pageComment = commentValue;
     },
 
+    // Удалить вопрос с конкретной страницы(для опроса) или из огбщего списка вопросов(для викторины) 
     removePollInPage(state, pollId) {
       const currentPollPage = state.pollPages.find(page => page.id === state.currentPageId);
       currentPollPage.pollList = currentPollPage.pollList.filter(poll => poll.id !== pollId);
     },
 
+    // Добавить опцию варианта ответа в компонент где это возможно
     addOptionInPoll(state, { pollItemId }) {
       const currentPoll = findPollById(state, pollItemId);
       const newOption = {
@@ -158,22 +172,7 @@ export default createStore({
       currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
 
-    addPairInPoll(state, pollItemId) {
-      const currentPoll = findPollById(state, pollItemId);
-      const newPair = {
-        id: uuidv4(),
-        firstFieldValue: '',
-        secondFieldValue: '',
-      };
-      currentPoll.data.optionsData.optionsList.push(newPair);
-    },
-
-    editPairValue(state, { pollItemId, fieldValue, pairId, filedType }) {
-      const currentPoll = findPollById(state, pollItemId);
-      const pairFiled = currentPoll.data.optionsData.optionsList.find(pair => pair.id === pairId);
-      pairFiled[filedType] = fieldValue;
-    },
-
+    // Указать вариант ответа как "верный", для вопросов с такой возможностью
     selectOptionInPoll(state, { pollItemId, optionId, inputsType }) {
       const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
@@ -190,6 +189,7 @@ export default createStore({
       }
     },
 
+    // Удалить опцию из вопроса(с проверкой на минимальное количество оставшихся опций )
     removeOptionInPoll(state, { pollItemId, optionId, inputsType }) {
       const currentPoll = findPollById(state, pollItemId);
       const optionListLength = currentPoll.data.optionsData.optionsList.length;
@@ -206,11 +206,31 @@ export default createStore({
       }
     },
 
+    // Добапвить пару в вопрос компонента парного ранжирования (PairRanking.vue)
+    addPairInPoll(state, pollItemId) {
+      const currentPoll = findPollById(state, pollItemId);
+      const newPair = {
+        id: uuidv4(),
+        firstFieldValue: '',
+        secondFieldValue: '',
+      };
+      currentPoll.data.optionsData.optionsList.push(newPair);
+    },
+
+    // Удалить пару из вопроса компонента парного ранжирования (PairRanking.vue)
     removePairInPoll(state, { pollItemId, pairId, }) {
       const currentPoll = findPollById(state, state.currentPageId, pollItemId);
       currentPoll.data.optionsData.optionsList = currentPoll.data.optionsData.optionsList.filter(pair => pair.id !== pairId);
     },
 
+    // Редактировать значение поля пары из вопроса компонента парного ранжирования (PairRanking.vue)
+    editPairValue(state, { pollItemId, fieldValue, pairId, filedType }) {
+      const currentPoll = findPollById(state, pollItemId);
+      const pairFiled = currentPoll.data.optionsData.optionsList.find(pair => pair.id === pairId);
+      pairFiled[filedType] = fieldValue;
+    },
+
+    // Редактирование значения поля value у вопросов где есть варианты ответа( В основном у инпутов)
     editOptionInPoll(state, { pollItemId, optionId, optionValue }) {
       const currentPoll = findPollById(state, pollItemId);
       if (currentPoll) {
@@ -219,11 +239,13 @@ export default createStore({
       }
     },
 
+    //Установить возможность выбора диапозона дат в компоненте Опции выбора даты (dateOption.vue)
     setDateOption(state, { pollItemId, dateDataInComponent }) {
       const currentPoll = findPollById(state, pollItemId);
       currentPoll.data.dateData = dateDataInComponent;
     },
 
+    //Добавить новое кастомное поле в компоненте отпроса Кастомные поля.
     addCustomField(state, { pollItemId }) {
       const currentPoll = findPollById(state, pollItemId);
       const newOption = {
@@ -234,12 +256,14 @@ export default createStore({
       currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
 
+    //Указать тип кастомного поля в компоненте отпроса Кастомные поля.
     setCustomFieldType(state, { pollItemId, optionId, selectedType }) {
       const currentPoll = findPollById(state, pollItemId);
       const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
       currentOption.type = selectedType
     },
 
+    //Добавить страниццу с вопросами(Только для опросов, не для викторины)
     addPollPage(state) {
       const pagesLimit = state.pagesLimit;
       if (state.pollPages.length >= pagesLimit) return;
@@ -253,6 +277,7 @@ export default createStore({
       state.currentPageId = newPage.id;
     },
 
+    // Удалить конкретный вопрос из опроса 
     removePollPage(state, pageId) {
       const pagesMinLength = state.pagesMinLength;
       if (state.pollPages.length <= pagesMinLength) return;
@@ -268,7 +293,7 @@ export default createStore({
       state.pollPages = state.pollPages.filter(page => page.id !== pageId);
     },
 
-
+    // Установка нового state на основании данных с сервера
     setQuizState(state, newState) {
       // Поправить склейку данных
       // Object.assign(state, newState);
@@ -282,6 +307,7 @@ export default createStore({
       }
     },
 
+    // Шаблоны вариантов вопросов
     setPollTypesListInApp(state, resPollTypesList) {
       const typeToData = Object.fromEntries(pollTypesListDefault.map(obj => [obj.type, obj.data]));
       const appPollTypesList = resPollTypesList.map(obj => ({
@@ -291,11 +317,13 @@ export default createStore({
       state.pollTypesList = appPollTypesList;
     },
 
+    // Шаблоны выбора основного цвета(кнопки, выделение и тд.)
     setColorListInApp(state, colorList) {
       state.colors = colorList;
     },
   },
   actions: {
+    // Получение с сервера данных опроса в формате json
     getQuizTemplate({ commit }) {
       axios.get('/bitrix/templates/quiz/itemjson.php', {
         params: {
@@ -326,6 +354,7 @@ export default createStore({
         });
     },
 
+    // Отправка данныъ опроса на сервер в формате json
     setQuizData({ state }) {
       return new Promise((resolve, reject) => {
         let newAppData = JSON.parse(JSON.stringify(state));

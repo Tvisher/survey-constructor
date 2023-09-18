@@ -32,7 +32,7 @@
             <label class="custom-cb">
               <input
                 type="radio"
-                :name="`${variant.id}-option`"
+                :name="`${pollItemId}-${variant.id}-option`"
                 value="text"
                 :checked="variant.type == 'text'"
                 class="custom-cb__checkbox"
@@ -43,7 +43,7 @@
             <label class="custom-cb">
               <input
                 type="radio"
-                :name="`${variant.id}-option`"
+                :name="`${pollItemId}-${variant.id}-option`"
                 value="phone"
                 :checked="variant.type == 'phone'"
                 class="custom-cb__checkbox"
@@ -54,7 +54,7 @@
             <label class="custom-cb">
               <input
                 type="radio"
-                :name="`${variant.id}-option`"
+                :name="`${pollItemId}-${variant.id}-option`"
                 value="email"
                 :checked="variant.type == 'email'"
                 class="custom-cb__checkbox"
@@ -65,7 +65,7 @@
             <label class="custom-cb">
               <input
                 type="radio"
-                :name="`${variant.id}-option`"
+                :name="`${pollItemId}-${variant.id}-option`"
                 value="textarea"
                 :checked="variant.type == 'textarea'"
                 class="custom-cb__checkbox"
