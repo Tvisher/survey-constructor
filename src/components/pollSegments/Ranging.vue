@@ -79,7 +79,7 @@ export default {
     permissionToAddOption() {
       const maxOptionsLength = this.optionsData.maxOptionsLength;
       const optionsLength = this.optionsData.optionsList.length;
-      return maxOptionsLength >= optionsLength;
+      return maxOptionsLength > optionsLength;
     },
     permissionToRemoveOption() {
       const minxOptionsLength = this.optionsData.minOptionsLength;

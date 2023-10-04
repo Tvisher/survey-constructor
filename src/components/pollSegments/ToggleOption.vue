@@ -11,13 +11,10 @@
         <slot></slot>
       </div>
     </label>
-    <Popper
-      class="top-popper"
-      :content="'Подсказка'"
-      :hover="true"
-      :arrow="true"
-      :placement="'top'"
-    >
+    <Popper class="top-popper" :hover="true" :arrow="true" :placement="'top'">
+      <template #content>
+        <div v-html="popperContent"></div>
+      </template>
       <button class="tolltip-btn"></button>
     </Popper>
   </div>
@@ -29,6 +26,7 @@ import Popper from "vue3-popper";
 export default {
   props: {
     toggleParam: { type: Boolean, default: false },
+    popperContent: { type: String, default: "" },
   },
   components: {
     Popper,

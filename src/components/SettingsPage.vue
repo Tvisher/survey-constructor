@@ -109,22 +109,23 @@
           v-if="appType != 'quiz'"
           @toggleCheck="toggleCheck($event, 'hasCorrectAnswers')"
           :toggleParam="appSettings.hasCorrectAnswers"
+          :popperContent="toggleOptionText.hasCorrectAnswers"
         >
           Добавить параметр правильный ответ для вопроса
         </app-toggle-option>
 
         <app-toggle-option
-          v-if="appType == 'quiz'"
           @toggleCheck="toggleCheck($event, 'takeTheQuizagain')"
           :toggleParam="appSettings.takeTheQuizagain"
+          :popperContent="toggleOptionText.takeTheQuizagain"
         >
           Разрешить пройти викторину повторно
         </app-toggle-option>
 
         <app-toggle-option
-          v-if="appType == 'quiz'"
           @toggleCheck="enableCustomLink($event)"
           :toggleParam="appSettings.customFinishLink.enable"
+          :popperContent="toggleOptionText.customFinishLink"
         >
           Кастомная сслыка после завершения викторины
         </app-toggle-option>
@@ -202,6 +203,14 @@ export default {
     return {
       titleLettersLimit: 90,
       descriptionLettersLimit: 700,
+      toggleOptionText: {
+        hasCorrectAnswers:
+          "Вы можете отметить, каким должен быть правильный ответ, если он относится к одному из следующих типов: одиночный выбор, множественный выбор, выпадающий список, множественный выпадающий список",
+        takeTheQuizagain:
+          "По умолчанию попытка повторного прохождения опроса/квиза с одного IP-адреса будет заблокировано нашей системой. Также система заблокирует попытку повторного прохождения, если информация о первом сохранилась в cookie пользователя.</br></br><strong>Важно!</strong> Если в вашей организации один IP-адрес для всех рабочих компьютеров, следует перевести ползунок в активное положение, чтобы заполнение анкеты было возможным для всех сотрудников.",
+        customFinishLink:
+          "После того, как респондент завершил прохождение опроса/квиза, вы можете перенаправить его на одну из страниц своего сайта, на страницы в соц.сетях и пр.",
+      },
     };
   },
   computed: {

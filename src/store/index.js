@@ -33,7 +33,7 @@ const appType = document.querySelector('#app').dataset.pollType;
 export default createStore({
   state: {
     appId: quizID,
-    appType: null,
+    appType,
     applicationReady: false,
     pollTypesList: [],
     currentPageId: "1",
@@ -354,7 +354,7 @@ export default createStore({
         });
     },
 
-    // Отправка данныъ опроса на сервер в формате json
+    // Отправка данных опроса на сервер в формате json
     setQuizData({ state }) {
       return new Promise((resolve, reject) => {
         let newAppData = JSON.parse(JSON.stringify(state));

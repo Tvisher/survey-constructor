@@ -70,7 +70,10 @@ export default {
         .dispatch("setQuizData")
         .then((response) => {
           console.log(response);
-          window.open(`/lk/poll/public/quizelem/?id=${this.appId}`, "_blank");
+          window.open(
+            `/lk/poll/public/${this.appType}elem/?id=${this.appId}`,
+            "_blank"
+          );
         })
         .catch((error) => {
           console.log(error);
