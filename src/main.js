@@ -25,11 +25,15 @@ vSelect.props.components.default = () => ({
 
 
 const globalOptions = {
+    formats: [
+        'bold', 'italic', 'underline', 'strike', 'script'
+    ],
     modules: {
-        toolbar: [['bold', 'italic', 'underline', 'strike',], [{ 'script': 'sub' }, { 'script': 'super' }], ['clean']]
+        toolbar: [['bold', 'italic', 'underline', 'strike',], [{ 'script': 'sub' }, { 'script': 'super' }], ['clean']],
     },
     placeholder: '',
     theme: 'snow',
+
 }
 QuillEditor.props.globalOptions.default = () => globalOptions
 

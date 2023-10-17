@@ -325,7 +325,7 @@ export default createStore({
   actions: {
     // Получение с сервера данных опроса в формате json
     getQuizTemplate({ commit }) {
-      axios.get('/bitrix/templates/quiz/itemjson.php', {
+      axios.get('/local/templates/quiz/itemjson.php', {
         params: {
           id: quizID,
           type: appType,
@@ -366,7 +366,7 @@ export default createStore({
           quizID,
           newAppData,
         });
-        axios.post('/bitrix/templates/quiz/itemjson.php',
+        axios.post('/local/templates/quiz/itemjson.php',
           {
             id: quizID,
             payload: newAppData,

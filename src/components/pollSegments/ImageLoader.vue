@@ -146,7 +146,7 @@ export default {
       loading.value = true;
       axios({
         method: "post",
-        url: "/bitrix/templates/quiz/files.php",
+        url: "/local/templates/quiz/files.php",
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       })

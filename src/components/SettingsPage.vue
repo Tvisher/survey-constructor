@@ -6,7 +6,7 @@
 
         <label class="settings-label">
           <div class="settings-label__text">
-            <span>Заголовок Вашего опроса</span>
+            <span>Заголовок {{ templatesText.appTitle }}</span>
             <span class="settings-label__req">*</span>
             <div class="letters-limit" :class="{ _err: isAppTitleLengthMore }">
               {{ appTitleLength }}/{{ titleLettersLimit }}
@@ -16,7 +16,7 @@
             :class="{ _err: isAppTitleLengthMore }"
             type="text"
             class="settings-input"
-            placeholder="Опрос о развитии в компании"
+            placeholder='Например: "Опрос о развитии в компании..."'
             :value="appSettings.appTitle"
             @input="appFieldEdit($event, 'appTitle')"
             ref="appTitle"
@@ -29,7 +29,7 @@
 
         <label class="settings-label">
           <div class="settings-label__text">
-            <span>Описание опроса</span>
+            <span>Описание {{ templatesText.appDescr }}</span>
             <span class="settings-label__req">*</span>
             <div
               class="letters-limit"
@@ -41,7 +41,7 @@
           <textarea
             :class="{ _err: isAppDescriptionLengthMore }"
             class="settings-textarea"
-            placeholder="Опрос о развитии в компании"
+            placeholder='Например: "Опрос о развитии в компании поможет нам понять..."'
             :value="appSettings.appDescription"
             @input="appFieldEdit($event, 'appDescription')"
             ref="appDescription"
@@ -53,7 +53,9 @@
         </label>
 
         <div>
-          <div class="settings-label__text">Логотип опроса</div>
+          <div class="settings-label__text">
+            Логотип {{ templatesText.appLogoText }}
+          </div>
           <app-image-loader
             :addedImage="appSettings.appLogo"
             @imageAdded="addImageInAppSettings"
@@ -119,7 +121,7 @@
           :toggleParam="appSettings.takeTheQuizagain"
           :popperContent="toggleOptionText.takeTheQuizagain"
         >
-          Разрешить пройти викторину повторно
+          Разрешить пройти {{ templatesText.customFinishLinkText }} повторно
         </app-toggle-option>
 
         <app-toggle-option
@@ -127,7 +129,8 @@
           :toggleParam="appSettings.customFinishLink.enable"
           :popperContent="toggleOptionText.customFinishLink"
         >
-          Кастомная сслыка после завершения викторины
+          Кастомная сслыка после завершения
+          {{ templatesText.takeTheQuizagainText }}
         </app-toggle-option>
         <Vue3SlideUpDown :duration="300" v-model="isHasCustomLink">
           <div class="range-selection__creater link-creater">
@@ -167,7 +170,8 @@
 
         <label class="settings-label">
           <div class="settings-label__text">
-            Форма текста после завершение опроса
+            Форма текста после завершения
+            {{ templatesText.takeTheQuizagainText }}
           </div>
           <textarea
             :value="appSettings.appFinalMessage"
@@ -246,6 +250,35 @@ export default {
     },
     isAppDescriptionLengthMore() {
       return this.appDescriptionLength > this.descriptionLettersLimit;
+    },
+
+    templatesText() {
+      let appTitle = "";
+      let appDescr = "";
+      let appLogoText = "";
+      let customFinishLinkText = "";
+      let takeTheQuizagainText = "";
+      if (this.appType === "survey") {
+        appTitle = "Вашего опроса";
+        appDescr = "опроса";
+        appLogoText = "опроса";
+        customFinishLinkText = "опрос";
+        takeTheQuizagainText = "опроса";
+      }
+      if (this.appType === "quiz") {
+        appTitle = "Вашей викторины";
+        appDescr = "викторины";
+        appLogoText = "викторины";
+        customFinishLinkText = "викторину";
+        takeTheQuizagainText = "викторины";
+      }
+      return {
+        appTitle,
+        appDescr,
+        appLogoText,
+        customFinishLinkText,
+        takeTheQuizagainText,
+      };
     },
   },
 
@@ -326,11 +359,9 @@ export default {
 
       const errBlock = document.querySelectorAll("._err, .err-field")[0];
       if (errBlock) {
-        const errBlocktopPos =
-          errBlock.getBoundingClientRect().top + window.scrollY - 50;
-        window.scrollTo({
-          top: errBlocktopPos,
+        errBlock.scrollIntoView({
           behavior: "smooth",
+          block: "center",
         });
       } else {
         this.$store.dispatch("setQuizData");
