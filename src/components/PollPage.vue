@@ -100,7 +100,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isHasPagePollsLimit"]),
+    ...mapGetters(["isHasPagePollsLimit", "editingIsBlocked"]),
     ...mapState({
       appType: (state) => state.appType,
     }),
@@ -127,6 +127,8 @@ export default {
     },
 
     pollItemsDragOptionsInSidebar() {
+      if (this.editingIsBlocked) return { disabled: true };
+
       return {
         scrollSensitivity: 200,
         forceFallback: true,
@@ -153,6 +155,7 @@ export default {
     },
 
     removePage() {
+      if (this.editingIsBlocked) return;
       this.modalData = {
         title: "Удаление страницы",
         description: `Вы действительно хотите удалить страницу${"\u00A0"} № ${

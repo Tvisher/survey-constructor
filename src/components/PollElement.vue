@@ -52,10 +52,7 @@
           </svg>
         </button>
         <!-- <button class="poll-remove" @click="showModal = true"> -->
-        <button
-          class="poll-remove"
-          @click="$emit('removePollElement', { pollItemId, pollItemName })"
-        >
+        <button class="poll-remove" @click="pollRemove()">
           <svg
             width="16"
             height="16"
@@ -87,7 +84,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 import Popper from "vue3-popper";
 import AppSettingsPollBody from "./pollSegments/SettingsPollBody.vue";
 import AppVisualPollBody from "./pollSegments/VisualPollBody.vue";
@@ -113,6 +110,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
     indexNumber() {
       return this.pollNumber + 1;
     },
@@ -120,6 +118,13 @@ export default {
   methods: {
     pollEdit() {
       this.isVisualType = !this.isVisualType;
+    },
+    pollRemove() {
+      if (this.editingIsBlocked) return;
+
+      const pollItemId = this.pollItemId;
+      const pollItemName = this.pollItemName;
+      this.$emit("removePollElement", { pollItemId, pollItemName });
     },
   },
 };

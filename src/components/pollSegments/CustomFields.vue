@@ -94,7 +94,7 @@
 
 <script>
 import { VueDraggableNext } from "vue-draggable-next";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -110,6 +110,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
     optionsList: {
       get() {
         return this.optionsData.optionsList;
@@ -131,6 +132,9 @@ export default {
     },
 
     pollItemsDragOptionsInSidebar() {
+      if (this.editingIsBlocked) {
+        return { disabled: true };
+      }
       return {
         animation: 200,
         group: `optionGroup-${this.pollItemId}`,
@@ -154,11 +158,13 @@ export default {
     ]),
 
     addOption() {
+      if (this.editingIsBlocked) return;
       const { pollItemId } = this;
       this.addCustomField({ pollItemId });
     },
 
     removeVariant(optionId) {
+      if (this.editingIsBlocked) return;
       const { pollItemId, inputsType } = this;
       this.removeOptionInPoll({ pollItemId, optionId, inputsType });
     },
@@ -170,6 +176,8 @@ export default {
     },
 
     setOptionType(event, optionId) {
+      if (this.editingIsBlocked) return;
+
       const selectedType = event.target.value;
       const { pollItemId } = this;
       this.setCustomFieldType({ pollItemId, optionId, selectedType });

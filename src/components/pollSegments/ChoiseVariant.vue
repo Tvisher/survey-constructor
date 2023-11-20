@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import AnswerOption from "./AnswerOption.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
@@ -55,6 +55,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
     optionsList: {
       get() {
         return this.optionsData.optionsList;
@@ -76,6 +77,9 @@ export default {
     },
 
     pollItemsDragOptionsInSidebar() {
+      if (this.editingIsBlocked) {
+        return { disabled: true };
+      }
       return {
         animation: 200,
         group: `optionGroup-${this.pollItemId}`,
@@ -96,6 +100,7 @@ export default {
       "dragSortOptionsInPoll",
     ]),
     addOption() {
+      if (this.editingIsBlocked) return;
       const { pollItemId } = this;
       this.addOptionInPoll({ pollItemId });
     },
@@ -106,6 +111,8 @@ export default {
     },
 
     removeVariant(optionId) {
+      if (this.editingIsBlocked) return;
+
       const { pollItemId, inputsType } = this;
       this.removeOptionInPoll({ pollItemId, optionId, inputsType });
     },

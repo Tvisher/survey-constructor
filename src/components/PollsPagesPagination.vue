@@ -13,7 +13,7 @@
       </div>
       <button
         class="polls-page-btn add-btn"
-        @click="addPollPage"
+        @click="addNewPage"
         :disabled="pageLimitReached"
         :title="pageLimitReachedText"
       >
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   props: {
@@ -57,8 +57,14 @@ export default {
   },
   methods: {
     ...mapMutations(["setCurrentPollPage", "addPollPage"]),
+    addNewPage() {
+      if (!this.editingIsBlocked) {
+        this.addPollPage();
+      }
+    },
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
     pageLimitReached() {
       return this.pollPagesList.length === this.pagesLimit;
     },

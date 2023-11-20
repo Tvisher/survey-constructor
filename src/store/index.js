@@ -27,13 +27,14 @@ function mergeState(state, newState) {
   return state;
 }
 
-const quizID = document.querySelector('#app').dataset.pollId;
+const appId = document.querySelector('#app').dataset.pollId;
 const appType = document.querySelector('#app').dataset.pollType;
 
 export default createStore({
   state: {
-    appId: quizID,
+    appId,
     appType,
+    completedSurveyCount: 2,
     applicationReady: false,
     pollTypesList: [],
     currentPageId: "1",
@@ -77,8 +78,11 @@ export default createStore({
       const currenPage = state.pollPages.find(page => page.id === state.currentPageId);
       return currenPage.pollList.length === state.pollsInPageLimit;
     },
+    editingIsBlocked: (state) => state.completedSurveyCount > 0,
   },
   mutations: {
+    setCompletedSurveyCount: (state, count) => state.completedSurveyCount = count,
+
     // Включить/выключить опцию кастомной ссылки после завершения опроса/викторины
     setCustomLink(state, flag) {
       state.appSettings.customFinishLink.enable = flag;
@@ -327,7 +331,7 @@ export default createStore({
     getQuizTemplate({ commit }) {
       axios.get('/local/templates/quiz/itemjson.php', {
         params: {
-          id: quizID,
+          id: appId,
           type: appType,
         }
       })
@@ -352,23 +356,36 @@ export default createStore({
           commit("setColorListInApp", resColors)
           commit("setPollTypesListInApp", resPollTypesList)
         });
+
+      axios.post('/ajax/resultResave.php', {
+        id: appId,
+      },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+        .then((response) => {
+          commit("setCompletedSurveyCount", response.data);
+        })
+        .catch((error) => {
+          console.log('resultResave', error);
+        });
     },
 
     // Отправка данных опроса на сервер в формате json
     setQuizData({ state }) {
       return new Promise((resolve, reject) => {
         let newAppData = JSON.parse(JSON.stringify(state));
+        newAppData.completedSurveyCount = '';
         newAppData.pollTypesList = [];
         newAppData.colors = [];
         newAppData.applicationReady = false;
         newAppData = JSON.stringify(newAppData);
-        console.log({
-          quizID,
-          newAppData,
-        });
+
         axios.post('/local/templates/quiz/itemjson.php',
           {
-            id: quizID,
+            id: appId,
             payload: newAppData,
           },
           {

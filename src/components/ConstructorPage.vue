@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" :class="{ editingIsBlocked }">
     <div class="constructor__handlers">
       <router-link to="/" class="btn app-btn">К настройкам</router-link>
       <transition name="fade">
@@ -9,43 +9,11 @@
           @click="saveData"
         >
           <span>Сохранить</span>
-          <!-- <div class="save-ok">
-            <svg
-              version="1.0"
-              xmlns="http://www.w3.org/2000/svg"
-              width="1280.000000pt"
-              height="1253.000000pt"
-              viewBox="0 0 1280.000000 1253.000000"
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <metadata>
-                Created by potrace 1.15, written by Peter Selinger 2001-2017
-              </metadata>
-              <g
-                transform="translate(0.000000,1253.000000) scale(0.100000,-0.100000)"
-                fill="var(--app-text-color)"
-                stroke="none"
-              >
-                <path
-                  d="M12000 12520 c-192 -27 -395 -98 -655 -230 -446 -225 -961 -590
--1620 -1149 -926 -785 -2158 -2000 -3466 -3416 -661 -717 -1389 -1537 -1913
--2157 -87 -104 -159 -188 -160 -188 -1 0 -67 34 -146 76 -255 134 -875 442
--1078 536 -849 391 -1441 595 -1912 659 -134 18 -368 13 -479 -10 -224 -48
--405 -181 -495 -366 -52 -104 -69 -183 -70 -310 -1 -105 1 -113 32 -177 29
--59 55 -87 235 -254 438 -407 919 -904 1273 -1315 792 -921 1625 -2167 2579
--3858 168 -297 234 -355 405 -355 66 0 96 5 132 21 113 51 158 111 238 313
-135 341 398 964 565 1335 1285 2866 2820 5295 4654 7365 520 587 971 1049
-1821 1866 665 640 790 788 844 1005 81 328 -187 601 -604 614 -63 2 -144 0
--180 -5z"
-                />
-              </g>
-            </svg>
-          </div> -->
         </div>
       </transition>
       <transition name="fade">
         <div
-          class="btn app-btn"
+          class="btn app-btn save-and-open-btn"
           v-if="pollHasElements"
           @click="saveAndOpenResult"
         >
@@ -71,14 +39,18 @@
         <div class="constructor__handlers constructor__handlers__footer">
           <router-link to="/" class="btn app-btn">К настройкам</router-link>
           <transition name="fade">
-            <div class="btn app-btn" v-if="pollHasElements" @click="saveData">
+            <div
+              class="btn app-btn save-btn"
+              v-if="pollHasElements"
+              @click="saveData"
+            >
               <span>Сохранить</span>
               <!-- <div class="save-ok"></div> -->
             </div>
           </transition>
           <transition name="fade">
             <div
-              class="btn app-btn"
+              class="btn app-btn save-and-open-btn"
               v-if="pollHasElements"
               @click="saveAndOpenResult"
             >
@@ -98,7 +70,7 @@
 import AppPollPage from "./PollPage.vue";
 import AppSidebar from "./Sidebar.vue";
 import PollsPagesPagination from "./PollsPagesPagination";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   components: {
     AppPollPage,
@@ -112,6 +84,8 @@ export default {
   },
   methods: {
     saveData() {
+      if (this.editingIsBlocked) return;
+
       this.$store
         .dispatch("setQuizData")
         .then((response) => {
@@ -122,6 +96,7 @@ export default {
         });
     },
     saveAndOpenResult() {
+      if (this.editingIsBlocked) return;
       this.$store
         .dispatch("setQuizData")
         .then((response) => {
@@ -147,7 +122,7 @@ export default {
       pollPagesList: (state) => state.pollPages,
       pollTypesList: (state) => state.pollTypesList,
     }),
-
+    ...mapGetters(["editingIsBlocked"]),
     showRemoveBtnInPage() {
       return this.pollPagesList.length > this.pagesMinLength;
     },

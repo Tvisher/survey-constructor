@@ -3,6 +3,7 @@
     <label class="range-selection__label">
       <span class="editor-descr">От</span>
       <input
+        :readonly="editingIsBlocked"
         class="variant-item__filed"
         v-model="range.min"
         type="text"
@@ -12,6 +13,7 @@
     <label class="range-selection__label">
       <span class="editor-descr">До</span>
       <input
+        :readonly="editingIsBlocked"
         class="variant-item__filed"
         v-model="range.max"
         type="text"
@@ -34,6 +36,7 @@
           v-model="sliderDefaultValues"
           :min="minToSlider"
           :max="maxToSlider"
+          :disabled="editingIsBlocked"
         />
         <div class="range-slider__max">
           {{ range.max }}
@@ -44,7 +47,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import Slider from "@vueform/slider";
 import { Vue3SlideUpDown } from "vue3-slide-up-down";
 export default {
@@ -72,6 +75,8 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
+
     showDefaultMinMax() {
       return this.range.min !== "" && this.range.max !== "";
     },

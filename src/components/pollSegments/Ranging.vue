@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
@@ -67,6 +67,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["editingIsBlocked"]),
+
     optionsList: {
       get() {
         return this.optionsData.optionsList;
@@ -88,6 +90,9 @@ export default {
     },
 
     pollItemsDragOptionsInSidebar() {
+      if (this.editingIsBlocked) {
+        return { disabled: true };
+      }
       return {
         animation: 200,
         group: `optionGroup-${this.pollItemId}`,
@@ -107,11 +112,15 @@ export default {
       "dragSortOptionsInPoll",
     ]),
     addOption() {
+      if (this.editingIsBlocked) return;
+
       const { pollItemId } = this;
       this.addOptionInPoll({ pollItemId });
     },
 
     removeVariant(optionId) {
+      if (this.editingIsBlocked) return;
+
       const { pollItemId } = this;
       if (this.permissionToRemoveOption) {
         this.removeOptionInPoll({ pollItemId, optionId });

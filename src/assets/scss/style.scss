@@ -158,15 +158,18 @@
   gap: 20px;
 }
 
-.poll-list-sidebar {
-  max-width: 390px;
-  width: 100%;
-  // padding: 15px;
-  padding: 20px;
-  background: #ecf4ff;
+.right-sidebar {
   position: sticky;
   top: 85px;
   left: 0;
+  max-width: 390px;
+  width: 100%;
+}
+
+.poll-list-sidebar,
+.analitic-info {
+  padding: 20px;
+  background: #ecf4ff;
   border-radius: 8px;
 }
 
@@ -575,5 +578,29 @@ textarea.variant-item__filed {
   color: #707683;
   &._err {
     color: red;
+  }
+}
+
+.editingIsBlocked {
+  .custom-fields-choise,
+  .custom-cb {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  .add-btn,
+  .variant-item__remove,
+  .variant-item__dragg,
+  .sidebar-item__btn,
+  .sidebar-item__wrapper,
+  .poll-remove,
+  .save-btn,
+  .save-and-open-btn,
+  .remove-btn,
+  .range-selection__creater .variant-item__filed,
+  .range-slider-visual,
+  .poll-item__name:before {
+    user-select: none;
+    opacity: 0.6;
+    cursor: no-drop !important;
   }
 }

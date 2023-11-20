@@ -200,13 +200,20 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     name: { type: String },
     type: { type: String },
   },
+  computed: {
+    ...mapGetters(["editingIsBlocked"]),
+  },
   methods: {
     addPollItem() {
+      if (this.editingIsBlocked) return;
+
       const pollType = this.type;
       this.$emit("addPollItem", pollType);
     },
