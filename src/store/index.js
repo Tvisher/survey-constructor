@@ -34,8 +34,7 @@ export default createStore({
   state: {
     appId,
     appType,
-    completedSurveyCount: 2,
-    applicationReady: false,
+    completedSurveyCount: 0,
     pollTypesList: [],
     currentPageId: "1",
     pagesLimit: 5,
@@ -81,8 +80,15 @@ export default createStore({
     editingIsBlocked: (state) => state.completedSurveyCount > 0,
   },
   mutations: {
+    // Установка колличества прохождений (приходит с сервера)
     setCompletedSurveyCount: (state, count) => state.completedSurveyCount = count,
-
+    // Установить для компонента ранжирования параметр учёта верного порядка 
+    setRanginCorrectListAnswers(state, { pollItemId, value }) {
+      const currentPollItem = findPollById(state, pollItemId);
+      if (currentPollItem) {
+        currentPollItem.data.optionsData.isHasCorrectListAnswers = value;
+      }
+    },
     // Включить/выключить опцию кастомной ссылки после завершения опроса/викторины
     setCustomLink(state, flag) {
       state.appSettings.customFinishLink.enable = flag;
@@ -304,7 +310,7 @@ export default createStore({
       mergeState(state, newState)
       document.body.style.setProperty("--app-color", state.appSettings.appColor.value);
       document.body.style.setProperty("--app-text-color", state.appSettings.appTextColor.value);
-      state.applicationReady = true;
+      // state.applicationReady = true;
       state.appType = appType;
       if (appType === 'quiz') {
         state.appSettings.hasCorrectAnswers = true;
@@ -329,48 +335,55 @@ export default createStore({
   actions: {
     // Получение с сервера данных опроса в формате json
     getQuizTemplate({ commit }) {
-      axios.get('/local/templates/quiz/itemjson.php', {
-        params: {
-          id: appId,
-          type: appType,
-        }
-      })
-        .then(function (response) {
-          console.log(response.data);
-          const resJson = response.data;
-          const resState = JSON.parse(resJson.resState);
-          const resColors = resJson.colors;
-          const resPollTypesList = resJson.pollTypesList;
-
-          commit("setQuizState", resState);
-          commit("setColorListInApp", resColors)
-          commit("setPollTypesListInApp", resPollTypesList)
-        })
-        .catch(function (error) {
-          console.log(error);
-          // DEV
-          const resState = JSON.parse(devJson.resState);
-          const resColors = devJson.colors;
-          const resPollTypesList = devJson.pollTypesList;
-          commit("setQuizState", resState);
-          commit("setColorListInApp", resColors)
-          commit("setPollTypesListInApp", resPollTypesList)
-        });
-
-      axios.post('/ajax/resultResave.php', {
-        id: appId,
-      },
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+      return new Promise((resolve, reject) => {
+        axios.get('/local/templates/quiz/itemjson.php', {
+          params: {
+            id: appId,
+            type: appType,
           }
         })
-        .then((response) => {
-          commit("setCompletedSurveyCount", response.data);
-        })
-        .catch((error) => {
-          console.log('resultResave', error);
-        });
+          .then(function (response) {
+            console.log(response.data);
+            const resJson = response.data;
+            const resState = JSON.parse(resJson.resState);
+            const resColors = resJson.colors;
+            const resPollTypesList = resJson.pollTypesList;
+
+            commit("setQuizState", resState);
+            commit("setColorListInApp", resColors)
+            commit("setPollTypesListInApp", resPollTypesList)
+
+            setInterval(() => {
+              axios.post('/ajax/resultResave.php', {
+                id: appId,
+              },
+                {
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                  }
+                })
+                .then((response) => {
+                  commit("setCompletedSurveyCount", response.data);
+                })
+                .catch((error) => {
+                  console.log('resultResave', error);
+                });
+            }, 3000)
+            resolve();
+          })
+          .catch(function (error) {
+            console.log(error);
+            // DEV
+            const resState = JSON.parse(devJson.resState);
+            const resColors = devJson.colors;
+            const resPollTypesList = devJson.pollTypesList;
+            commit("setQuizState", resState);
+            commit("setColorListInApp", resColors)
+            commit("setPollTypesListInApp", resPollTypesList)
+            reject(error)
+          });
+      })
+
     },
 
     // Отправка данных опроса на сервер в формате json
@@ -380,9 +393,8 @@ export default createStore({
         newAppData.completedSurveyCount = '';
         newAppData.pollTypesList = [];
         newAppData.colors = [];
-        newAppData.applicationReady = false;
+        // newAppData.applicationReady = false;
         newAppData = JSON.stringify(newAppData);
-
         axios.post('/local/templates/quiz/itemjson.php',
           {
             id: appId,

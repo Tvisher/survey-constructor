@@ -1,5 +1,15 @@
 <template>
   <span class="editor-descr">Опции ранжирования</span>
+  <hr />
+  <label class="custom-cb">
+    <input
+      type="checkbox"
+      :checked="optionsData.isHasCorrectListAnswers"
+      @input="setRanginCorrectListAnswersValue"
+      class="custom-cb__checkbox"
+    />
+    <span class="custom-cb__text">Учитывать порядок заполнения</span>
+  </label>
   <draggable
     v-model="optionsList"
     v-bind="pollItemsDragOptionsInSidebar"
@@ -47,6 +57,7 @@
   >
     Добавить вариант
   </button>
+  {{ optionsData }}
 </template>
 
 <script>
@@ -106,11 +117,20 @@ export default {
   },
   methods: {
     ...mapMutations([
+      "setRanginCorrectListAnswers",
       "editOptionInPoll",
       "addOptionInPoll",
       "removeOptionInPoll",
       "dragSortOptionsInPoll",
     ]),
+    setRanginCorrectListAnswersValue() {
+      const pollItemId = this.pollItemId;
+      const value = !this.optionsData.isHasCorrectListAnswers;
+      this.setRanginCorrectListAnswers({
+        pollItemId,
+        value,
+      });
+    },
     addOption() {
       if (this.editingIsBlocked) return;
 

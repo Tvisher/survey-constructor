@@ -17,16 +17,24 @@ import { mapState } from "vuex";
 
 export default {
   name: "App",
+  data() {
+    return {
+      applicationReady: false,
+    };
+  },
   computed: {
     ...mapState({
       appColor: (state) => state.appSettings.appColor,
-      applicationReady: (state) => state.applicationReady,
     }),
   },
   methods: {},
 
   beforeMount() {
-    this.$store.dispatch("getQuizTemplate");
+    this.$store
+      .dispatch("getQuizTemplate")
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+      .finally(() => (this.applicationReady = true));
   },
 };
 </script>

@@ -337,7 +337,7 @@ export default {
       if (e.target.classList.contains("err-field")) {
         e.target.classList.remove("err-field");
       }
-      const value = e.target.value.trim();
+      const value = e.target.value;
       this.setCustomLinkValues({ type, value });
     },
     validAndSave() {

@@ -84,8 +84,6 @@ export default {
   },
   methods: {
     saveData() {
-      if (this.editingIsBlocked) return;
-
       this.$store
         .dispatch("setQuizData")
         .then((response) => {
@@ -96,7 +94,6 @@ export default {
         });
     },
     saveAndOpenResult() {
-      if (this.editingIsBlocked) return;
       this.$store
         .dispatch("setQuizData")
         .then((response) => {
