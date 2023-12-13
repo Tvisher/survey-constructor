@@ -8,7 +8,9 @@
       @input="setRanginCorrectListAnswersValue"
       class="custom-cb__checkbox"
     />
-    <span class="custom-cb__text">Учитывать порядок заполнения</span>
+    <span class="custom-cb__text"
+      >Учитывать правильный порядок ответов пользователя</span
+    >
   </label>
   <draggable
     v-model="optionsList"
@@ -57,7 +59,6 @@
   >
     Добавить вариант
   </button>
-  {{ optionsData }}
 </template>
 
 <script>
