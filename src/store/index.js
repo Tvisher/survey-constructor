@@ -353,23 +353,31 @@ export default createStore({
             commit("setColorListInApp", resColors)
             commit("setPollTypesListInApp", resPollTypesList)
 
-            setInterval(() => {
-              axios.post('/ajax/resultResave.php', {
-                id: appId,
-              },
-                {
-                  headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                  }
-                })
-                .then((response) => {
-                  commit("setCompletedSurveyCount", response.data);
-                })
-                .catch((error) => {
-                  console.log('resultResave', error);
-                });
-            }, 3000)
-            resolve();
+            const getSurveyCount = () => {
+              return new Promise((res, rej) => {
+                axios.post('/ajax/resultResave.php', {
+                  id: appId,
+                },
+                  {
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                  })
+                  .then((response) => {
+                    commit("setCompletedSurveyCount", response.data);
+                    res();
+                  })
+                  .catch((error) => {
+                    console.log('resultResave', error);
+                    rej(error)
+                  });
+              })
+            }
+            getSurveyCount()
+              .then(() => {
+                resolve();
+                setInterval(() => getSurveyCount, 3000);
+              })
           })
           .catch(function (error) {
             console.log(error);
