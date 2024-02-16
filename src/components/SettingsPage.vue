@@ -129,7 +129,7 @@
           :toggleParam="appSettings.customFinishLink.enable"
           :popperContent="toggleOptionText.customFinishLink"
         >
-          Кастомная сслыка после завершения
+          Кастомная ссылка после завершения
           {{ templatesText.takeTheQuizagainText }}
         </app-toggle-option>
         <Vue3SlideUpDown :duration="300" v-model="isHasCustomLink">

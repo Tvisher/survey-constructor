@@ -375,8 +375,8 @@ export default createStore({
             }
             getSurveyCount()
               .then(() => {
+                setInterval(() => getSurveyCount(), 3000);
                 resolve();
-                setInterval(() => getSurveyCount, 3000);
               })
           })
           .catch(function (error) {
