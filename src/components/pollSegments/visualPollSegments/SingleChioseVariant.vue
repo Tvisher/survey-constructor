@@ -11,8 +11,31 @@
         type="radio"
         :name="pollItemId"
         @input="getChecket(option.id)"
+        :checked="option.id === checkedInputId"
       />
       <p class="single-choise-visual__text">{{ option.value }}</p>
+    </label>
+
+    <label
+      v-if="
+        optionsData.hasOwnProperty('hasCustomAnswer') &&
+        optionsData.hasCustomAnswer === true
+      "
+      class="single-choise-visual__label custom-user-answer"
+      :class="{ checked: checkedInputId === 'custom-answer' }"
+    >
+      <span style="font-size: 14px">Ваш вариант ответа</span>
+      <input
+        class="single-choise-visual__input"
+        type="radio"
+        :name="pollItemId"
+        @input="getChecket('custom-answer')"
+      />
+      <input
+        type="text"
+        class="variant-item__filed"
+        @focus="setCustomVariant"
+      />
     </label>
   </div>
 </template>
@@ -32,11 +55,22 @@ export default {
     getChecket(inputId) {
       this.checkedInputId = inputId;
     },
+    setCustomVariant() {
+      this.checkedInputId = "custom-answer";
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.custom-user-answer {
+  display: flex;
+  flex-direction: column;
+  .variant-item__filed {
+    position: relative;
+    z-index: 2;
+  }
+}
 .single-choise-visual,
 .multiple-choise-visual {
   display: flex;

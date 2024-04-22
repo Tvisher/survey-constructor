@@ -25,6 +25,26 @@
       />
     </transition-group>
   </draggable>
+  <div v-if="pollItemType == 'single-choice' && appType == 'survey'">
+    <hr />
+    <div class="editor-descr">
+      <label class="custom-cb">
+        <input
+          type="checkbox"
+          class="custom-cb__checkbox"
+          @input="addCustomOption"
+          :checked="optionsData.hasCustomAnswer"
+        />
+        <span
+          class="custom-cb__text"
+          style="line-height: 100%; text-transform: none"
+        >
+          Добавить пользовательский ответ</span
+        >
+      </label>
+    </div>
+    <hr />
+  </div>
   <button
     class="btn app-btn add-btn"
     v-if="permissionToAddOption"
@@ -35,7 +55,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapState } from "vuex";
 import AnswerOption from "./AnswerOption.vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
@@ -48,6 +68,7 @@ export default {
     pollItemId: { type: [Number, String] },
     optionsData: { type: Object },
     inputsType: { type: String },
+    pollItemType: { type: String },
   },
   data() {
     return {
@@ -56,6 +77,9 @@ export default {
   },
   computed: {
     ...mapGetters(["editingIsBlocked"]),
+    ...mapState({
+      appType: (state) => state.appType,
+    }),
     optionsList: {
       get() {
         return this.optionsData.optionsList;
@@ -98,7 +122,14 @@ export default {
       "addOptionInPoll",
       "removeOptionInPoll",
       "dragSortOptionsInPoll",
+      "addCustomOptionInPoll",
     ]),
+
+    addCustomOption(e) {
+      const customOption = e.target.checked;
+      const { pollItemId } = this;
+      this.addCustomOptionInPoll({ pollItemId, customOption });
+    },
     addOption() {
       if (this.editingIsBlocked) return;
       const { pollItemId } = this;

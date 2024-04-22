@@ -4,7 +4,7 @@
     v-for="(field, index) in customFilds"
     :key="field.id"
   >
-    <span class="editor-descr">{{ field.value || `Поле № ${index + 1}` }}</span>
+    <span class="editor-descr" v-if="field.value">{{ field.value }} </span>
     <label class="variant-item__label" v-if="field.type === 'phone'">
       <input
         class="variant-item__filed"

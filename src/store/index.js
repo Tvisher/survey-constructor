@@ -38,7 +38,7 @@ export default createStore({
     pollTypesList: [],
     currentPageId: "1",
     pagesLimit: 5,
-    pollsInPageLimit: 10,
+    pollsInPageLimit: 40,
     pagesMinLength: 1,
     colors: [],
     textColors: [
@@ -63,6 +63,10 @@ export default createStore({
       appTextColor: { name: "Белый", value: "#FFFFFF" },
       appLogo: {},
       appQuizBg: {},
+      appHeadSlider: {
+        stretchSlides: false,
+        list: []
+      },
     },
     pollPages: [
       {
@@ -182,6 +186,12 @@ export default createStore({
       currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
 
+    // Добавить опцию варианта ответа в компонент где это возможно
+    addCustomOptionInPoll(state, { pollItemId, customOption }) {
+      const currentPoll = findPollById(state, pollItemId);
+      currentPoll.data.optionsData.hasCustomAnswer = customOption;
+    },
+
     // Указать вариант ответа как "верный", для вопросов с такой возможностью
     selectOptionInPoll(state, { pollItemId, optionId, inputsType }) {
       const currentPoll = findPollById(state, pollItemId);
@@ -261,7 +271,8 @@ export default createStore({
       const newOption = {
         id: `${uuidv4()}`,
         type: 'text',
-        value: ""
+        value: "",
+        req: true,
       };
       currentPoll.data.optionsData.optionsList = [...currentPoll.data.optionsData.optionsList, newOption];
     },
@@ -271,6 +282,12 @@ export default createStore({
       const currentPoll = findPollById(state, pollItemId);
       const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
       currentOption.type = selectedType
+    },
+
+    setCustomFieldReq(state, { pollItemId, optionId, value }) {
+      const currentPoll = findPollById(state, pollItemId);
+      const currentOption = currentPoll.data.optionsData.optionsList.find(option => option.id === optionId);
+      currentOption.req = value;
     },
 
     //Добавить страниццу с вопросами(Только для опросов, не для викторины)

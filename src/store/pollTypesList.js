@@ -11,6 +11,7 @@ const pollTypesList = [
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
                 currentAnswerId: [],
+                hasCustomAnswer: false,
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },
@@ -129,7 +130,7 @@ const pollTypesList = [
                 minOptionsLength: 1,
                 maxOptionsLength: 10,
                 optionsList: [
-                    { id: '1', type: 'text', value: "" },
+                    { id: '1', type: 'text', value: "", req: true },
                 ],
             },
         }

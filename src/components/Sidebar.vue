@@ -6,6 +6,8 @@
           :list="pollTypesList"
           handle=".sidebar-item__wrapper"
           v-bind="dragOptionsInSidebar"
+          @start="body.classList.add('selection-none')"
+          @end="body.classList.remove('selection-none')"
         >
           <app-sidebar-item
             v-for="(pollTemplate, index) in pollTypesList"
@@ -54,7 +56,6 @@ import AppSidebarItem from "./pollSegments/SidebarItem.vue";
 import { mapMutations, mapGetters, mapState } from "vuex";
 import AppConfirmModal from "./ConfirmModal.vue";
 import axios from "axios";
-
 export default {
   props: { pollTypesList: { type: Array } },
   components: {
@@ -65,6 +66,7 @@ export default {
 
   data() {
     return {
+      body: document.querySelector("body"),
       showModal: false,
       modalData: {
         title: "Превышен лимит вопросов на странице",

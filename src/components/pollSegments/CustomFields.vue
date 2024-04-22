@@ -16,70 +16,86 @@
         v-for="variant in optionsList"
         :key="variant.id"
       >
-        <div class="variant-item__dragg"></div>
-        <div class="variant-item__wrapper">
-          <label class="variant-item__label">
-            <input
-              type="text"
-              class="variant-item__filed"
-              :value="variant.value"
-              @input="editVariant($event, variant.id)"
-              placeholder="Заголовок поля"
-            />
-          </label>
+        <div class="variant-item-req" v-if="appType == 'survey'">
           <div class="custom-fields-choise">
-            <span class="custom-fields-title">Тип поля:</span>
             <label class="custom-cb">
               <input
-                type="radio"
+                type="checkbox"
                 :name="`${pollItemId}-${variant.id}-option`"
-                value="text"
-                :checked="variant.type == 'text'"
+                :checked="variant.req"
                 class="custom-cb__checkbox"
-                @input="setOptionType($event, variant.id)"
+                @input="toggleOptionRequired($event, variant.id)"
               />
-              <span class="custom-cb__text">Текст</span>
-            </label>
-            <label class="custom-cb">
-              <input
-                type="radio"
-                :name="`${pollItemId}-${variant.id}-option`"
-                value="phone"
-                :checked="variant.type == 'phone'"
-                class="custom-cb__checkbox"
-                @input="setOptionType($event, variant.id)"
-              />
-              <span class="custom-cb__text">Телефон</span>
-            </label>
-            <label class="custom-cb">
-              <input
-                type="radio"
-                :name="`${pollItemId}-${variant.id}-option`"
-                value="email"
-                :checked="variant.type == 'email'"
-                class="custom-cb__checkbox"
-                @input="setOptionType($event, variant.id)"
-              />
-              <span class="custom-cb__text">Email</span>
-            </label>
-            <label class="custom-cb">
-              <input
-                type="radio"
-                :name="`${pollItemId}-${variant.id}-option`"
-                value="textarea"
-                :checked="variant.type == 'textarea'"
-                class="custom-cb__checkbox"
-                @input="setOptionType($event, variant.id)"
-              />
-              <span class="custom-cb__text">Область текста</span>
+              <span class="custom-cb__text">Обязательное поле</span>
             </label>
           </div>
         </div>
-        <button
-          class="variant-item__remove"
-          :class="{ 'cant-remove': !permissionToRemoveOption }"
-          @click="removeVariant(variant.id)"
-        ></button>
+        <div class="variant-item-w">
+          <div class="variant-item__dragg"></div>
+          <div class="variant-item__wrapper">
+            <label class="variant-item__label">
+              <input
+                type="text"
+                class="variant-item__filed"
+                :value="variant.value"
+                @input="editVariant($event, variant.id)"
+                placeholder="Заголовок поля"
+              />
+            </label>
+            <div class="custom-fields-choise">
+              <span class="custom-fields-title">Тип поля:</span>
+              <label class="custom-cb">
+                <input
+                  type="radio"
+                  :name="`${pollItemId}-${variant.id}-option`"
+                  value="text"
+                  :checked="variant.type == 'text'"
+                  class="custom-cb__checkbox"
+                  @input="setOptionType($event, variant.id)"
+                />
+                <span class="custom-cb__text">Текст</span>
+              </label>
+              <label class="custom-cb">
+                <input
+                  type="radio"
+                  :name="`${pollItemId}-${variant.id}-option`"
+                  value="phone"
+                  :checked="variant.type == 'phone'"
+                  class="custom-cb__checkbox"
+                  @input="setOptionType($event, variant.id)"
+                />
+                <span class="custom-cb__text">Телефон</span>
+              </label>
+              <label class="custom-cb">
+                <input
+                  type="radio"
+                  :name="`${pollItemId}-${variant.id}-option`"
+                  value="email"
+                  :checked="variant.type == 'email'"
+                  class="custom-cb__checkbox"
+                  @input="setOptionType($event, variant.id)"
+                />
+                <span class="custom-cb__text">Email</span>
+              </label>
+              <label class="custom-cb">
+                <input
+                  type="radio"
+                  :name="`${pollItemId}-${variant.id}-option`"
+                  value="textarea"
+                  :checked="variant.type == 'textarea'"
+                  class="custom-cb__checkbox"
+                  @input="setOptionType($event, variant.id)"
+                />
+                <span class="custom-cb__text">Область текста</span>
+              </label>
+            </div>
+          </div>
+          <button
+            class="variant-item__remove"
+            :class="{ 'cant-remove': !permissionToRemoveOption }"
+            @click="removeVariant(variant.id)"
+          ></button>
+        </div>
       </div>
     </transition-group>
   </draggable>
@@ -94,7 +110,7 @@
 
 <script>
 import { VueDraggableNext } from "vue-draggable-next";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapState } from "vuex";
 
 export default {
   components: {
@@ -110,6 +126,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      appType: (state) => state.appType,
+    }),
     ...mapGetters(["editingIsBlocked"]),
     optionsList: {
       get() {
@@ -155,6 +174,7 @@ export default {
       "addOptionInPoll",
       "removeOptionInPoll",
       "dragSortOptionsInPoll",
+      "setCustomFieldReq",
     ]),
 
     addOption() {
@@ -182,11 +202,32 @@ export default {
       const { pollItemId } = this;
       this.setCustomFieldType({ pollItemId, optionId, selectedType });
     },
+
+    toggleOptionRequired(event, optionId) {
+      const { pollItemId } = this;
+      this.setCustomFieldReq({
+        pollItemId,
+        optionId,
+        value: event.target.checked,
+      });
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.variant-item {
+  display: flex;
+  flex-direction: column;
+}
+.variant-item-req {
+  width: 100%;
+}
+
+.variant-item-w {
+  width: 100%;
+  display: flex;
+}
 .custom-cb {
   margin-right: 20px;
 }

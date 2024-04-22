@@ -17,6 +17,7 @@
       :pollItemId="pollItemId"
       :optionsData="pollItemData.optionsData"
       :inputsType="inputsType"
+      :pollItemType="pollItemType"
     />
     <app-ranging
       v-if="pollItemType === 'ranging'"

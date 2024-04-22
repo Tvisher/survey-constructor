@@ -2,8 +2,26 @@
   <div class="app-container">
     <div class="app-container__inner">
       <div class="polls-container">
-        <h1 class="settings-title">Второй шаг</h1>
-
+        <div class="t-wtapper">
+          <h1 class="settings-title">Второй шаг</h1>
+          <a class="btn app-btn" href="/lk/poll/">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="20" y1="12" x2="4" y2="12" />
+              <polyline points="10 18 4 12 10 6" />
+            </svg>
+            Главное меню
+          </a>
+        </div>
         <label class="settings-label">
           <div class="settings-label__text">
             <span>Заголовок {{ templatesText.appTitle }}</span>
@@ -71,6 +89,11 @@
             :maxFileSize="5"
             :hasSettings="false"
           />
+        </div>
+
+        <div v-if="appType == 'survey'">
+          <div class="settings-label__text">Слайдер под заголовком опроса</div>
+          <app-image-loader-multiple />
         </div>
 
         <div>
@@ -191,6 +214,7 @@
 
 <script>
 import AppImageLoader from "./pollSegments/ImageLoader.vue";
+import AppImageLoaderMultiple from "./pollSegments/ImageLoaderMiutiple.vue";
 import AppColorSelection from "./pollSegments/ColorSelection.vue";
 import AppToggleOption from "./pollSegments/ToggleOption.vue";
 import { Vue3SlideUpDown } from "vue3-slide-up-down";
@@ -199,6 +223,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     AppImageLoader,
+    AppImageLoaderMultiple,
     AppColorSelection,
     AppToggleOption,
     Vue3SlideUpDown,
@@ -439,5 +464,22 @@ export default {
 .link-creater {
   margin-bottom: 0;
   padding-bottom: 20px;
+}
+
+.t-wtapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  a {
+    // color: #fa0056;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .settings-title {
+    margin-bottom: 0;
+  }
 }
 </style>

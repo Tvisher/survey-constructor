@@ -48,7 +48,7 @@
           </div>
           <div class="poll-dropzone__descr">
             Поддерживаемые форматы:
-            <span class="take-note">PNG, TIFF, JPG</span>
+            <span class="take-note">PNG, JPEG, JPG</span>
           </div>
           <div class="poll-dropzone__descr">
             Максималяный размер файла
