@@ -10,6 +10,7 @@
       </div>
     </div>
   </transition>
+  <!-- <pre>  {{ this.$store.state }}</pre> -->
 </template>
 
 <script>

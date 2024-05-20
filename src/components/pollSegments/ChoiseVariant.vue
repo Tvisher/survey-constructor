@@ -25,7 +25,12 @@
       />
     </transition-group>
   </draggable>
-  <div v-if="pollItemType == 'single-choice' && appType == 'survey'">
+  <div
+    v-if="
+      (pollItemType == 'single-choice' || pollItemType == 'multiple-choice') &&
+      appType == 'survey'
+    "
+  >
     <hr />
     <div class="editor-descr">
       <label class="custom-cb">
@@ -52,6 +57,11 @@
   >
     Добавить вариант
   </button>
+
+  <!-- <pre>
+  {{ optionsData }}
+</pre
+  > -->
 </template>
 
 <script>

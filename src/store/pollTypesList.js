@@ -66,6 +66,7 @@ const pollTypesList = [
                 minOptionsLength: 2,
                 maxOptionsLength: 10,
                 currentAnswerId: [],
+                hasCustomAnswer: false,
                 optionsList: [
                     { id: '1', value: "" },
                     { id: '2', value: "" },

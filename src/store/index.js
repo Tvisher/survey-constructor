@@ -419,6 +419,7 @@ export default createStore({
         newAppData.pollTypesList = [];
         newAppData.colors = [];
         // newAppData.applicationReady = false;
+        console.log(newAppData);
         newAppData = JSON.stringify(newAppData);
         axios.post('/local/templates/quiz/itemjson.php',
           {
