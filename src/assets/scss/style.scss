@@ -30,15 +30,18 @@
   line-height: 140%;
   width: fit-content;
   transition: background-color 0.2s ease-in-out;
+
   &.app-btn {
     color: var(--app-text-color);
     background-color: var(--app-color);
   }
 }
+
 .polls-container {
   max-width: 790px;
   width: 100%;
 }
+
 .poll-elements__title {
   margin-bottom: 20px;
   text-align: center;
@@ -46,7 +49,8 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 100%; /* 18px */
+  line-height: 100%;
+  /* 18px */
 }
 
 .container {
@@ -61,12 +65,14 @@
   border-radius: 8px;
   background: #ecf4ff;
 }
+
 .polls-pagination {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 8px;
   background: #ecf4ff;
 }
+
 .polls-pagination__wrapper {
   margin: 5px;
   display: flex;
@@ -87,6 +93,7 @@
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 2px 12px 0px rgba(37, 51, 66, 0.08);
+
   &.active {
     color: var(--app-text-color);
     background-color: var(--app-color);
@@ -109,6 +116,7 @@
 .poll-page-comment {
   margin-bottom: 20px;
 }
+
 .comment__input {
   outline: none;
   padding: 10px 12px;
@@ -149,6 +157,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
 .constructor__handlers {
   display: flex;
   padding: 20px;
@@ -185,6 +194,7 @@
   margin: 20px 0;
   border-radius: 8px;
 }
+
 .poll-item__head,
 .poll-item__name,
 .poll-item__head-wrapper {
@@ -195,6 +205,7 @@
   font-weight: 500;
   line-height: 100%;
 }
+
 .poll-item__head {
   margin-bottom: 20px;
 }
@@ -204,6 +215,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   &:before {
     cursor: grabbing;
     display: block;
@@ -258,6 +270,7 @@
     height: 100%;
     object-fit: contain;
   }
+
   &.setting {
     padding: 4px;
   }
@@ -266,6 +279,7 @@
 .editor-wrapper {
   margin-bottom: 20px;
 }
+
 hr {
   border: none;
   height: 1px;
@@ -282,6 +296,7 @@ hr {
   justify-content: center;
   margin-top: 10px;
 }
+
 .variant-item__container {
   display: flex;
   align-items: flex-start;
@@ -292,9 +307,11 @@ hr {
   font-size: 18px;
   min-height: 110px;
 }
+
 .ql-toolbar {
   text-align: left;
 }
+
 .editor-descr {
   text-align: left;
   color: #707683;
@@ -304,6 +321,7 @@ hr {
   text-transform: uppercase;
   margin-bottom: 10px;
 }
+
 .variant-item__dragg {
   margin-top: 10px;
   cursor: grabbing;
@@ -318,6 +336,7 @@ hr {
 .add-btn {
   margin-top: 10px;
 }
+
 .variant-item {
   display: flex;
   align-items: flex-start;
@@ -328,10 +347,12 @@ hr {
   margin-left: -15px;
   border: 1px solid transparent;
 }
+
 .variant-item__label {
   display: block;
   width: 100%;
 }
+
 .variant-item__filed {
   margin-bottom: 8px;
   width: 100%;
@@ -346,10 +367,12 @@ hr {
   line-height: 140%;
   outline: none;
   transition: border-color 0.3s ease-in-out;
+
   &:focus {
     border-color: #7db1fa;
   }
 }
+
 textarea.variant-item__filed {
   resize: vertical;
   min-height: 150px;
@@ -364,8 +387,10 @@ textarea.variant-item__filed {
     transform: scale(0);
     width: 0px;
   }
+
   padding: 0;
-  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out,
+  width 0.3s ease-in-out;
   cursor: pointer;
   border: none;
   width: 30px;
@@ -381,13 +406,16 @@ textarea.variant-item__filed {
   margin-bottom: 20px;
   width: 100%;
   height: 366px;
+
   img {
     width: 100%;
     height: 100%;
   }
+
   &._cover img {
     object-fit: cover;
   }
+
   &._contain img {
     object-fit: contain;
   }
@@ -395,6 +423,7 @@ textarea.variant-item__filed {
 
 .custom-cb {
   position: relative;
+
   .custom-cb__checkbox {
     z-index: 2;
     margin: 0;
@@ -405,16 +434,19 @@ textarea.variant-item__filed {
     top: 0;
     width: 100%;
     height: 100%;
-    &:checked + .custom-cb__text {
+
+    &:checked+.custom-cb__text {
       &:before {
         background-color: var(--app-color);
         border-color: var(--app-color);
       }
+
       &::after {
         opacity: 1;
       }
     }
   }
+
   .custom-cb__text {
     color: #262b31;
     font-size: 16px;
@@ -422,6 +454,7 @@ textarea.variant-item__filed {
     font-weight: 500;
     line-height: 140%;
     padding-left: 24px;
+
     &:before {
       content: "";
       position: absolute;
@@ -433,6 +466,7 @@ textarea.variant-item__filed {
       border-radius: 4px;
       border: 1px solid #c2cfe0;
     }
+
     &::after {
       opacity: 0;
       content: "";
@@ -472,6 +506,7 @@ textarea.variant-item__filed {
   border-radius: 6px !important;
   box-shadow: 0px 1px 2px 0px rgba(56, 63, 72, 0.1),
     0px 2px 12px 0px rgba(37, 51, 66, 0.08) !important;
+
   #arrow {
     &::before {
       border-left: 1px solid rgba(56, 63, 72, 0.1);
@@ -482,6 +517,7 @@ textarea.variant-item__filed {
 }
 
 .option-transition {
+
   &-enter-active,
   &-leave-active {
     transition: opacity 0.3s ease, transform 0.4s ease;
@@ -491,6 +527,7 @@ textarea.variant-item__filed {
     opacity: 0;
     transform: translateX(-5%);
   }
+
   &-leave-to {
     opacity: 0;
     transform: translateX(5%);
@@ -500,16 +537,27 @@ textarea.variant-item__filed {
 .poll-item__answer {
   font-size: 18px;
   color: #202020;
+
+  a {
+    display: inline;
+    color: var(--app-color);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .custom-fields-choise {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
   .custom-cb:last-child {
     margin-right: 0;
   }
 }
+
 .custom-fields-title {
   margin-right: 20px;
   font-weight: 500;
@@ -533,9 +581,10 @@ textarea.variant-item__filed {
     border: none !important;
     text-align: center;
   }
+
   .popper #arrow::before {
     border: none !important;
-    border-bottom: 1px solid rgba(56, 63, 72, 0.1) !important ;
+    border-bottom: 1px solid rgba(56, 63, 72, 0.1) !important;
     border-right: 1px solid rgba(56, 63, 72, 0.1) !important;
   }
 }
@@ -582,17 +631,20 @@ textarea.variant-item__filed {
   margin-left: auto;
   font-size: 12px;
   color: #707683;
+
   &._err {
     color: red;
   }
 }
 
 .editingIsBlocked {
+
   .custom-fields-choise,
   .custom-cb {
     pointer-events: none;
     opacity: 0.6;
   }
+
   .add-btn,
   .variant-item__remove,
   .variant-item__dragg,
@@ -606,5 +658,49 @@ textarea.variant-item__filed {
     user-select: none;
     opacity: 0.6;
     cursor: no-drop !important;
+  }
+}
+
+
+
+
+.editor-wrapper {
+  .ql-snow .ql-tooltip[data-mode="link"]::before {
+    content: "Укажите ссылку:";
+  }
+
+  .ql-snow .ql-tooltip::before {
+    content: "Ваша ссылка:";
+    margin: 0;
+  }
+
+  .ql-snow .ql-tooltip a.ql-action::after {
+    content: "Редактировать";
+    border: none;
+    margin: 0;
+  }
+
+  .ql-snow .ql-tooltip a.ql-remove::before {
+    content: "Удалить";
+    margin: 0;
+  }
+
+  .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+    content: "Сохранить";
+    margin: 0;
+  }
+
+  .ql-tooltip {
+    display: flex;
+    gap: 20px;
+
+    &.ql-hidden {
+      display: none;
+    }
+  }
+
+  a {
+    display: inline;
+    color: var(--app-color);
   }
 }

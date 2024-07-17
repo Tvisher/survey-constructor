@@ -2,13 +2,13 @@ import { createApp, h } from 'vue'
 import App from './App.vue'
 import store from './store'
 import router from "./router/router";
+import vSelect from 'vue-select';
 
-import "./assets/scss/style.scss";
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import "./assets/scss/style.scss";
 
 
-import vSelect from 'vue-select';
 vSelect.props.components.default = () => ({
     OpenIndicator: {
         render: () => h("span", {
@@ -26,10 +26,10 @@ vSelect.props.components.default = () => ({
 
 const globalOptions = {
     formats: [
-        'bold', 'italic', 'underline', 'strike', 'script'
+        'bold', 'italic', 'underline', 'strike', 'script', 'link'
     ],
     modules: {
-        toolbar: [['bold', 'italic', 'underline', 'strike',], [{ 'script': 'sub' }, { 'script': 'super' }], ['clean']],
+        toolbar: [['bold', 'italic', 'underline', 'strike', 'link'], [{ 'script': 'sub' }, { 'script': 'super' }], ['clean']],
     },
     placeholder: '',
     theme: 'snow',
