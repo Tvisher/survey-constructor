@@ -308,8 +308,13 @@ hr {
   min-height: 110px;
 }
 
+.ql-container {
+  border-radius: 0 0 5px 5px;
+}
+
 .ql-toolbar {
   text-align: left;
+  border-radius: 5px 5px 0 0;
 }
 
 .editor-descr {
@@ -664,7 +669,8 @@ textarea.variant-item__filed {
 
 
 
-.editor-wrapper {
+.editor-wrapper,
+.single-chiose-editor {
   .ql-snow .ql-tooltip[data-mode="link"]::before {
     content: "Укажите ссылку:";
   }
@@ -693,6 +699,8 @@ textarea.variant-item__filed {
   .ql-tooltip {
     display: flex;
     gap: 20px;
+    padding: 10px;
+    border-radius: 5px;
 
     &.ql-hidden {
       display: none;
@@ -702,5 +710,9 @@ textarea.variant-item__filed {
   a {
     display: inline;
     color: var(--app-color);
+  }
+
+  .ql-snow .ql-tooltip input[type=text] {
+    outline: none !important;
   }
 }

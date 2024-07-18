@@ -164,6 +164,16 @@ export default createStore({
       }
     },
 
+    // Установить значение тексторого редактора в конкретном варианте ответа для вопроса типа single-choise
+    setSingleChoiseEditorValue(state, { pollItemId, optionId, editorValue }) {
+      const currentPoll = findPollById(state, pollItemId);
+      if (currentPoll) {
+        const currentOptionInPoll = currentPoll.data.optionsData.optionsList.find(el => el.id == optionId);
+        // console.log(currentOptionInPoll);
+        currentOptionInPoll.descriptionValue = editorValue;
+      }
+    },
+
     // Редактировать комментарий к конкретной страницце(для опросов)
     editPageComment(state, { pollPageId, commentValue }) {
       const currentPage = state.pollPages.find(page => page.id === pollPageId);

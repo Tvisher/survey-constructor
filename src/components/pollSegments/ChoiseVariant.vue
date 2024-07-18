@@ -19,6 +19,9 @@
         :inputsType="inputsType"
         :currentAnswerIdList="optionsData.currentAnswerId"
         :showRemoveBtn="permissionToRemoveOption"
+        :pollItemType="pollItemType"
+        :appType="appType"
+        :pollItemId="pollItemId"
         @selectVariant="selectVariant"
         @editVariant="editVariant($event, variant.id)"
         @removeVariant="removeVariant"
@@ -57,11 +60,6 @@
   >
     Добавить вариант
   </button>
-
-  <!-- <pre>
-  {{ optionsData }}
-</pre
-  > -->
 </template>
 
 <script>
