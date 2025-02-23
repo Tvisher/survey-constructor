@@ -198,7 +198,18 @@ export default createStore({
 
     // Добавить опцию варианта ответа в компонент где это возможно
     addCustomOptionInPoll(state, { pollItemId, customOption }) {
+
       const currentPoll = findPollById(state, pollItemId);
+      if (customOption) {
+        const newOption = {
+          id: `custom-answer-${uuidv4()}`,
+          value: ""
+        };
+        currentPoll.data.optionsData.optionsList.push(newOption);
+      } else {
+        currentPoll.data.optionsData.optionsList = currentPoll.data.optionsData.optionsList.filter(el => !el.id.startsWith('custom-answer'));
+      }
+
       currentPoll.data.optionsData.hasCustomAnswer = customOption;
     },
 

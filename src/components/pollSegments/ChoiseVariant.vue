@@ -90,7 +90,9 @@ export default {
     }),
     optionsList: {
       get() {
-        return this.optionsData.optionsList;
+        return this.optionsData.optionsList.filter(
+          (el) => !el.id.startsWith("custom-answer")
+        );
       },
       set(sortableList) {
         const pollItemId = this.pollItemId;

@@ -3,7 +3,7 @@
     <label
       class="single-choise-visual__label"
       :class="{ checked: option.id === checkedInputId }"
-      v-for="option in optionsData.optionsList"
+      v-for="option in optionsList"
       :key="option.id"
     >
       <input
@@ -17,19 +17,16 @@
     </label>
 
     <label
-      v-if="
-        optionsData.hasOwnProperty('hasCustomAnswer') &&
-        optionsData.hasCustomAnswer === true
-      "
+      v-if="isHasCustomAnswer"
       class="single-choise-visual__label custom-user-answer"
-      :class="{ checked: checkedInputId === 'custom-answer' }"
+      :class="{ checked: checkedInputId.startsWith('custom-answer') }"
     >
       <span style="font-size: 14px">Ваш вариант ответа</span>
       <input
         class="single-choise-visual__input"
         type="radio"
         :name="pollItemId"
-        @input="getChecket('custom-answer')"
+        @input="getChecket(isHasCustomAnswer)"
       />
       <input
         type="text"
@@ -51,12 +48,24 @@ export default {
       checkedInputId: "",
     };
   },
+  computed: {
+    optionsList() {
+      return this.optionsData.optionsList.filter(
+        (el) => !el.id.startsWith("custom-answer")
+      );
+    },
+    isHasCustomAnswer() {
+      return this.optionsData.optionsList.find((el) =>
+        el.id.startsWith("custom-answer")
+      )?.id;
+    },
+  },
   methods: {
     getChecket(inputId) {
       this.checkedInputId = inputId;
     },
     setCustomVariant() {
-      this.checkedInputId = "custom-answer";
+      this.checkedInputId = this.isHasCustomAnswer;
     },
   },
 };
